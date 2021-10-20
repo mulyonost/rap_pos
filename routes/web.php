@@ -7,6 +7,7 @@ use App\Http\Controllers\AvalanController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\KasController;
+use App\Http\Controllers\ProduksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/kas/data', [KasController::class, 'data'])->name('kas.data');
     Route::resource('/kas', KasController::class);
+
+    Route::get('/produksi/data', [ProduksiController::class, 'data'])->name('produksi.data');
+    Route::resource('/produksi', ProduksiController::class);
 });
