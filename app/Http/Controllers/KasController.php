@@ -70,6 +70,7 @@ class KasController extends Controller
             $kasdetail->kategori = $value['kategori'];
             $kasdetail->save();
         }
+        return view ('kas.index');
         
     }
 

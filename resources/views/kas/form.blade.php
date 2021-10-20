@@ -18,18 +18,18 @@
                     </div>
                     <label for="total">Total</label>
                     <div class="col-sm-4">
-                      <input type="text" id="total" name="total" class="form_control"> 
+                      <input type="text" id="total" name="total" class="form_control" readonly> 
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
                     <div class="col-sm-4">
-                      <input type="date" id="tanggal" name="tanggal" class="form_control"> 
+                      <input type="date" id="tanggal" name="tanggal" class="form_control" value="<?php echo date('Y-m-d') ?>"> 
                     </div>
                   </div>
 
                   <div class="table-responsive">
-                    <table class="table" width="100%">
+                    <table class="table" width="100%" id="kas_table">
                       <thead>
                         <tr>
                           <th>Nama Item</th>
@@ -51,7 +51,7 @@
                             </select></td>
                           <td><input class="qty" type="number" name="addmore[0][qty]" id="qty0"></td>
                           <td><input class="harga" type="number" name="addmore[0][harga]" id=harga0></td>
-                          <td><input class="subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0"></td>
+                          <td><input class="subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
                         </tr>
                       </tbody>
                     </table>               
@@ -71,6 +71,32 @@
 
   @push('scripts')
 <script>
+var numRows = 2, ti = 5;
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function recalc() {
+  var qty = 0;
+  var harga = 0;
+  var grandtotal = 0;
+  $('#kas_table').find('tr').each(function() {
+    var qty = $(this).find('input.qty').val();
+    var harga = $(this).find('input.harga').val();
+    var subtotal = (qty * harga);
+    $(this).find('input.subtotal').val(subtotal);
+    grandtotal += isNumber(subtotal)  ? subtotal : 0;
+  });
+  $('#total').val(grandtotal);
+}
+
+$(function() {
+  $('#kas_table').on("keyup blur", recalc); 
+});
+
+
+
   var i=0;
   $('#add_new').click(function(){
     i++;
@@ -82,34 +108,36 @@
      '<option value ="transportasi">Transportasi</option></td>' +
      '<td><input class="qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
      '<td><input class="harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required ></td>' +
-     '<td><input class="subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required ></td>'
+     '<td><input class="subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>'
       )
   });
 
-  $('input.qty,input.harga').keyup(function(){
-    var subtotal = 0;
-    var $row = $(this).closest("tr");
-    var qty = parseFloat($row.find('.qty').val());
-    var harga = parseFloat($row.find('.harga').val());
-    subtotal = qty * harga ;
+  // $('input.qty,input.harga').keyup(function(){
+  //   var subtotal = 0;
+  //   var $row = $(this).closest("tr");
+  //   var qty = parseFloat($row.find('.qty').val());
+  //   var harga = parseFloat($row.find('.harga').val());
+  //   subtotal = qty * harga ;
 
-    $row.find('.subtotal').val(subtotal);
+  //   $row.find('.subtotal').val(subtotal);
 
-  })
-    var $tr = $(this).closest('tr'),
-        $qty = $tr.find('input.qty'),
-        $harga = $tr.find('input.harga'),
-        $subtotal = $tr.find('input.subtotal')
-        $total = $('#total');
+  // })
+  // //   var $tr = $(this).closest('tr'),
+  // //       $qty = $tr.find('input.qty'),
+  // //       $harga = $tr.find('input.harga'),
+  // //       $subtotal = $tr.find('input.subtotal')
+  // //       $total = $('#total');
 
-        $subtotal.val($qty.val() * $harga.val());
+  // //       $subtotal.val($qty.val() * $harga.val());
 
-        // var grandtotal = 0;
-        // $('#total').each(function(){
-        //   if(!isNaN($(this)))
-        // })
+  // //       // var grandtotal = 0;
+  // //       // $('#total').each(function(){
+  // //       //   if(!isNaN($(this)))
+  // //       // })
 
-  });
+  // // });
+
+
 
 </script>
 @endpush
