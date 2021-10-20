@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreatePenjualanTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('penjualan', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreignID('id_penjualan_po');
+            $table->foreignID('id_customer');
+            $table->integer('timbangan_mobil');
+            $table->integer('total');
+            $table->string('foto_mobil');
+            $table->string('foto_nota');
+            $table->date('tanggal');
+            $table->date('due_date');
+            $table->boolean('status');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('penjualan');
+    }
+}
