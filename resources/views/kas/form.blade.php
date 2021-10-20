@@ -96,20 +96,20 @@
     $row.find('.subtotal').val(subtotal);
 
   })
-  //   var $tr = $(this).closest('tr'),
-  //       $qty = $tr.find('input.qty'),
-  //       $harga = $tr.find('input.harga'),
-  //       $subtotal = $tr.find('input.subtotal')
-  //       $total = $('#total');
+    var $tr = $(this).closest('tr'),
+        $qty = $tr.find('input.qty'),
+        $harga = $tr.find('input.harga'),
+        $subtotal = $tr.find('input.subtotal')
+        $total = $('#total');
 
-  //       $subtotal.val($qty.val() * $harga.val());
+        $subtotal.val($qty.val() * $harga.val());
 
-  //       // var grandtotal = 0;
-  //       // $('#total').each(function(){
-  //       //   if(!isNaN($(this)))
-  //       // })
+        // var grandtotal = 0;
+        // $('#total').each(function(){
+        //   if(!isNaN($(this)))
+        // })
 
-  // });
+  });
 
 </script>
 @endpush
