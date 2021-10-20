@@ -85,7 +85,7 @@
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=id_kas]').focus();
+        $('#modal-form [name=id_laporan_produksi]').focus();
 
     }
 

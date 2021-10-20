@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ProduksiDetail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Produksi extends Model
 {
     use HasFactory;
-    protected $table="laporan_produksi";
-    protected $guarded=[];
+    protected $table = "laporan_produksi";
+    protected $guarded = [];
 
-    // public function kas_detail() {
-    //     return $this->hasMany(KasDetail::class, 'id_kas', 'id');
-
+    public function laporan_produksi_detail()
+    {
+        return $this->hasMany(ProduksiDetail::class, 'id_laporan_produksi', 'id_laporan_produksi');
+    }
 }
