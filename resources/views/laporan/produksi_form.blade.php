@@ -96,8 +96,8 @@
                       <tbody id="mainbody">
                         <tr>
                           <td><input class="form-control" type="text" name="addmore[0][matras]" id="matras0" required></td>
-                          <td><input class="form-control" type="text" name="addmore[0][nama]" id="nama0" required></td>
-                          <td><input class="form-control berat" type="number" name="addmore[0][berat]" id="berat0"></td>
+                          <td><input class="form-control nama" type="text" name="addmore[0][nama]" id="nama0" required value="{{ $produk }}"></td>
+                          <td><input step=".001" class="form-control berat" type="number" name="addmore[0][berat]" id="berat0"></td>
                           <td><input class="form-control qty" type="number" name="addmore[0][qty]" id=qty0></td>
                           <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
                         </tr>
@@ -156,6 +156,11 @@ $(function() {
      '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>'
       )
   });
+
+  // var products = @json($produk)
+  // $("#nama0").autocomplete ({
+  //   source : products;
+  // })
 
   // $('input.qty,input.harga').keyup(function(){
   //   var subtotal = 0;

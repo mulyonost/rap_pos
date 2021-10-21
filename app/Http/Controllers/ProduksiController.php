@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produksi;
 use App\Models\ProduksiDetail;
+use App\Models\Aluminium;
 
 class ProduksiController extends Controller
 {
@@ -14,8 +15,8 @@ class ProduksiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('laporan.produksi_index');
+    {   $produk = Aluminium::orderBy('id')->get();
+        return view('laporan.produksi_index', compact('produk'))->render();
     }
 
     public function data()
