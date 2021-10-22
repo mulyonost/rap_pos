@@ -29,7 +29,7 @@
                         <th>Stok Skrg</th>
                         <th>Berat Jual</th>
                         <th>Harga Jual</th>
-                        <th>Foto</th>
+                        <th>Ket</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
                     <tbody>
@@ -65,17 +65,20 @@
                 {data: 'stok_sekarang'},
                 {data: 'berat_jual'},
                 {data: 'harga_jual'},
-                {data: 'foto'},
+                {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
-
+        showData();
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
+                let formData = new FormData(this);
                 $.ajax({
                     url: $('#modal-form form').attr('action'),
+                    contentType : false,
+                    processData : false,
                     type: 'post',
-                    data: $('#modal-form form').serialize(),
+                    data: formData,
                 })
                 .done((response) => {
                     $('#modal-form').modal('hide');

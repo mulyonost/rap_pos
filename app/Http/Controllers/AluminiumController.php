@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Items;
 use App\Models\Aluminium;
 use Illuminate\Http\Request;
 
@@ -63,11 +64,18 @@ class AluminiumController extends Controller
         $aluminium->stok_sekarang = 0;
         $aluminium->berat_jual = $request->berat_jual;
         $aluminium->harga_jual = $request->harga_jual;
-        $aluminium->foto = $request->foto;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = date('YmdHms') . '.' . $extension;
+            $file->move('uploads/aluminium/', $filename);
+            $aluminium->foto = $filename;
+        }
+
         $aluminium->keterangan = $request->keterangan;
         $aluminium->save();
 
-        return response('Data berhasil disimpan', 200);
+        return view('penjualan.aluminium_index');
     }
 
     /**

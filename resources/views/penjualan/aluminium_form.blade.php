@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog modal-xl">
-        <form action="" method="post" class="form-horizontal">
+        <form action="javascript:;" method="post" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @method('post')
 
@@ -29,7 +29,10 @@
                   <div class="form-group row">
                       <label for="kategori" class="col-md-2 col-md-offset-1 control-label"> Kategori</label>
                       <div class="col-md-5">
-                          <input type="text" name="kategori" id="kategori" class="form-control">
+                        <select class="form-group form-control" aria-label="Default select example">
+                            <option value="ALUMINIUM" selected>ALUMINIUM</option>
+                            <option value="TANGGA">TANGGA</option>
+                          </select>
                           <span class="help-block with-errors"></span>
                       </div>
                   </div>
@@ -71,7 +74,7 @@
                   <div class="form-group row">
                       <label for="foto" class="col-md-2 col-md-offset-1 control-label">Foto</label>
                       <div class="col-md-5">
-                          <input type="text" name="foto" id="foto" class="form-control">
+                          <input type="file" name="foto" id="foto" class="form-control">
                           <span class="help-block with-errors"></span>
                       </div>
                   </div>
