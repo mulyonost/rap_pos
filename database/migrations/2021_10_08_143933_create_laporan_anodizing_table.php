@@ -14,11 +14,12 @@ class CreateLaporanAnodizingTable extends Migration
     public function up()
     {
         Schema::create('laporan_anodizing', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->date('tanggal');
-            $table->integer('total');
-            $table->text('keterangan');
-            $table->text('foto');
+            $table->integer('total_btg');
+            $table->integer('total_kg');
+            $table->text('keterangan')->nullable();
+            $table->text('foto')->nullable();
             $table->timestamps();
         });
     }

@@ -14,10 +14,10 @@ class CreateLaporanProduksiDetailTable extends Migration
     public function up()
     {
         Schema::create('laporan_produksi_detail', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('no_matras');
-            $table->foreignID('id_laporan_produksi');
-            $table->foreignID('id_aluminium');
+            $table->foreignID('id_laporan_produksi')->constrained('laporan_produksi');
+            $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->decimal('berat', 5, 3);
             $table->integer('qty');
             $table->integer('total');

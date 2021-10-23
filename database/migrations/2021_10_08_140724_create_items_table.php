@@ -14,15 +14,15 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nama');
+            $table->id();
+            $table->string('nama')->unique();
             $table->string('kategori');
-            $table->integer('stok_awal');
-            $table->integer('stok_minimum');
+            $table->integer('stok_awal')->default(0);
+            $table->integer('stok_minimum')->default(0);
             $table->integer('stok_sekarang');
             $table->integer('harga_beli');
-            $table->string('foto');
-            $table->text('keterangan');
+            $table->string('foto')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

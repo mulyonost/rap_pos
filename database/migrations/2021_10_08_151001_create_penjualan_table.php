@@ -14,13 +14,13 @@ class CreatePenjualanTable extends Migration
     public function up()
     {
         Schema::create('penjualan', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignID('id_penjualan_po');
-            $table->foreignID('id_customer');
+            $table->id();
+            $table->foreignID('id_penjualan_po')->constrained('penjualan_po');
+            $table->foreignID('id_customer')->constrained('customers');
             $table->integer('timbangan_mobil');
             $table->integer('total');
-            $table->string('foto_mobil');
-            $table->string('foto_nota');
+            $table->string('foto_mobil')->nullable();
+            $table->string('foto_nota')->nullable();
             $table->date('tanggal');
             $table->date('due_date');
             $table->boolean('status');

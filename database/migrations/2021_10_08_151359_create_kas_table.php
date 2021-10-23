@@ -14,9 +14,10 @@ class CreateKasTable extends Migration
     public function up()
     {
         Schema::create('kas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->date('tanggal');
             $table->integer('total');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

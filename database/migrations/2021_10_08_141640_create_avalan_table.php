@@ -15,7 +15,7 @@ class CreateAvalanTable extends Migration
     {
         Schema::create('avalan', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_supplier');
+            $table->foreignID('id_supplier')->constrained('suppliers');
             $table->string('nama');
             $table->integer('harga');
             $table->timestamps();

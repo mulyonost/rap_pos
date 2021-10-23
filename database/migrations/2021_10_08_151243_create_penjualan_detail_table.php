@@ -14,9 +14,9 @@ class CreatePenjualanDetailTable extends Migration
     public function up()
     {
         Schema::create('penjualan_detail', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignID('id_penjualan');
-            $table->foreignID('id_aluminium');
+            $table->id();
+            $table->foreignID('id_penjualan')->constrained('penjualan');
+            $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->integer('harga');
             $table->integer('qty');
             $table->integer('subtotal');

@@ -14,18 +14,18 @@ class CreateAluminiumTable extends Migration
     public function up()
     {
         Schema::create('aluminium', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('nama');
             $table->string('finishing');
             $table->string('kategori');
             $table->decimal('berat_maksimal', 5, 3);
             $table->integer('stok_awal')->default(0);
-            $table->integer('stok_minimum');
+            $table->integer('stok_minimum')->default(0);
             $table->integer('stok_sekarang');
             $table->decimal('berat_jual', 5, 3);
             $table->integer('harga_jual');
-            $table->string('foto');
-            $table->text('keterangan');
+            $table->string('foto')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

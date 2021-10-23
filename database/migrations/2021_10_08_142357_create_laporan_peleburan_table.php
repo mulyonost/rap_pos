@@ -14,11 +14,11 @@ class CreateLaporanPeleburanTable extends Migration
     public function up()
     {
         Schema::create('laporan_peleburan', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->dateTime('tanggal');
-            $table->string('foto');
             $table->integer('total_avalan');
             $table->integer('total_billet');
+            $table->string('foto');
             $table->timestamps();
         });
     }

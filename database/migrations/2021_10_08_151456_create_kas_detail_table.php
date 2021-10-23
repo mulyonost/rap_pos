@@ -14,9 +14,10 @@ class CreateKasDetailTable extends Migration
     public function up()
     {
         Schema::create('kas_detail', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->foreignID('id_kas')
-                  -> onDelete('cascade');
+                ->constrained('kas')
+                ->onDelete('cascade');
             $table->string('nama');
             $table->integer('qty');
             $table->integer('harga');

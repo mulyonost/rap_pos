@@ -14,9 +14,9 @@ class CreateLaporanPackingDetailTable extends Migration
     public function up()
     {
         Schema::create('laporan_packing_detail', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignID('id_laporan_packing');
-            $table->foreignID('id_aluminium');
+            $table->id();
+            $table->foreignID('id_laporan_packing')->constrained('laporan_packing');
+            $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->integer('qty_colly');
             $table->integer('qty_isi');
             $table->integer('qty_subtotal');

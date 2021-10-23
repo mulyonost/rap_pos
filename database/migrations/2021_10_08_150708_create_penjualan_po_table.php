@@ -14,8 +14,8 @@ class CreatePenjualanPoTable extends Migration
     public function up()
     {
         Schema::create('penjualan_po', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignID('id_customer');
+            $table->id();
+            $table->foreignID('id_customer')->constrained('customers');
             $table->date('tanggal');
             $table->date('due_date');
             $table->integer('total');

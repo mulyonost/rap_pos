@@ -14,9 +14,9 @@ class CreatePembelianDetailTable extends Migration
     public function up()
     {
         Schema::create('pembelian_detail', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignID('id_pembelian');
-            $table->foreignID('id_bahan');
+            $table->id();
+            $table->foreignID('id_pembelian')->constrained('pembelian');
+            $table->foreignID('id_bahan')->constrained('items');
             $table->integer('qty');
             $table->integer('harga');
             $table->integer('subtotal');

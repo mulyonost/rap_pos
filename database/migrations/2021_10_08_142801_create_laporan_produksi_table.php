@@ -14,10 +14,10 @@ class CreateLaporanProduksiTable extends Migration
     public function up()
     {
         Schema::create('laporan_produksi', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('id_laporan_produksi');
             $table->date('tanggal');
-            $table->string('anggota');
+            $table->string('anggota')->nullable();
             $table->string('mesin');
             $table->string('shift');
             $table->integer('total_produksi');

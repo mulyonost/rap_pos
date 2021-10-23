@@ -14,8 +14,8 @@ class CreatePembelianPoTable extends Migration
     public function up()
     {
         Schema::create('pembelian_po', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignID('id_supplier');
+            $table->id();
+            $table->foreignID('id_supplier')->constrained('suppliers');
             $table->date('tanggal');
             $table->date('due_date');
             $table->integer('total');

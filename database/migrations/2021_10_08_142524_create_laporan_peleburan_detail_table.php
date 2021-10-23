@@ -14,9 +14,9 @@ class CreateLaporanPeleburanDetailTable extends Migration
     public function up()
     {
         Schema::create('laporan_peleburan_detail', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignID('id_laporan_peleburan');
-            $table->foreignID('id_avalan');
+            $table->id();
+            $table->foreignID('id_laporan_peleburan')->constrained('laporan_peleburan');
+            $table->foreignID('id_avalan')->constrained('avalan');
             $table->integer('berat_avalan');
             $table->timestamps();
         });
