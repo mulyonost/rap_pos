@@ -22,14 +22,17 @@
                   <div class="form-group row">
                       <label for="finishing" class="col-md-2 col-md-offset-1 control-label">Finish/Warna</label>
                       <div class="col-md-5">
-                          <input type="text" name="finishing" id="finishing" class="form-control">
-                          <span class="help-block with-errors"></span>
+                      <select name="finishing" id="finishing" class="form-select form-control col-md-4" size="3" aria-label="size 3 select example">
+                        <option value="MF">MF</option>
+                        <option value="CA">CA</option>
+                        <option value="BR">BR</option>
+                      </select>
                       </div>
                   </div>
                   <div class="form-group row">
                       <label for="kategori" class="col-md-2 col-md-offset-1 control-label"> Kategori</label>
                       <div class="col-md-5">
-                        <select class="form-group form-control" aria-label="Default select example">
+                        <select name="kategori" class="form-group form-control" aria-label="Default select example">
                             <option value="ALUMINIUM" selected>ALUMINIUM</option>
                             <option value="TANGGA">TANGGA</option>
                           </select>
@@ -74,7 +77,7 @@
                   <div class="form-group row">
                       <label for="foto" class="col-md-2 col-md-offset-1 control-label">Foto</label>
                       <div class="col-md-5">
-                          <input type="file" name="foto" id="foto" class="form-control">
+                          <input class="form-control" type="file" name="foto" id="foto" >
                           <span class="help-block with-errors"></span>
                       </div>
                   </div>

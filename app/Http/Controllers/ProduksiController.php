@@ -16,7 +16,9 @@ class ProduksiController extends Controller
      */
     public function index()
     {   $produk = Aluminium::orderBy('id')->get();
-        return view('laporan.produksi_index', compact('produk'))->render();
+        $id_laporan = date('Y-m-d');
+
+        return view('laporan.produksi_index', compact('produk', 'id_laporan'));
     }
 
     public function data()
@@ -77,7 +79,7 @@ class ProduksiController extends Controller
             $produksidetail->total = $value['subtotal'];
             $produksidetail->save();
         }
-        return view('laporan.produksi_index');
+        return redirect('laporan.produksi_index');
     }
 
     /**

@@ -15,11 +15,11 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="">ID Laporan</label>
-                        <input type="text" class="form-control form-control-sm col-md-6" name="id_laporan" id="id_laporan">
+                        <input type="text" class="form-control form-control-sm col-md-6" name="id_laporan" id="id_laporan" value= "{{ $id_laporan }}" readonly>
                       </div>
                       <div class="form-group">
                         <label for="">Tanggal</label>
-                        <input type="date" class="form-control form-control-sm col-md-6" name="tanggal" id="tanggal">
+                        <input type="date" class="form-control form-control-sm col-md-6" name="tanggal" id="tanggal" value="<?= date('Y-m-d') ?>">
                       </div>
                       <div class="form-group">
                         <label for="">Jumlah Billet</label>
@@ -96,7 +96,13 @@
                       <tbody id="mainbody">
                         <tr>
                           <td><input class="form-control" type="text" name="addmore[0][matras]" id="matras0" required></td>
-                          <td><input class="form-control nama" type="text" name="addmore[0][nama]" id="nama0" required value="{{ $produk }}"></td>
+                          <td><select class="form-control" required id="nama0" name="addmore[0][nama]" >
+                              option disabled="disabled" selected="selected" value="" >Select Produk</option>
+                              @foreach($produk as $pro)
+                                  <option value="{{$pro->id}}">{{$pro->nama}}</option>
+                              @endforeach
+                          </select></td>
+                          <!-- <td><input class="form-control nama" type="text" name="addmore[0][nama]" id="nama0" required value="{{ $produk }}"></td> -->
                           <td><input step=".001" class="form-control berat" type="number" name="addmore[0][berat]" id="berat0"></td>
                           <td><input class="form-control qty" type="number" name="addmore[0][qty]" id=qty0></td>
                           <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>

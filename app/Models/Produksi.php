@@ -10,6 +10,7 @@ class Produksi extends Model
 {
     use HasFactory;
     protected $table = "laporan_produksi";
+    protected $primaryKey = 'id';
     protected $guarded = [];
 
     public function laporan_produksi_detail()
