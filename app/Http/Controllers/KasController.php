@@ -15,7 +15,8 @@ class KasController extends Controller
      */
     public function index()
     {
-        return view ('kas.index');
+        $nomor = date('Ymd');
+        return view('kas.index', compact('nomor'));
     }
 
     public function data()
@@ -55,14 +56,16 @@ class KasController extends Controller
     public function store(Request $request)
     {
         $kas = new Kas();
-        $kas->id = $request->id_kas;
+        $kas->nomor = $request->nomor;
         $kas->tanggal = $request->tanggal;
         $kas->total = $request->total;
         $kas->save();
-        
-        foreach ($request->addmore as $key=>$value) {
+
+        $id = $kas->id;
+
+        foreach ($request->addmore as $key => $value) {
             $kasdetail = new KasDetail();
-            $kasdetail->id_kas = $request->id_kas;
+            $kasdetail->id_kas = $id;
             $kasdetail->nama = $value['nama'];
             $kasdetail->qty = $value['qty'];
             $kasdetail->harga = $value['harga'];
@@ -70,8 +73,7 @@ class KasController extends Controller
             $kasdetail->kategori = $value['kategori'];
             $kasdetail->save();
         }
-        return view ('kas.index');
-        
+        return view('kas.index');
     }
 
     /**

@@ -14,17 +14,17 @@
                   <div class="form-group row">
                     <label for="id_kas" class="col-sm-2 col-form-label">ID Kas</label>
                     <div class="col-sm-4">
-                      <input type="text" id="id_kas" name="id_kas" class="form_control"> 
+                      <input class="form-control" type="text" id="nomor" name="nomor" value="{{ $nomor }}" > 
                     </div>
                     <label for="total">Total</label>
                     <div class="col-sm-4">
-                      <input type="text" id="total" name="total" class="form_control" readonly> 
+                      <input class="form-control" type="text" id="total" name="total" readonly> 
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
                     <div class="col-sm-4">
-                      <input type="date" id="tanggal" name="tanggal" class="form_control" value="<?php echo date('Y-m-d') ?>"> 
+                      <input class="form-control" type="date" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d') ?>"> 
                     </div>
                   </div>
 
@@ -34,7 +34,7 @@
                         <tr>
                           <th>Nama Item</th>
                           <th>Kategori</th>
-                          <th>Qty</th>
+                          <th width="10%">Qty</th>
                           <th>Harga</th>
                           <th>Subtotal</th>
                           <th><button id="add_new" type="button" name="add_new" class="btn btn-sm btn-success"> +</button></th>
@@ -42,16 +42,16 @@
                       </thead>
                       <tbody id="mainbody">
                         <tr>
-                          <td><input type="text" name="addmore[0][nama]" id="nama0" required></td>
+                          <td><input class="form-control" type="text" name="addmore[0][nama]" id="nama0" required></td>
                           <td>
-                            <select name="addmore[0][kategori]" id="kategori0">
+                            <select class="form-control" name="addmore[0][kategori]" id="kategori0">
                               <option disabled="disabled" selected="selected" value="">Pilih Kategori</option>
                               <option value="spare-part">Spare Part</option>
                               <option value="transportasi">Transportasi</option>
                             </select></td>
-                          <td><input class="qty" type="number" name="addmore[0][qty]" id="qty0"></td>
-                          <td><input class="harga" type="number" name="addmore[0][harga]" id=harga0></td>
-                          <td><input class="subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
+                          <td><input class="form-control qty" type="number" name="addmore[0][qty]" id="qty0"></td>
+                          <td><input class="form-control harga" type="number" name="addmore[0][harga]" id=harga0></td>
+                          <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
                         </tr>
                       </tbody>
                     </table>               
@@ -101,14 +101,14 @@ $(function() {
   $('#add_new').click(function(){
     i++;
     $('#mainbody').append('<tr><td>' +
-     '<input type="text" step="any" name="addmore['+i+'][nama]" id="nama'+i+'" required ></td>' +
-     '<td><select name="addmore['+i+'][kategori]" id="kategori'+i+'">' +
+     '<input type="text" class="form-control" name="addmore['+i+'][nama]" id="nama'+i+'" required ></td>' +
+     '<td><select class="form-control" name="addmore['+i+'][kategori]" id="kategori'+i+'">' +
      '<option disabled="disabled" selected="selected" value="">Pilih Kategori</option>' +
      '<option value ="spare-part">Spare Part</option>' +
      '<option value ="transportasi">Transportasi</option></td>' +
-     '<td><input class="qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
-     '<td><input class="harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required ></td>' +
-     '<td><input class="subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>'
+     '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
+     '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required ></td>' +
+     '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>'
       )
   });
 

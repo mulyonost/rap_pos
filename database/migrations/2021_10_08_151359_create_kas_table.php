@@ -15,6 +15,7 @@ class CreateKasTable extends Migration
     {
         Schema::create('kas', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor');
             $table->date('tanggal');
             $table->integer('total');
             $table->string('foto')->nullable();

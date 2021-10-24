@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Items;
 use App\Models\Aluminium;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class AluminiumController extends Controller
 {
@@ -15,7 +17,8 @@ class AluminiumController extends Controller
      */
     public function index()
     {
-        return view('penjualan.aluminium_index');
+        $alma = Aluminium::orderBy('id')->get();
+        return view('penjualan.aluminium_index', compact('alma'));
     }
 
     public function data()
@@ -56,24 +59,25 @@ class AluminiumController extends Controller
     {
         $aluminium = new Aluminium();
         $aluminium->nama = $request->nama;
+        $aluminium->base_name = Str::slug(substr($request->nama, 0, -3), '-');
         $aluminium->finishing = $request->finishing;
         $aluminium->kategori = $request->kategori;
         $aluminium->berat_maksimal = $request->berat_maksimal;
         $aluminium->stok_awal = $request->stok_awal;
         $aluminium->stok_minimum = $request->stok_minimum;
-        $aluminium->stok_sekarang = 0;
         $aluminium->berat_jual = $request->berat_jual;
         $aluminium->harga_jual = $request->harga_jual;
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = date('YmdHms') . '.' . $extension;
+            $filename = Str::slug($request->nama) . '.' . $extension;
             $file->move('uploads/aluminium/', $filename);
             $aluminium->foto = $filename;
         }
-
         $aluminium->keterangan = $request->keterangan;
         $aluminium->save();
+
+
 
         return view('penjualan.aluminium_index');
     }
@@ -113,19 +117,29 @@ class AluminiumController extends Controller
     {
         $aluminium = Aluminium::find($id);
         $aluminium->nama = $request->nama;
+        $aluminium->base_name = Str::slug(substr($request->nama, 0, -3), '-');
         $aluminium->finishing = $request->finishing;
         $aluminium->kategori = $request->kategori;
         $aluminium->berat_maksimal = $request->berat_maksimal;
         $aluminium->stok_awal = $request->stok_awal;
         $aluminium->stok_minimum = $request->stok_minimum;
-        $aluminium->stok_sekarang = 0;
         $aluminium->berat_jual = $request->berat_jual;
         $aluminium->harga_jual = $request->harga_jual;
-        $aluminium->foto = $request->foto;
+        if ($request->hasFile('foto')) {
+            $aluminium_image = public_path("uploads/aluminium/{$aluminium->foto}");
+            if (File::exists($aluminium_image)) {
+                File::delete($aluminium_image);
+            };
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::slug($request->nama) . '.' . $extension;
+            $file->move('uploads/aluminium/', $filename);
+            $aluminium->foto = $filename;
+        }
         $aluminium->keterangan = $request->keterangan;
         $aluminium->update();
 
-        return response()->json('Data berhasil diubah', 200);
+        return view('penjualan.aluminium_index');
     }
 
     /**
@@ -137,6 +151,10 @@ class AluminiumController extends Controller
     public function destroy($id)
     {
         $aluminium = Aluminium::find($id);
+        $aluminium_image = public_path("uploads/aluminium/{$aluminium->foto}");
+        if (File::exists($aluminium_image)) {
+            File::delete($aluminium_image);
+        };
         $aluminium->delete();
 
         return response()->json('Data berhasil dihapus', 200);

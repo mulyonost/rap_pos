@@ -16,6 +16,7 @@ class AluminiumSeeder extends Seeder
         \DB::table('aluminium')->insert([
             [
                 'nama' => 'HOLLOW 22 X 22 KOTAK BR',
+                'base_name' => 'hollow-22-x-22-kotak',
                 'finishing' => 'BR',
                 'kategori' => 'ALUMINIUM',
                 'berat_maksimal' => 0.55,
@@ -29,6 +30,7 @@ class AluminiumSeeder extends Seeder
             ],
             [
                 'nama' => 'HOLLOW 22 X 22 KOTAK CA',
+                'base_name' => 'hollow-22-x-22-kotak',
                 'finishing' => 'CA',
                 'kategori' => 'ALUMINIUM',
                 'berat_maksimal' => 0.55,
@@ -42,6 +44,7 @@ class AluminiumSeeder extends Seeder
             ],
             [
                 'nama' => 'HOLLOW 10 X 21 TANDUK CA',
+                'base_name' => 'hollow-10-x-21-tanduk',
                 'finishing' => 'CA',
                 'kategori' => 'ALUMINIUM',
                 'berat_maksimal' => 0.65,

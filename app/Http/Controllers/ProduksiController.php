@@ -15,25 +15,25 @@ class ProduksiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   $produk = Aluminium::orderBy('id')->get();
-        $id_laporan = date('Y-m-d');
-
-        return view('laporan.produksi_index', compact('produk', 'id_laporan'));
+    {
+        $produk = Aluminium::orderBy('id')->get();
+        $nomor = date('Ymd');
+        return view('laporan.produksi_index', compact('produk', 'nomor'));
     }
 
     public function data()
     {
-        $produksi = Produksi::orderBy('id_laporan_produksi', 'desc')->get();
+        $produksi = Produksi::orderBy('id', 'desc')->get();
         return datatables()
             ->of($produksi)
             ->addIndexColumn()
             ->addColumn('aksi', function ($produksi) {
-                // return '
-                // <div class="btn-group">
-                //     <button onclick="editForm(`' . route('produksi.update', $produksi->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                //     <button onclick="deleteData(`' . route('produksi.destroy', $produksi->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
-                // </div>
-                // ';
+                return '
+                <div class="btn-group">
+                    <button onclick="editForm(`' . route('produksi.update', $produksi->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('produksi.destroy', $produksi->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                </div>
+                ';
             })
             ->rawColumns(['aksi'])
             ->make(true);
@@ -58,7 +58,7 @@ class ProduksiController extends Controller
     public function store(Request $request)
     {
         $produksi = new Produksi();
-        $produksi->id_laporan_produksi = $request->id_laporan;
+        $produksi->nomor_laporan = $request->nomor;
         $produksi->tanggal = $request->tanggal;
         $produksi->anggota = $request->anggota;
         $produksi->mesin = $request->mesin;
@@ -66,12 +66,21 @@ class ProduksiController extends Controller
         $produksi->total_produksi = $request->total;
         $produksi->jumlah_billet = $request->jumlah_billet;
         $produksi->jumlah_avalan = $request->jumlah_avalan;
-        $produksi->foto = $request->foto;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = date('YmdHms') . '.' . $extension;
+            $file->move('uploads/laporan/produksi', $filename);
+            $produksi->foto = $filename;
+        }
         $produksi->save();
 
+
+        $id = $produksi->id;
         foreach ($request->addmore as $key => $value) {
             $produksidetail = new ProduksiDetail();
-            $produksidetail->id_laporan_produksi = $request->id_laporan;
+            $produksidetail->id_laporan_produksi = $id;
+            $produksidetail->nomor_laporan = $request->nomor;
             $produksidetail->no_matras = $value['matras'];
             $produksidetail->id_aluminium = $value['nama'];
             $produksidetail->berat = $value['berat'];
@@ -79,7 +88,6 @@ class ProduksiController extends Controller
             $produksidetail->total = $value['subtotal'];
             $produksidetail->save();
         }
-        return redirect('laporan.produksi_index');
     }
 
     /**
@@ -90,7 +98,14 @@ class ProduksiController extends Controller
      */
     public function show($id)
     {
-        //
+        // $data = array();
+        // $data['produksi'] = Produksi::find($id);
+        // $data['produksidetail'] = ProduksiDetail::where('id_laporan_produksi', $id)->get();
+
+        $data = Produksi::find($id);
+        $detail = ProduksiDetail::where('id_laporan_produksi', $id)->get();
+
+        return response()->json($data);
     }
 
     /**

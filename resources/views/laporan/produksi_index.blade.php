@@ -53,11 +53,10 @@
                 {data: 'tanggal'},
                 {data: 'mesin'},
                 {data: 'shift'},
-                {data: 'total_produksi'},
+                {data: 'total_produksi', render: $.fn.dataTable.render.number('.', ',', 0, '', ' Kg') },
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
-
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
                 $.ajax({
@@ -91,25 +90,27 @@
 
     function editForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Kas');
+        $('#modal-form .modal-title').text('Edit Laporan Produksi');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
         $('#modal-form [name=nama]').focus();
 
+        // var array = jQuery.parseJSON(response);
+        // produksi = array[0];
+        // produksidetail = array[1]
         $.get(url)
             .done((response) => {
-                $('#modal-form [name=nama]').val(response.nama);
-                $('#modal-form [name=finishing]').val(response.finishing);
-                $('#modal-form [name=kategori]').val(response.kategori);
-                $('#modal-form [name=berat_maksimal]').val(response.berat_maksimal);
-                $('#modal-form [name=stok_awal]').val(response.stok_awal);
-                $('#modal-form [name=stok_minimum]').val(response.stok_minimum);
-                $('#modal-form [name=berat_jual]').val(response.berat_jual);
-                $('#modal-form [name=harga_jual]').val(response.harga_jual);
+                $('#modal-form [name=nomor]').val(response.nomor_laporan);
+                $('#modal-form [name=tanggal]').val(response.tanggal);
+                $('#modal-form [name=jumlah_billet]').val(response.jumlah_billet);
+                $('#modal-form [name=jumlah_avalan]').val(response.jumlah_avalan);
+                $('#modal-form [name=mesin]').val(response.mesin);
+                $('#modal-form [name=shift]').val(response.shift);
                 $('#modal-form [name=foto]').val(response.foto);
-                $('#modal-form [name=keterangan]').val(response.keterangan);
+                $('#modal-form [name=anggota]').val(response.anggota);
+                $('#modal-form [name=total_produksi]').val(response.total_produksi);
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

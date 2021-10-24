@@ -14,6 +14,6 @@ class ProduksiDetail extends Model
 
     public function laporan_produksi()
     {
-        $this->belongsTo(Produksi::class, 'id_laporan_detail', 'id_laporan_detail');
+        $this->belongsTo(Produksi::class);
     }
 }

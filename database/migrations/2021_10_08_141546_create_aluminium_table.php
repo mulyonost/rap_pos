@@ -15,6 +15,7 @@ class CreateAluminiumTable extends Migration
     {
         Schema::create('aluminium', function (Blueprint $table) {
             $table->id();
+            $table->string('base_name');
             $table->string('nama');
             $table->string('finishing');
             $table->string('kategori');

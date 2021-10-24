@@ -15,15 +15,15 @@ class CreateLaporanProduksiTable extends Migration
     {
         Schema::create('laporan_produksi', function (Blueprint $table) {
             $table->id();
-            $table->string('id_laporan_produksi');
+            $table->string('nomor_laporan');
             $table->date('tanggal');
             $table->string('anggota')->nullable();
             $table->string('mesin');
             $table->string('shift');
             $table->integer('total_produksi');
-            $table->integer('jumlah_billet');
-            $table->integer('jumlah_avalan');
-            $table->string('foto');
+            $table->integer('jumlah_billet')->default(0)->nullable();
+            $table->integer('jumlah_avalan')->default(0)->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

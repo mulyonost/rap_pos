@@ -11,7 +11,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body">                    
                   <div class="form-group row">
                         <label for="nama" class="col-md-2 col-md-offset-1 control-label">Nama</label>                     
                       <div class="col-md-5">
@@ -80,6 +80,9 @@
                           <input class="form-control" type="file" name="foto" id="foto" >
                           <span class="help-block with-errors"></span>
                       </div>
+                      <div class="col-md-5">
+                          <img src="{{ asset('/uploads/aluminium/') }}" alt="">
+                      </div>
                   </div>
                   <div class="form-group row">
                       <label for="keterangan" class="col-md-2 col-md-offset-1 control-label">Keterangan</label>
@@ -88,13 +91,13 @@
                           <span class="help-block with-errors"></span>
                       </div>
                   </div>
-
-                </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                   <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
               </div>
+
+            </div>
               <!-- /.modal-content -->
         </form>
     </div>

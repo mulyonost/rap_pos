@@ -36,7 +36,7 @@
         </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-paste"></i>
               <p>
                 Input Laporan
                 <i class="right fas fa-angle-left"></i>
@@ -83,7 +83,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fas fa-cart-plus"></i>
               <p>
                 Pembelian
                 <i class="fas fa-angle-left right"></i>
@@ -130,7 +130,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-cart-arrow-down"></i>
               <p>
                 Penjualan
                 <i class="fas fa-angle-left right"></i>
@@ -171,7 +171,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
                 Kas Kecil
                 <i class="fas fa-angle-left right"></i>
@@ -182,6 +182,23 @@
                 <a href="{{ route('kas.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input Kas Kecil</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Reports
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('kas.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Laporan Produksi</p>
                 </a>
               </li>
             </ul>
