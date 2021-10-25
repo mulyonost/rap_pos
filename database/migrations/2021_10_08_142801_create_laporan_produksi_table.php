@@ -20,7 +20,7 @@ class CreateLaporanProduksiTable extends Migration
             $table->string('anggota')->nullable();
             $table->string('mesin');
             $table->string('shift');
-            $table->integer('total_produksi');
+            $table->float('total_produksi', 7, 3);
             $table->integer('jumlah_billet')->default(0)->nullable();
             $table->integer('jumlah_avalan')->default(0)->nullable();
             $table->string('foto')->nullable();

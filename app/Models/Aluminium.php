@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProduksiDetal;
 
 class Aluminium extends Model
 {
@@ -11,4 +12,6 @@ class Aluminium extends Model
     protected $table = 'aluminium';
     protected $primaryKey = 'id';
     protected $guarded = [];
+
 }
+

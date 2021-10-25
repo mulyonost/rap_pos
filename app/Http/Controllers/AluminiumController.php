@@ -65,6 +65,7 @@ class AluminiumController extends Controller
         $aluminium->berat_maksimal = $request->berat_maksimal;
         $aluminium->stok_awal = $request->stok_awal;
         $aluminium->stok_minimum = $request->stok_minimum;
+        $aluminium->stok_sekarang = 0;
         $aluminium->berat_jual = $request->berat_jual;
         $aluminium->harga_jual = $request->harga_jual;
         if ($request->hasFile('foto')) {

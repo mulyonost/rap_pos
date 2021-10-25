@@ -21,7 +21,7 @@ class CreateLaporanProduksiDetailTable extends Migration
             $table->string('nomor_laporan');
             $table->decimal('berat', 5, 3);
             $table->integer('qty');
-            $table->integer('total');
+            $table->float('total', 7, 3);
             $table->timestamps();
         });
     }
