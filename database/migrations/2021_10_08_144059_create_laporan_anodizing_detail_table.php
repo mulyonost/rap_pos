@@ -15,9 +15,11 @@ class CreateLaporanAnodizingDetailTable extends Migration
     {
         Schema::create('laporan_anodizing_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_laporan_anodizing')->constrained('laporan_anodizing');
+            $table->foreignID('id_laporan_anodizing')->constrained('laporan_anodizing')->onDelete('cascade');
+            $table->string('nomor');
             $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->integer('qty');
+            $table->float('berat');
             $table->timestamps();
         });
     }

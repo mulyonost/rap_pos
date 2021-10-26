@@ -19,6 +19,7 @@ class CreateAluminiumTable extends Migration
             $table->string('nama');
             $table->string('finishing');
             $table->string('kategori');
+            $table->decimal('berat_avg', 5, 3)->nullable();
             $table->decimal('berat_maksimal', 5, 3);
             $table->integer('stok_awal')->default(0);
             $table->integer('stok_minimum')->default(0);

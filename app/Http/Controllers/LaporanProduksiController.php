@@ -18,7 +18,7 @@ class LaporanProduksiController extends Controller
     {
         $produksi = Produksi::orderBy('id')->get();
         $produksi_detail = ProduksiDetail::with('aluminium')->get();
-        $group = ProduksiDetail::selectRaw('laporan_produksi_detail.id_aluminium, sum(qty * berat) as total, sum(qty) as qty')
+        $group = ProduksiDetail::selectRaw('laporan_produksi_detail.id_aluminium, sum(qty * berat) as total, sum(qty) as qty, min(berat) as berat_min, max(berat) as berat_max')
             ->with('aluminium')
             ->groupBy('laporan_produksi_detail.id_aluminium')
             ->get()

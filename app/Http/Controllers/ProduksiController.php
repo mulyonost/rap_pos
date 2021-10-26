@@ -16,7 +16,7 @@ class ProduksiController extends Controller
      */
     public function index()
     {
-        $produk = Aluminium::orderBy('id')->get();
+        $produk = Aluminium::where('finishing', "MF")->orderBy("nama")->get();
         $nomor = date('Ymd');
         return view('laporan.produksi_index', compact('produk', 'nomor'));
     }

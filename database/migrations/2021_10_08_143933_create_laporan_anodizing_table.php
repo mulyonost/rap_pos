@@ -16,6 +16,7 @@ class CreateLaporanAnodizingTable extends Migration
         Schema::create('laporan_anodizing', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
+            $table->string('nomor');
             $table->integer('total_btg');
             $table->integer('total_kg');
             $table->text('keterangan')->nullable();

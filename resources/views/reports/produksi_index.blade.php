@@ -10,14 +10,14 @@
 @endsection
 
 @section('content')
-<table class="table table-bordered">
+<table class="table table-bordered table-responsive">
     <thead>
         <tr>
             <td>Nama Barang</td>
             <td>Berat Rata-Rata</td>
-            <td>Qty Btg</td>
             <td>Berat Min</td>
             <td>Berat Max</td>
+            <td>Qty Btg</td>
             <td>Berat Total</td>
         </tr>
     </thead>
@@ -27,9 +27,9 @@
         <tr>
             <td>{{ $produksi->aluminium->nama }}</td>
             <td>{{ number_format($produksi->total / $produksi->qty, 3) }}</td>
+            <td>{{ number_format($produksi->berat_min, 3) }}</td>
+            <td>{{ number_format($produksi->berat_max, 3) }}</td>
             <td>{{ number_format($produksi->qty) }}</td> 
-            <td>Berat Min</td>
-            <td>Berat Max</td>
             <td>{{ number_format($produksi->total) }} Kg</td> 
             <?php $grandtotal += $produksi->total; ?>
         </tr>

@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\AnodizingController;
 use App\Http\Controllers\LaporanProduksiController;
 
 /*
@@ -49,6 +50,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/produksi/data', [ProduksiController::class, 'data'])->name('produksi.data');
     Route::resource('/produksi', ProduksiController::class);
+
+    Route::get('/anodizing/data', [AnodizingController::class, 'data'])->name('anodizing.data');
+    Route::resource('/anodizing', AnodizingController::class);
 
     Route::resource('/laporan/produksi', LaporanProduksiController::class);
 });
