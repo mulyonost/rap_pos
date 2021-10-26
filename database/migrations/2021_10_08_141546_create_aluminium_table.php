@@ -39,6 +39,6 @@ class CreateAluminiumTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aluminiums');
+        Schema::dropIfExists('aluminium');
     }
 }

@@ -54,5 +54,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/anodizing/data', [AnodizingController::class, 'data'])->name('anodizing.data');
     Route::resource('/anodizing', AnodizingController::class);
 
-    Route::resource('/laporan/produksi', LaporanProduksiController::class);
+    Route::resource('/produksireports', LaporanProduksiController::class);
 });

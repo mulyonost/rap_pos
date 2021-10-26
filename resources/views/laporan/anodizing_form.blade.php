@@ -15,7 +15,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="">ID Laporan</label>
-                        <input type="text" class="form-control form-control-sm col-md-6" name="nomor" id="nomor" required>
+                        <input type="text" class="form-control form-control-sm col-md-6" name="nomor" id="nomor" required readonly>
                       </div>
                       <div class="form-group">
                         <label for="">Tanggal</label>
@@ -100,9 +100,9 @@ function recalc() {
     var qty = $(this).find('input.qty').val();
     var subtotal = (berat * qty);
     var subtotalbtg = (qty * 1);
-    // let berat_max = $(this).find('option:selected').data('berat');
+    let berat_max = $(this).find('option:selected').data('berat');
     $(this).find('input.subtotal').val(Math.round(subtotal * 100) / 100);
-    // $(this).find('input.berat').val(berat_max);
+    $(this).find('input.berat').val(berat_max).text();
     grandtotal += isNumber(subtotal)  ? subtotal : 0;
     grandtotalbtg += isNumber(subtotalbtg) ? subtotalbtg : 0;
   });
@@ -110,8 +110,14 @@ function recalc() {
   $('#total_btg').val(grandtotalbtg);
 }
 
+function getdate() {
+	var date= $('#tanggal').val();
+  var newDate = date.replace(/-/g, "");
+  $('#nomor').val(newDate);
+}
+
 $(function() {
-  $('#kas_table').on("keyup change blur", recalc); 
+  $('#modal-form').on("keyup change blur", recalc).on("keyup change click blur", getdate);
 });
 
 

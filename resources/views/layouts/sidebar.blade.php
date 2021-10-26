@@ -62,7 +62,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('anodizing.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Anodizing</p>
                 </a>
@@ -196,7 +196,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('kas.index') }}" class="nav-link">
+                <a href="{{ route('produksireports.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Produksi</p>
                 </a>
