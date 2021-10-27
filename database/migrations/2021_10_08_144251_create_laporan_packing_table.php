@@ -16,9 +16,9 @@ class CreateLaporanPackingTable extends Migration
         Schema::create('laporan_packing', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->integer('qty_total');
-            $table->integer('qty_cacat');
-            $table->integer('total_kg');
+            $table->integer('qty_btg');
+            $table->integer('qty_colly');
+            $table->integer('qty_cacat')->nullable();
             $table->string('foto')->nullable();
             $table->string('keterangan')->nullable();
             $table->timestamps();
