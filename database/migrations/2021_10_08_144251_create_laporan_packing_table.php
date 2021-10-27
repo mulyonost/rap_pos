@@ -15,10 +15,11 @@ class CreateLaporanPackingTable extends Migration
     {
         Schema::create('laporan_packing', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor');
             $table->date('tanggal');
-            $table->integer('qty_btg');
-            $table->integer('qty_colly');
-            $table->integer('qty_cacat')->nullable();
+            $table->integer('total_btg');
+            $table->integer('total_colly');
+            $table->integer('total_cacat')->nullable();
             $table->string('foto')->nullable();
             $table->string('keterangan')->nullable();
             $table->timestamps();

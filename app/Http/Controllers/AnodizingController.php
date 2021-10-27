@@ -17,7 +17,7 @@ class AnodizingController extends Controller
     public function index()
     {
         $produk = Aluminium::where('finishing', '!=', 'MF')->orWhereNull("finishing")->orderBy('nama')->get();
-        return view ('laporan.anodizing_index', compact('produk'));
+        return view('laporan.anodizing_index', compact('produk'));
     }
 
     public function data()
@@ -59,15 +59,15 @@ class AnodizingController extends Controller
         $anodizing = new Anodizing();
         $anodizing->tanggal = $request->tanggal;
         $anodizing->nomor = $request->nomor;
-        $anodizing->total_btg = $request->total_btg ;
-        $anodizing->total_kg = $request->total_kg ;
-        $anodizing->keterangan = $request->keterangan ;
+        $anodizing->total_btg = $request->total_btg;
+        $anodizing->total_kg = $request->total_kg;
+        $anodizing->keterangan = $request->keterangan;
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
             $filename = date('YmdHms') . '.' . $extension;
             $file->move('uploads/laporan/anodizing', $filename);
-            $produksi->foto = $filename;
+            $anodizing->foto = $filename;
         }
         $anodizing->save();
 
@@ -76,7 +76,7 @@ class AnodizingController extends Controller
             $anodizingdetail = new AnodizingDetail();
             $anodizingdetail->id_laporan_anodizing = $id;
             $anodizingdetail->nomor = $request->nomor;
-            $anodizingdetail->id_aluminium =$value['nama'];
+            $anodizingdetail->id_aluminium = $value['nama'];
             $anodizingdetail->qty = $value['qty'];
             $anodizingdetail->berat = $value['berat'];
             $anodizingdetail->save();

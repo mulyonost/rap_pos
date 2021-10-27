@@ -15,7 +15,8 @@ class CreateLaporanPackingDetailTable extends Migration
     {
         Schema::create('laporan_packing_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_laporan_packing')->constrained('laporan_packing');
+            $table->string('nomor');
+            $table->foreignID('id_laporan_packing')->constrained('laporan_packing')->onDelete('cascade');
             $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->integer('qty_colly');
             $table->integer('qty_isi');

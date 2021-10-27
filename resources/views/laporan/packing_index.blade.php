@@ -22,7 +22,7 @@
                         <th width="5%">No</th>
                         <th>Tanggal</th>
                         <th>Total Batang</th>
-                        <th>Total Kg</th>
+                        <th>Total Colly</th>
                         <th>Keterangan</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
@@ -34,7 +34,7 @@
         </div>
     </div>
 </div>
-@includeIf('laporan.anodizing_form')
+@includeIf('laporan.packing_form')
 @endsection
 
 @push('scripts')
@@ -46,13 +46,13 @@
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('anodizing.data') }}',
+                url: '{{ route('packing.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'tanggal'},
                 {data: 'total_btg'},
-                {data: 'total_kg'},
+                {data: 'total_colly'},
                 {data: 'keterangan', render: $.fn.dataTable.render.number('.', ',', 0, '', ' Kg') },
                 {data: 'aksi', searchable:false, sortable:false}
             ]
@@ -79,7 +79,7 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Input Data Anodizing');
+        $('#modal-form .modal-title').text('Input Data Packing');
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');

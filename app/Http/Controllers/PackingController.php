@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Packing;
 use App\Models\Aluminium;
+use App\Models\PackingDetail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class PackingController extends Controller
 {
@@ -15,20 +18,20 @@ class PackingController extends Controller
     public function index()
     {
         $produk = Aluminium::where('finishing', '!=', 'MF')->orWhereNull("finishing")->orderBy('nama')->get();
-        return view ('laporan.packing_index', compact('produk'));
+        return view('laporan.packing_index', compact('produk'));
     }
 
     public function data()
     {
-        $anodizing = Anodizing::orderBy('id', 'desc')->get();
+        $packing = Packing::orderBy('id', 'desc')->get();
         return datatables()
-            ->of($anodizing)
+            ->of($packing)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($anodizing) {
+            ->addColumn('aksi', function ($packing) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('anodizing.update', $anodizing->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('anodizing.destroy', $anodizing->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('packing.update', $packing->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('packing.destroy', $packing->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })
@@ -54,7 +57,33 @@ class PackingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $packing = new Packing();
+        $packing->tanggal = $request->tanggal;
+        $packing->nomor = $request->nomor;
+        $packing->total_btg = $request->total_btg;
+        $packing->total_colly = $request->total_colly;
+        $packing->total_cacat = $request->total_cacat;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = date('YmdHms') . '.' . $extension;
+            $file->move('uploads/laporan/packing', $filename);
+            $packing->foto = $filename;
+        }
+        $packing->keterangan = $request->keterangan;
+        $packing->save();
+
+        $id = $packing->id;
+        foreach ($request->addmore as $key => $value) {
+            $packingdetail = new PackingDetail();
+            $packingdetail->id_laporan_packing = $id;
+            $packingdetail->nomor = $request->nomor;
+            $packingdetail->id_aluminium = $value['nama'];
+            $packingdetail->qty_colly = $value['qty'];
+            $packingdetail->qty_isi = $value['berat'];
+            $packingdetail->qty_subtotal = $value['subtotal'];
+        }
+        $packingdetail->save();
     }
 
     /**
@@ -99,6 +128,13 @@ class PackingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $packing = Packing::find($id);
+        $packing_image = public_path("uploads/packing/{$packing->foto}");
+        if (File::exists($packing_image)) {
+            File::delete($packing_image);
+        };
+        $packing->delete();
+
+        return response()->json('Data berhasil dihapus', 200);
     }
 }
