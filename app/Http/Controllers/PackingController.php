@@ -17,7 +17,7 @@ class PackingController extends Controller
      */
     public function index()
     {
-        $produk = Aluminium::where('finishing', '!=', 'MF')->orWhereNull("finishing")->orderBy('nama')->get();
+        $produk = Aluminium::orderBy('nama')->get();
         return view('laporan.packing_index', compact('produk'));
     }
 
@@ -82,8 +82,9 @@ class PackingController extends Controller
             $packingdetail->qty_colly = $value['qty'];
             $packingdetail->qty_isi = $value['berat'];
             $packingdetail->qty_subtotal = $value['subtotal'];
+            $packingdetail->save();
         }
-        $packingdetail->save();
+
     }
 
     /**
