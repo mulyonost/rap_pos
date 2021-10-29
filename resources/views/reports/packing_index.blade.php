@@ -1,12 +1,13 @@
 @extends('layouts.master')
 
 @section('title')
-    Laporan Anodizing
+    Laporan Packing
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Laporan Anodizing</li>
+    <li class="breadcrumb-item active">Laporan Packing
+    </li>
 @endsection
 
 @section('content')
@@ -23,11 +24,12 @@
         <?php  $grandtotal=0; ?>
     @foreach ($group as $produksi)
         <tr>
+            <?php $berat = $produksi->aluminium->berat_maksimal * $produksi->btg; ?>
             <td>{{ $produksi->aluminium->nama }}</td>
-            <td>{{ number_format($produksi->qty) }}</td> 
-            <td>{{ number_format($produksi->total) }} Kg</td> 
-            <td>{{ number_format($produksi->total) }} Kg</td> 
-            <?php $grandtotal += $produksi->total; ?>
+            <td>{{ number_format($produksi->colly) }}</td> 
+            <td>{{ number_format($produksi->btg) }}</td> 
+            <td>{{ number_format($berat) }} Kg</td> 
+            <?php $grandtotal += $berat; ?>
         </tr>
         @endforeach
         <tr>

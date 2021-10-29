@@ -12,6 +12,7 @@ use App\Http\Controllers\AnodizingController;
 use App\Http\Controllers\PackingController;
 use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\LaporanAnodizingController;
+use App\Http\Controllers\LaporanPackingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,4 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/produksireports', LaporanProduksiController::class);
 
     Route::resource('/anodizingreports', LaporanAnodizingController::class);
+
+    Route::resource('/packingreports', LaporanPackingController::class);
 });

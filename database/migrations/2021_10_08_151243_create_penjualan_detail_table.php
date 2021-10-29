@@ -15,10 +15,13 @@ class CreatePenjualanDetailTable extends Migration
     {
         Schema::create('penjualan_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_penjualan')->constrained('penjualan');
+            $table->foreignID('id_penjualan')->constrained('penjualan')->onDelete('cascade');
             $table->foreignID('id_aluminium')->constrained('aluminium');
-            $table->integer('harga');
+            $table->integer('colly');
+            $table->integer('isi');
             $table->integer('qty');
+            $table->string('unit');
+            $table->integer('harga');
             $table->integer('subtotal');
             $table->timestamps();
         });

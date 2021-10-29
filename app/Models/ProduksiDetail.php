@@ -22,4 +22,9 @@ class ProduksiDetail extends Model
     {
         return $this->belongsTo(Aluminium::class, 'id_aluminium', 'id');
     }
+
+    public function master()
+    {
+        return $this->belongsTo(Produksi::class, 'id_laporan_produksi', 'id');
+    }
 }

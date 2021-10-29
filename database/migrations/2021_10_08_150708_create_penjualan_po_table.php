@@ -15,10 +15,14 @@ class CreatePenjualanPoTable extends Migration
     {
         Schema::create('penjualan_po', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor_po');
             $table->foreignID('id_customer')->constrained('customers');
             $table->date('tanggal');
             $table->date('due_date');
             $table->integer('total');
+            $table->integer('diskon');
+            $table->integer('total_akhir');
+            $table->string('keterangan');
             $table->boolean('status');
             $table->timestamps();
         });

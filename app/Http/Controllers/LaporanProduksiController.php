@@ -25,7 +25,8 @@ class LaporanProduksiController extends Controller
             ->sortBy(function($aluminium, $key){
                 return $aluminium->aluminium->nama;
             });
-        return view ('reports.produksi_index', compact('produksi_detail', 'produksi', 'group'));
+        $tanggal = ProduksiDetail::with('master')->get();
+        return view ('reports.produksi_index', compact('produksi_detail', 'produksi', 'group', 'tanggal'));
     }
 
     /**

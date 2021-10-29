@@ -19,6 +19,7 @@ class CreatePenjualanPoDetailTable extends Migration
             $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->integer('harga');
             $table->integer('qty');
+            $table->string('unit');
             $table->integer('subtotal');
             $table->timestamps();
         });

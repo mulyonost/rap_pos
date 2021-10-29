@@ -13,7 +13,7 @@ class Produksi extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
-    public function laporan_produksi_detail()
+    public function detail()
     {
         return $this->hasMany(ProduksiDetail::class);
     }
