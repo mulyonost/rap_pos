@@ -32,7 +32,14 @@
     <!-- DataTables --> --}}
   <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-   <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+  {{-- Selectize --}}  
+  <link rel="stylesheet" href="{{ asset('css/selectize.css') }}">
+  {{-- Select2 --}}
+  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2/css/select2.css')}}">
+  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -139,6 +146,13 @@
 <script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 {{-- Validator --}}
 <script src="{{ asset('js/validator.min.js') }}"></script>
+{{-- Selectize --}}
+<script src="{{ asset('js/selectize.js') }}"></script>
+{{-- Select2 --}}
+<script src="{{ asset('AdminLTE/plugins/select2/js/select2.full.js') }}"></script>
+<script src="{{ asset('AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('AdminLTE/plugins/select2/js/select2.js') }}"></script>
+<script src="{{ asset('AdminLTE/plugins/select2/js/select2.min.js') }}"></script>
 
 @stack('scripts')
 </body>

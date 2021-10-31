@@ -13,11 +13,6 @@ class ProduksiDetail extends Model
     protected $table = 'laporan_produksi_detail';
     protected $guarded = [];
 
-    public function laporan_produksi()
-    {
-        $this->belongsTo(Produksi::class);
-    }
-
     public function aluminium()
     {
         return $this->belongsTo(Aluminium::class, 'id_aluminium', 'id');

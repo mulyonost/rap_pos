@@ -13,6 +13,7 @@ use App\Http\Controllers\PackingController;
 use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\LaporanAnodizingController;
 use App\Http\Controllers\LaporanPackingController;
+use App\Http\Controllers\PenjualanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/penjualan/aluminium/data', [AluminiumController::class, 'data'])->name('aluminium.data');
     Route::resource('/penjualan/aluminium', AluminiumController::class);
 
+    Route::get('/penjualan/sale/data', [PenjualanController::class, 'data'])->name('sale.data');
+    Route::resource('/penjualan/sale', PenjualanController::class);
+
     Route::get('/kas/data', [KasController::class, 'data'])->name('kas.data');
     Route::resource('/kas', KasController::class);
 
@@ -60,7 +64,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/packing/data', [PackingController::class, 'data'])->name('packing.data');
     Route::resource('/packing', PackingController::class);
 
-    Route::resource('/produksireports', LaporanProduksiController::class);
+    Route::get('/produksireports', [LaporanProduksiController::class, 'index'])->name('produksireports.index');
+    Route::get('/produksireports/date', [LaporanProduksiController::class, 'date'])->name('produksireports.date');
 
     Route::resource('/anodizingreports', LaporanAnodizingController::class);
 

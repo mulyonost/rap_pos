@@ -19,13 +19,15 @@ class CreatePenjualanTable extends Migration
             $table->string('nomor');
             $table->foreignID('id_customer')->constrained('customers');
             $table->integer('timbangan_mobil')->nullable();
-            $table->bigInteger('total');
             $table->string('foto_mobil')->nullable();
             $table->string('foto_nota')->nullable();
             $table->date('tanggal');
             $table->date('due_date');
             $table->string('keterangan');
             $table->boolean('status');
+            $table->bigInteger('total_nota');
+            $table->integer('diskon');
+            $table->bigInteger('total_akhir');
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });

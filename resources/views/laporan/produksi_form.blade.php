@@ -88,6 +88,7 @@
                           <td><input step=".001" class="form-control berat" type="number" name="addmore[0][berat]" id="berat0" required></td>
                           <td><input class="form-control qty" type="number" name="addmore[0][qty]" id=qty0 required></td>
                           <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
+                          <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td>
                         </tr>
                       </tbody>
                     </table>               
@@ -105,10 +106,10 @@
   </div>
   <!-- /.modal -->
 
-  @push('scripts')
+@push('scripts')
+
 <script>
 var numRows = 2, ti = 5;
-
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
@@ -121,7 +122,7 @@ function recalc() {
     var berat = $(this).find('input.berat').val();
     var qty = $(this).find('input.qty').val();
     var subtotal = (berat * qty);
-    // let berat_max = $(this).find('option:selected').data('berat');
+    let berat_max = $(this).find('option:selected').data('berat');
     $(this).find('input.subtotal').val(Math.round(subtotal * 100) / 100);
     // $(this).find('input.berat').val(berat_max);
     grandtotal += isNumber(subtotal)  ? subtotal : 0;
@@ -130,10 +131,18 @@ function recalc() {
 }
 
 $(function() {
-  $('#kas_table').on("keyup change blur", recalc); 
+  $('#kas_table').on("keyup change blur", recalc);
 });
 
+$(document).ready(function () {
+  $('.nama').select2({
+    theme: "bootstrap"
+  })
+});
 
+$(document).on('select2:open', () => {
+    document.querySelector('.select2-search__field').focus();
+  });
 
 var i=0;
 $('#add_new').click(function(){
@@ -148,41 +157,18 @@ $('#add_new').click(function(){
     '</select></td>' +
     '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
     '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
-    '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>'
+    '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
+    '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
   )
+  $('.nama').select2({
+    theme: "bootstrap"
+  });
 });
 
-  // var products = @json($produk)
-  // $("#nama0").autocomplete ({
-  //   source : products;
-  // })
-
-  // $('input.qty,input.harga').keyup(function(){
-  //   var subtotal = 0;
-  //   var $row = $(this).closest("tr");
-  //   var qty = parseFloat($row.find('.qty').val());
-  //   var harga = parseFloat($row.find('.harga').val());
-  //   subtotal = qty * harga ;
-
-  //   $row.find('.subtotal').val(subtotal);
-
-  // })
-  // //   var $tr = $(this).closest('tr'),
-  // //       $qty = $tr.find('input.qty'),
-  // //       $harga = $tr.find('input.harga'),
-  // //       $subtotal = $tr.find('input.subtotal')
-  // //       $total = $('#total');
-
-  // //       $subtotal.val($qty.val() * $harga.val());
-
-  // //       // var grandtotal = 0;
-  // //       // $('#total').each(function(){
-  // //       //   if(!isNaN($(this)))
-  // //       // })
-
-  // // });
-
-
+$( document ).on('click', '.remove', function(event){
+  jQuery(this).parent().parent().remove();
+            return false;
+});
 
 </script>
 @endpush

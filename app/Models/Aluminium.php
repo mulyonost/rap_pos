@@ -13,4 +13,3 @@ class Aluminium extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 }
-

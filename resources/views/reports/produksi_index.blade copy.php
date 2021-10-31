@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Laporan Produksi {{ $tanggalAwal ?? "Semua" }}   -   {{ $tanggalAkhir ?? "Data"}}
+    Laporan Produksi {{ $tanggalAwal }} s/d {{ $tanggalAkhir }}
 @endsection
 
 @section('breadcrumb')
@@ -10,18 +10,6 @@
 @endsection
 
 @section('content')
-<div class="row">
-    <form action="{{ route('produksireports.date') }}">
-        @csrf
-        <label for="">Tanggal Awal</label>
-        <input type="date" name="tanggal_awal" value="{{ $tanggalAwal ?? date('Y-m-01') }}">
-        <label for="">Tanggal Akhir</label>
-        <input type="date" name="tanggal_akhir" value="{{ $tanggalAkhir ?? date('Y-m-d')}}">
-        <button type="submit" name="button" id="button" value="date">Submit</button>
-        <button type="submit" name="button" id="button" value="all">Tampilkan Semua Data</button>
-    </form>
-</div>
-<div class="row">
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
@@ -35,10 +23,9 @@
     </thead>
     <tbody>
         <?php  $grandtotal=0; ?>
-        Total Rows : {{ $count }}
-        @foreach ($produksi as $produksi)
+    @foreach ($group as $produksi)
         <tr>
-            <td>{{ $produksi->nama }}</td>
+            <td>{{ $produksi->aluminium->nama }}</td>
             <td>{{ number_format($produksi->total / $produksi->qty, 3) }}</td>
             <td>{{ number_format($produksi->berat_min, 3) }}</td>
             <td>{{ number_format($produksi->berat_max, 3) }}</td>
@@ -58,5 +45,4 @@
     </tbody>
 
 </table>
-</div>
 @endsection
