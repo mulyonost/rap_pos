@@ -65,6 +65,7 @@
                           <td><input class="form-control qty" type="number" name="addmore[0][qty]" id=qty0 required></td>
                         <td><input step=".001" class="form-control berat" type="number" name="addmore[0][berat]" id="berat0" required></td>
                         <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
+                        <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td>
                       </tr>
                     </tbody>
                   </table>               
@@ -132,8 +133,14 @@ $('#mainbody').append('<tr><td>' +
   '</select></td>' +
   '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
   '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
-  '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>'
+  '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
+  '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
 )
+});
+
+$( document ).on('click', '.remove', function(event){
+  jQuery(this).parent().parent().remove();
+            return false;
 });
 
 </script>
