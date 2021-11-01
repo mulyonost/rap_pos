@@ -34,6 +34,6 @@ class AluminiumBase extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('aluminium_base');
     }
 }
