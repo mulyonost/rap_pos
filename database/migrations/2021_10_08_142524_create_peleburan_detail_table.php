@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLaporanPeleburanDetailTable extends Migration
+class CreatePeleburanDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLaporanPeleburanDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('laporan_peleburan_detail', function (Blueprint $table) {
+        Schema::create('peleburan_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_laporan_peleburan')->constrained('laporan_peleburan');
+            $table->foreignID('id_laporan_peleburan')->constrained('peleburan');
             $table->foreignID('id_avalan')->constrained('avalan');
             $table->integer('berat_avalan');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateLaporanPeleburanDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laporan_peleburan_detail');
+        Schema::dropIfExists('peleburan_detail');
     }
 }

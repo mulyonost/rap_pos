@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLaporanPeleburanTable extends Migration
+class CreateAnodizingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateLaporanPeleburanTable extends Migration
      */
     public function up()
     {
-        Schema::create('laporan_peleburan', function (Blueprint $table) {
+        Schema::create('anodizing', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('tanggal');
-            $table->integer('total_avalan');
-            $table->integer('total_billet');
-            $table->string('foto');
+            $table->date('tanggal');
+            $table->string('nomor');
+            $table->integer('total_btg');
+            $table->integer('total_kg');
+            $table->text('keterangan')->nullable();
+            $table->text('foto')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateLaporanPeleburanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laporan_peleburan');
+        Schema::dropIfExists('anodizing');
     }
 }

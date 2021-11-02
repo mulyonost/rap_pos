@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ProduksiDetail extends Model
 {
     use HasFactory;
-    protected $table = 'laporan_produksi_detail';
+    protected $table = 'produksi_detail';
     protected $guarded = [];
 
     public function aluminium()

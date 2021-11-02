@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AluminiumBase extends Migration
+class CreateAluminiumBaseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AluminiumBase extends Migration
      */
     public function up()
     {
-        Schema::create('aluminium', function (Blueprint $table) {
+        Schema::create('aluminium_base', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->decimal('berat_avg', 5, 3)->nullable();

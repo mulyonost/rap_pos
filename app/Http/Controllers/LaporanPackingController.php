@@ -12,9 +12,9 @@ class LaporanPackingController extends Controller
     {
         $packing = Packing::orderBy('id')->get();
         $packing_detail = PackingDetail::with('aluminium')->get();
-        $group = PackingDetail::selectRaw('laporan_packing_detail.id_aluminium, sum(qty_colly) as colly, sum(qty_subtotal) as btg')
+        $group = PackingDetail::selectRaw('packing_detail.id_aluminium, sum(qty_colly) as colly, sum(qty_subtotal) as btg')
             ->with('aluminium')
-            ->groupBy('laporan_packing_detail.id_aluminium')
+            ->groupBy('packing_detail.id_aluminium')
             ->get()
             ->sortBy(function($aluminium, $key){
                 return $aluminium->aluminium->nama;

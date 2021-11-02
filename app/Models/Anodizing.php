@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Anodizing extends Model
 {
     use HasFactory;
-    protected $table = 'laporan_anodizing';
+    protected $table = 'anodizing';
     protected $guarded = [];
 }

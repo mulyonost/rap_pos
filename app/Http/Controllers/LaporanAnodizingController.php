@@ -18,9 +18,9 @@ class LaporanAnodizingController extends Controller
     {
         $anodizing = Anodizing::orderBy('id')->get();
         $anodizing_detail = AnodizingDetail::with('aluminium')->get();
-        $group = AnodizingDetail::selectRaw('laporan_anodizing_detail.id_aluminium, sum(qty * berat) as total, sum(qty) as qty')
+        $group = AnodizingDetail::selectRaw('anodizing_detail.id_aluminium, sum(qty * berat) as total, sum(qty) as qty')
             ->with('aluminium')
-            ->groupBy('laporan_anodizing_detail.id_aluminium')
+            ->groupBy('anodizing_detail.id_aluminium')
             ->get()
             ->sortBy(function($aluminium, $key){
                 return $aluminium->aluminium->nama;

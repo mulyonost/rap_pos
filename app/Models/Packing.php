@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Packing extends Model
 {
     use HasFactory;
-    protected $table = 'laporan_packing';
+    protected $table = 'packing';
     protected $primaryKey ='id';
     protected $guarded = [];
 }

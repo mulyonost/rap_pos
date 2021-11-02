@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Produksi extends Model
 {
     use HasFactory;
-    protected $table = "laporan_produksi";
+    protected $table = "produksi";
     protected $primaryKey = 'id';
     protected $guarded = [];
 

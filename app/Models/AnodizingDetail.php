@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class AnodizingDetail extends Model
 {
     use HasFactory;
-    protected $table = 'laporan_anodizing_detail';
+    protected $table = 'anodizing_detail';
     protected $guarded = [];
 
-    public function laporan_anodizing()
+    public function anodizing()
     {
         $this->belongsTo(Produksi::class);
     }

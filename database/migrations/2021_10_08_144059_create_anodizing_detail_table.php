@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLaporanPackingTable extends Migration
+class CreateAnodizingDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateLaporanPackingTable extends Migration
      */
     public function up()
     {
-        Schema::create('laporan_packing', function (Blueprint $table) {
+        Schema::create('anodizing_detail', function (Blueprint $table) {
             $table->id();
+            $table->foreignID('id_laporan_anodizing')->constrained('anodizing')->onDelete('cascade');
             $table->string('nomor');
-            $table->date('tanggal');
-            $table->integer('total_btg');
-            $table->integer('total_colly');
-            $table->integer('total_cacat')->nullable();
-            $table->string('foto')->nullable();
-            $table->string('keterangan')->nullable();
+            $table->foreignID('id_aluminium')->constrained('aluminium');
+            $table->integer('qty');
+            $table->float('berat');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateLaporanPackingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laporan_packing');
+        Schema::dropIfExists('anodizing_detail');
     }
 }
