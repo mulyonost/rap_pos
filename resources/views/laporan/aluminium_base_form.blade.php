@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog modal-xl">
-        <form action="javascript:;" method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+        <form action="" method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
             @csrf
             @method('post')
 

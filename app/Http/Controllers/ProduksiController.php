@@ -7,6 +7,7 @@ use App\Models\Aluminium;
 use Illuminate\Http\Request;
 use App\Models\AluminiumBase;
 use App\Models\ProduksiDetail;
+use Illuminate\Support\Facades\File;
 
 class ProduksiController extends Controller
 {
@@ -18,8 +19,7 @@ class ProduksiController extends Controller
     public function index()
     {
         $produk = AluminiumBase::orderBy("nama")->get();
-        $nomor = date('Ymd');
-        return view('laporan.produksi_index', compact('produk', 'nomor'));
+        return view('laporan.produksi_index', compact('produk'));
     }
 
     public function data()
@@ -70,12 +70,11 @@ class ProduksiController extends Controller
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = date('YmdHms') . '.' . $extension;
+            $filename = $request->nomor . date('YmdHms') . '.' . $extension;
             $file->move('uploads/laporan/produksi', $filename);
             $produksi->foto = $filename;
         }
         $produksi->save();
-
 
         $id = $produksi->id;
         foreach ($request->addmore as $key => $value) {
@@ -89,6 +88,8 @@ class ProduksiController extends Controller
             $produksidetail->total = $value['subtotal'];
             $produksidetail->save();
         }
+
+        return redirect('produksi');
     }
 
     /**
@@ -99,12 +100,12 @@ class ProduksiController extends Controller
      */
     public function show($id)
     {
-        // $data = array();
-        // $data['produksi'] = Produksi::find($id);
-        // $data['produksidetail'] = ProduksiDetail::where('id_laporan_produksi', $id)->get();
+        $data = array();
+        $data['produksi'] = Produksi::find($id);
+        $data['produksidetail'] = ProduksiDetail::where('id_laporan_produksi', $id)->get();
 
-        $data = Produksi::find($id);
-        $detail = ProduksiDetail::where('id_laporan_produksi', $id)->get();
+        // $data = Produksi::find($id);
+        // $detail = ProduksiDetail::where('id_laporan_produksi', $id)->get();
 
         return response()->json($data);
     }
@@ -140,6 +141,12 @@ class ProduksiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $produksi = Produksi::find($id);
+        $produksi_image = public_path("uploads/laporan/produksi/{$produksi->foto}");
+        if (File::exists($produksi_image)) {
+            File::delete($produksi_image);
+        };
+        $produksi->delete();
+        return response()->json('Data berhasil dihapus', 200);
     }
 }

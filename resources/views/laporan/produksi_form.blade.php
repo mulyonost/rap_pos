@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog modal-xl">
-    <form action="" method="post" class="form-horizontal" autocomplete="off">
+    <form action="" method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('post')
             <div class="modal-content">
@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="">ID Laporan</label>
-                        <input type="text" class="form-control form-control-sm col-md-6" name="nomor" id="nomor" value= "{{ $nomor }}">
+                        <input type="text" class="form-control form-control-sm col-md-6" name="nomor" id="nomor" value= "">
                       </div>
                       <div class="form-group">
                         <label for="">Tanggal</label>
@@ -42,7 +42,7 @@
                       </div>
                       <div class="form-group">
                         <label for="">Shift</label>
-                        <select name="shift" id="shift" class="custom-select form-control-sm col-md-3" size="2">
+                        <select name="shift" id="shift" class="custom-select form-control-sm col-md-3" size="2" required>
                           <option value="bohari">Bohari</option>
                           <option value="saldi">Saldi</option>
                         </select>

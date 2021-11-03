@@ -57,12 +57,16 @@
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
+        showData();
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
+                let formData = new FormData(this);
                 $.ajax({
                     url: $('#modal-form form').attr('action'),
                     type: 'post',
-                    data: $('#modal-form form').serialize(),
+                    contentType: false,
+                    processData: false,
+                    data: formData,
                 })
                 .done((response) => {
                     $('#modal-form').modal('hide');
@@ -91,7 +95,6 @@
     function editForm(url){
         $('#modal-form').modal('show');
         $('#modal-form .modal-title').text('Edit Laporan Produksi');
-
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
@@ -102,19 +105,47 @@
         // produksidetail = array[1]
         $.get(url)
             .done((response) => {
-                $('#modal-form [name=nomor]').val(response.nomor_laporan);
-                $('#modal-form [name=tanggal]').val(response.tanggal);
-                $('#modal-form [name=jumlah_billet]').val(response.jumlah_billet);
-                $('#modal-form [name=jumlah_avalan]').val(response.jumlah_avalan);
-                $('#modal-form [name=mesin]').val(response.mesin);
-                $('#modal-form [name=shift]').val(response.shift);
-                $('#modal-form [name=foto]').val(response.foto);
-                $('#modal-form [name=anggota]').val(response.anggota);
-                $('#modal-form [name=total_produksi]').val(response.total_produksi);
+                $('#modal-form [name=nomor]').val(response.produksi.nomor_laporan);
+                $('#modal-form [name=tanggal]').val(response.produksi.tanggal);
+                $('#modal-form [name=jumlah_billet]').val(response.produksi.jumlah_billet);
+                $('#modal-form [name=jumlah_avalan]').val(response.produksi.jumlah_avalan);
+                $('#modal-form [name=mesin]').val(response.produksi.mesin);
+                $('#modal-form [name=shift]').val(response.produksi.shift);
+                // $('#modal-form [name=foto]').val(response.produksi.foto);
+                $('#modal-form [name=anggota]').val(response.produksi.anggota);
+                $('#modal-form [name=total_produksi]').val(response.produksi.total_produksi);
+                $('#modal-form [id=nama0]').val(response.produksidetail[0].id_aluminium_base).change();
+                $('#modal-form [id=berat0]').val(response.produksidetail[0].berat);
+                $('#modal-form [id=qty0]').val(response.produksidetail[0].qty);
+                var data = '';
+                if(response.produksidetail.length>0){
+                    for(i=1; i<response.produksidetail.length; i++){
+                        data += '<tr>';
+                        data += '<td>' + '<input type="text" class="form-control matras" name="addmore[' +i+ '][matras]" id="matras' +i+ '" value="' + response.produksidetail[i].no_matras + '">' + '</td>'
+                        // data += '<td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
+                        //             '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
+                        //             '@foreach($produk as $pro)' +
+                        //                 '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
+                        //             '@endforeach' +
+                        //             '</select></td>';
+                        // data += '<td>' + response.produksidetail[i].id_aluminium_base + '</td>';
+                        data += '<td>' + '<input type="text" class="form-control nama" name="addmore[' +i+ '][nama]" id="nama' +i+ '" value="' + response.produksidetail[i].id_aluminium_base + '">' + '</td>'
+                        data += '<td>' + '<input type="text" class="form-control berat" name="addmore[' +i+ '][berat]" id="berat' +i+ '" value="' + response.produksidetail[i].berat + '">' + '</td>'
+                        data += '<td>' + '<input type="text" class="form-control qty" name="addmore[' +i+ '][qty]" id="qty' +i+ '" value="' + response.produksidetail[i].qty + '">' + '</td>'
+                        data += '<td>' + '<input type="text" class="form-control subtotal" name="addmore[' +i+ '][subtotal]" id="subtotal' +i+ '"readonly>' + '</td>'
+                        data += '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
+                        data += '</tr>';
+                    }
+                    $('#kas_table').append(data);
+                    console.log(data);
+                }
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');
                 return;
+            });
+            $("#modal-form").on("hidden.bs.modal", function(){
+                $(".modal-body").html("");
             });
 
     }

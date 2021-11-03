@@ -72,6 +72,8 @@ class AluminiumBaseController extends Controller
         }
         $aluminiumbase->keterangan = $request->keterangan;
         $aluminiumbase->save();
+
+        return view('laporan.aluminium_base_index');
     }
 
     /**
@@ -127,6 +129,8 @@ class AluminiumBaseController extends Controller
         }
         $aluminiumbase->keterangan = $request->keterangan;
         $aluminiumbase->save();
+
+        return view('laporan.aluminium_base_index');
     }
 
     /**

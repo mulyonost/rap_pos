@@ -70,9 +70,9 @@
                 let formData = new FormData(this);
                 $.ajax({
                     url: $('#modal-form form').attr('action'),
+                    type: 'post',
                     contentType : false,
                     processData : false,
-                    type: 'post',
                     data: formData,
                 })
                 .done((response) => {
@@ -133,6 +133,7 @@
             '_method': 'delete'
         })
         .done((response) => {
+            alert('Data berhasil dihapus');
             table.ajax.reload();
         })
         .fail((errors) => {
