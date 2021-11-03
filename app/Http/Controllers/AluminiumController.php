@@ -25,7 +25,7 @@ class AluminiumController extends Controller
 
     public function data()
     {
-        $aluminium = Aluminium::orderBy('id', 'desc')->get();
+        $aluminium = Aluminium::orderBy('nama')->get();
         return datatables()
             ->of($aluminium)
             ->addIndexColumn()

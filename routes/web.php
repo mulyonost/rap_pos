@@ -14,6 +14,7 @@ use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\LaporanAnodizingController;
 use App\Http\Controllers\LaporanPackingController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\AluminiumBaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/penjualan/aluminium/data', [AluminiumController::class, 'data'])->name('aluminium.data');
     Route::resource('/penjualan/aluminium', AluminiumController::class);
+
+    Route::get('aluminiumbase/data', [AluminiumBaseController::class, 'data'])->name('aluminiumbase.data');
+    Route::resource('/aluminiumbase', AluminiumBaseController::class);
 
     Route::get('/penjualan/sale/data', [PenjualanController::class, 'data'])->name('sale.data');
     Route::resource('/penjualan/sale', PenjualanController::class);

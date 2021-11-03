@@ -83,7 +83,7 @@ class ProduksiController extends Controller
             $produksidetail->id_laporan_produksi = $id;
             $produksidetail->nomor_laporan = $request->nomor;
             $produksidetail->no_matras = $value['matras'];
-            $produksidetail->id_aluminium = $value['nama'];
+            $produksidetail->id_aluminium_base = $value['nama'];
             $produksidetail->berat = $value['berat'];
             $produksidetail->qty = $value['qty'];
             $produksidetail->total = $value['subtotal'];

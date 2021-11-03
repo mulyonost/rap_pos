@@ -42,9 +42,9 @@
                       </div>
                       <div class="form-group">
                         <label for="">Shift</label>
-                        <select name="shift" id="shift" class="form-control form-control-sm col-md-3">
-                          <option value="1">1</option>
-                          <option value="2">2</option>
+                        <select name="shift" id="shift" class="custom-select form-control-sm col-md-3" size="2">
+                          <option value="bohari">Bohari</option>
+                          <option value="saldi">Saldi</option>
                         </select>
                       </div>
                       <div class="form-group">
@@ -130,8 +130,14 @@ function recalc() {
   $('#total').val(Math.round(grandtotal * 100) / 100 );
 }
 
+function getdate() {
+	var date= $('#tanggal').val();
+  var newDate = date.replace(/-/g, "");
+  $('#nomor').val(newDate);
+}
+
 $(function() {
-  $('#kas_table').on("keyup change blur", recalc);
+  $('#modal-form').on("keyup change blur", recalc).on("keyup change click blur", getdate);
 });
 
 $(document).ready(function () {
@@ -169,6 +175,8 @@ $( document ).on('click', '.remove', function(event){
   jQuery(this).parent().parent().remove();
             return false;
 });
+
+
 
 </script>
 @endpush

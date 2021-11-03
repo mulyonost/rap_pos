@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Aluminium
+    Daftar Aluminium Produksi
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Aluminium</li>
+    <li class="breadcrumb-item active">Aluminium Base</li>
 @endsection
 
 @section('content')
@@ -14,21 +14,18 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('aluminium.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Aluminium</button>
+                <button onclick="addForm('{{ route('aluminiumbase.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Aluminium</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Kategori</th>
                         <th>Nama</th>
-                        <th>Finish</th>
+                        <th>Berat Avg</th>
                         <th>Berat Maks</th>
                         <th>Stok Awal</th>
                         <th>Stok Min</th>
                         <th>Stok Skrg</th>
-                        <th>Berat Jual</th>
-                        <th>Harga Jual</th>
                         <th>Ket</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
@@ -40,7 +37,7 @@
         </div>
     </div>
 </div>
-@includeIf('penjualan.aluminium_form')
+@includeIf('laporan.aluminium_base_form')
 @endsection
 
 @push('scripts')
@@ -53,19 +50,16 @@
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('aluminium.data') }}',
+                url: '{{ route('aluminiumbase.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
-                {data: 'kategori'},
                 {data: 'nama'},
-                {data: 'finishing'},
+                {data: 'berat_avg'},
                 {data: 'berat_maksimal'},
                 {data: 'stok_awal'},
                 {data: 'stok_minimum'},
                 {data: 'stok_sekarang'},
-                {data: 'berat_jual'},
-                {data: 'harga_jual', render: $.fn.dataTable.render.number(',', '.', 0, '')},
                 {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
@@ -96,12 +90,12 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah Aluminium');
-
+        $('#modal-form .modal-title').text('Tambah Aluminium Produksi');
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nama]').focus();
+        $('#modal-form [name=showfoto]').attr("src", null);
 
     }
 
@@ -117,14 +111,12 @@
         $.get(url)
             .done((response) => {
                 $('#modal-form [name=nama]').val(response.nama);
-                $('#modal-form [name=finishing]').val(response.finishing);
-                $('#modal-form [name=kategori]').val(response.kategori);
+                $('#modal-form [name=berat_avg]').val(response.berat_avg);
                 $('#modal-form [name=berat_maksimal]').val(response.berat_maksimal);
                 $('#modal-form [name=stok_awal]').val(response.stok_awal);
                 $('#modal-form [name=stok_minimum]').val(response.stok_minimum);
-                $('#modal-form [name=berat_jual]').val(response.berat_jual);
-                $('#modal-form [name=harga_jual]').val(response.harga_jual);
-                $('#modal-form [name=foto]').val(response.foto);
+                $('#modal-form [name=stok_sekarang]').val(response.stok_sekarang);
+                $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/aluminium') }}' + '/' + response.foto);
                 $('#modal-form [name=keterangan]').val(response.keterangan);
             })
             .fail((errors) => {
