@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produksi;
 use App\Models\Aluminium;
 use Illuminate\Http\Request;
+use App\Models\AluminiumBase;
 use App\Models\ProduksiDetail;
 use Illuminate\Support\Facades\DB;
 
@@ -64,15 +65,15 @@ class LaporanProduksiController extends Controller
             case 'date':
                 $tanggalAwal = $request->tanggal_awal;
                 $tanggalAkhir = $request->tanggal_akhir;
-                $count = Produksi::selectRaw('count(laporan_produksi.tanggal) as count')
+                $count = Produksi::selectRaw('count(produksi.tanggal) as count')
                     ->distinct()
-                    ->whereBetween('laporan_produksi.tanggal', [$tanggalAwal, $tanggalAkhir])
+                    ->whereBetween('produksi.tanggal', [$tanggalAwal, $tanggalAkhir])
                     ->get();
 
-                $produksi = Aluminium::select('nama', DB::raw('SUM(laporan_produksi_detail.qty) as qty, SUM(laporan_produksi_detail.qty * laporan_produksi_detail.berat) as total, min(laporan_produksi_detail.berat) as berat_min, max(laporan_produksi_detail.berat) as berat_max'))
-                    ->join('laporan_produksi_detail', 'aluminium.id', '=', 'laporan_produksi_detail.id_aluminium')
-                    ->join('laporan_produksi', 'laporan_produksi.id', '=', 'laporan_produksi_detail.id_laporan_produksi')
-                    ->whereBetween('laporan_produksi.tanggal', [$tanggalAwal, $tanggalAkhir])
+                $produksi = Aluminium::select('nama', DB::raw('SUM(produksi_detail.qty) as qty, SUM(produksi_detail.qty * produksi_detail.berat) as total, min(produksi_detail.berat) as berat_min, max(produksi_detail.berat) as berat_max'))
+                    ->join('produksi_detail', 'aluminium.id', '=', 'produksi_detail.id_aluminium')
+                    ->join('produksi', 'produksi.id', '=', 'produksi_detail.id_laporan_produksi')
+                    ->whereBetween('produksi.tanggal', [$tanggalAwal, $tanggalAkhir])
                     ->groupBy('aluminium.nama')
                     ->get();
 
@@ -80,14 +81,14 @@ class LaporanProduksiController extends Controller
                 break;
 
             case 'all':
-                $count = Produksi::selectRaw('count(laporan_produksi.tanggal) as count')
+                $count = Produksi::selectRaw('count(produksi.tanggal) as count')
                     ->distinct()
                     ->get();
 
-                $produksi = Aluminium::select('nama', DB::raw('SUM(laporan_produksi_detail.qty) as qty, SUM(laporan_produksi_detail.qty * laporan_produksi_detail.berat) as total, min(laporan_produksi_detail.berat) as berat_min, max(laporan_produksi_detail.berat) as berat_max'))
-                    ->join('laporan_produksi_detail', 'aluminium.id', '=', 'laporan_produksi_detail.id_aluminium')
-                    ->join('laporan_produksi', 'laporan_produksi.id', '=', 'laporan_produksi_detail.id_laporan_produksi')
-                    ->groupBy('aluminium.nama')
+                $produksi = AluminiumBase::select('nama', DB::raw('SUM(produksi_detail.qty) as qty, SUM(produksi_detail.qty * produksi_detail.berat) as total, min(produksi_detail.berat) as berat_min, max(produksi_detail.berat) as berat_max'))
+                    ->join('produksi_detail', 'aluminium_base.id', '=', 'produksi_detail.id_aluminium')
+                    ->join('produksi', 'produksi.id', '=', 'produksi_detail.id_laporan_produksi')
+                    ->groupBy('aluminium_base.nama')
                     ->get();
 
                 return view('reports.produksi_index', compact('produksi', 'count'));

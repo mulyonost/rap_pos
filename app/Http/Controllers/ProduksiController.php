@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Produksi;
-use App\Models\ProduksiDetail;
 use App\Models\Aluminium;
+use Illuminate\Http\Request;
+use App\Models\AluminiumBase;
+use App\Models\ProduksiDetail;
 
 class ProduksiController extends Controller
 {
@@ -16,7 +17,7 @@ class ProduksiController extends Controller
      */
     public function index()
     {
-        $produk = Aluminium::where('finishing', "MF")->orderBy("nama")->get();
+        $produk = AluminiumBase::orderBy("nama")->get();
         $nomor = date('Ymd');
         return view('laporan.produksi_index', compact('produk', 'nomor'));
     }

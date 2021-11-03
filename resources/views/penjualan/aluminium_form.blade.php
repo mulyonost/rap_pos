@@ -11,7 +11,18 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">                    
+                <div class="modal-body">   
+                    <div class="form-group row">
+                        <label for="nama" class="col-md-2 col-md-offset-1 control-label">Base ALuminium</label>                     
+                      <div class="col-md-5">
+                          <select name="base" id="base" class="form-control">
+                              @foreach ($base as $base)
+                                <option value="{{ $base->id }}">{{ $base->nama }}</option>
+                              @endforeach                              
+                          </select>
+                          <span class="help-block with-errors"></span>
+                      </div>
+                  </div>                 
                   <div class="form-group row">
                         <label for="nama" class="col-md-2 col-md-offset-1 control-label">Nama</label>                     
                       <div class="col-md-5">

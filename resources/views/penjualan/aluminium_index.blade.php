@@ -64,7 +64,7 @@
                 {data: 'stok_minimum'},
                 {data: 'stok_sekarang'},
                 {data: 'berat_jual'},
-                {data: 'harga_jual'},
+                {data: 'harga_jual', render: $.fn.dataTable.render.number(',', '.', 0, '')},
                 {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]

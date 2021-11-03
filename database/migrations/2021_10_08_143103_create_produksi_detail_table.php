@@ -18,7 +18,7 @@ class CreateProduksiDetailTable extends Migration
             $table->foreignID('id_laporan_produksi')->constrained('produksi')->onDelete('cascade');
             $table->string('nomor_laporan');
             $table->string('no_matras')->nullable();
-            $table->foreignID('id_aluminium')->constrained('aluminium');
+            $table->foreignID('id_aluminium_base')->constrained('aluminium_base');
             $table->integer('qty');
             $table->decimal('berat', 5, 3);
             $table->float('total', 7, 3);

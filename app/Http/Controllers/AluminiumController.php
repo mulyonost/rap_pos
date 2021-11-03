@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Items;
 use App\Models\Aluminium;
+use App\Models\AluminiumBase;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -18,7 +19,8 @@ class AluminiumController extends Controller
     public function index()
     {
         $alma = Aluminium::orderBy('id')->get();
-        return view('penjualan.aluminium_index', compact('alma'));
+        $base = AluminiumBase::orderBy('nama')->get();
+        return view('penjualan.aluminium_index', compact('alma', 'base'));
     }
 
     public function data()
@@ -58,6 +60,7 @@ class AluminiumController extends Controller
     public function store(Request $request)
     {
         $aluminium = new Aluminium();
+        $aluminium->base_id = $request->base;
         $aluminium->nama = $request->nama;
         $aluminium->base_name = Str::slug(substr($request->nama, 0, -3), '-');
         $aluminium->finishing = $request->finishing;
