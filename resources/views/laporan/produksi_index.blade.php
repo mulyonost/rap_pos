@@ -39,6 +39,24 @@
 
 @push('scripts')
 <script>
+function add_row(){
+  var i=0;
+  i++;
+  $('#mainbody').append('<tr><td>' +
+    '<input class="form-control" type="text" name="addmore['+i+'][matras]" id="matras'+i+'"></td>' +
+    '<td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
+    '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
+      '@foreach($produk as $pro)' +
+        '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
+      '@endforeach' +
+    '</select></td>' +
+    '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
+    '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
+    '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
+    '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
+  )
+}
+
     let table;
 
     $(function () {
@@ -83,9 +101,9 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
+        $('#mainbody').empty();
+        $('#modal-form').on('ready', add_row);
         $('#modal-form .modal-title').text('Input Data Produksi');
-
-        $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=id_laporan_produksi]').focus();
@@ -105,6 +123,7 @@
         // produksidetail = array[1]
         $.get(url)
             .done((response) => {
+                    console.log(response.produksidetail[0].aluminium.nama);
                 $('#modal-form [name=nomor]').val(response.produksi.nomor_laporan);
                 $('#modal-form [name=tanggal]').val(response.produksi.tanggal);
                 $('#modal-form [name=jumlah_billet]').val(response.produksi.jumlah_billet);
@@ -117,9 +136,10 @@
                 $('#modal-form [id=nama0]').val(response.produksidetail[0].id_aluminium_base).change();
                 $('#modal-form [id=berat0]').val(response.produksidetail[0].berat);
                 $('#modal-form [id=qty0]').val(response.produksidetail[0].qty);
+                $('#mainbody').empty();
                 var data = '';
                 if(response.produksidetail.length>0){
-                    for(i=1; i<response.produksidetail.length; i++){
+                    for(i=0; i<response.produksidetail.length; i++){
                         data += '<tr>';
                         data += '<td>' + '<input type="text" class="form-control matras" name="addmore[' +i+ '][matras]" id="matras' +i+ '" value="' + response.produksidetail[i].no_matras + '">' + '</td>'
                         // data += '<td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
@@ -129,23 +149,19 @@
                         //             '@endforeach' +
                         //             '</select></td>';
                         // data += '<td>' + response.produksidetail[i].id_aluminium_base + '</td>';
-                        data += '<td>' + '<input type="text" class="form-control nama" name="addmore[' +i+ '][nama]" id="nama' +i+ '" value="' + response.produksidetail[i].id_aluminium_base + '">' + '</td>'
-                        data += '<td>' + '<input type="text" class="form-control berat" name="addmore[' +i+ '][berat]" id="berat' +i+ '" value="' + response.produksidetail[i].berat + '">' + '</td>'
-                        data += '<td>' + '<input type="text" class="form-control qty" name="addmore[' +i+ '][qty]" id="qty' +i+ '" value="' + response.produksidetail[i].qty + '">' + '</td>'
+                        data += '<td>' + '<input type="text" class="form-control nama" name="addmore[' +i+ '][nama]" id="nama' +i+ '" value="' + response.produksidetail[i].aluminium.nama + '">' + '</td>'
+                        data += '<td>' + '<input type="number" step="0.001" class="form-control berat" name="addmore[' +i+ '][berat]" id="berat' +i+ '" value="' + response.produksidetail[i].berat + '">' + '</td>'
+                        data += '<td>' + '<input type="number" class="form-control qty" name="addmore[' +i+ '][qty]" id="qty' +i+ '" value="' + response.produksidetail[i].qty + '">' + '</td>'
                         data += '<td>' + '<input type="text" class="form-control subtotal" name="addmore[' +i+ '][subtotal]" id="subtotal' +i+ '"readonly>' + '</td>'
                         data += '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
                         data += '</tr>';
                     }
-                    $('#kas_table').append(data);
-                    console.log(data);
+                    $('#mainbody').append(data);
                 }
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');
                 return;
-            });
-            $("#modal-form").on("hidden.bs.modal", function(){
-                $(".modal-body").html("");
             });
 
     }

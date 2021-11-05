@@ -137,7 +137,7 @@ function getdate() {
 }
 
 $(function() {
-  $('#modal-form').on("keyup change blur", recalc).on("keyup change click blur", getdate);
+  $('#modal-form').on("keyup change blur shown.bs.modal", recalc).on("keyup change click blur", getdate);
 });
 
 $(document).ready(function () {

@@ -15,7 +15,7 @@ class ProduksiDetail extends Model
 
     public function aluminium()
     {
-        return $this->belongsTo(Aluminium::class, 'id_aluminium', 'id');
+        return $this->belongsTo(AluminiumBase::class, 'id_aluminium_base', 'id');
     }
 
     public function master()

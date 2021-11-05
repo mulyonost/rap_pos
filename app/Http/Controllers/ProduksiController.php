@@ -102,7 +102,7 @@ class ProduksiController extends Controller
     {
         $data = array();
         $data['produksi'] = Produksi::find($id);
-        $data['produksidetail'] = ProduksiDetail::where('id_laporan_produksi', $id)->get();
+        $data['produksidetail'] = ProduksiDetail::where('id_laporan_produksi', $id)->with('aluminium')->get();
 
         // $data = Produksi::find($id);
         // $detail = ProduksiDetail::where('id_laporan_produksi', $id)->get();
@@ -130,7 +130,39 @@ class ProduksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->addmore);
+        $produksi = Produksi::find($id);
+        $produksi->nomor_laporan = $request->nomor;
+        $produksi->tanggal = $request->tanggal;
+        $produksi->anggota = $request->anggota;
+        $produksi->mesin = $request->mesin;
+        $produksi->shift = $request->shift;
+        $produksi->total_produksi = $request->total;
+        $produksi->jumlah_billet = $request->jumlah_billet;
+        $produksi->jumlah_avalan = $request->jumlah_avalan;
+        // if ($request->hasFile('foto')) {
+        //     $produksi_image = public_path("uploads/laporan/produksi/{$produksi->foto}");
+        //     if (File::exists($produksi_image)) {
+        //         File::delete($produksi_image);
+        //     };
+        //     $file = $request->file('foto');
+        //     $extension = $file->getClientOriginalExtension();
+        //     $filename = $request->nomor . date('YmdHms') . '.' . $extension;
+        //     $file->move('uploads/laporan/produksi', $filename);
+        //     $produksi->foto = $filename;
+        // }
+        $produksi->save();
+        foreach ($request->addmore as $key => $value) {
+            $produksidetail = ProduksiDetail::where('id_laporan_produksi',$id);
+            $produksidetail->id_laporan_produksi = $id;
+            $produksidetail->nomor_laporan = $request->nomor;
+            $produksidetail->no_matras = $value['matras'];
+            $produksidetail->id_aluminium_base = $value['nama'];
+            $produksidetail->berat = $value['berat'];
+            $produksidetail->qty = $value['qty'];
+            $produksidetail->total = $value['subtotal'];
+            $produksidetail->save();
+        }
     }
 
     /**
