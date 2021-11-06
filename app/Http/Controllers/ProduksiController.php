@@ -151,18 +151,18 @@ class ProduksiController extends Controller
         //     $file->move('uploads/laporan/produksi', $filename);
         //     $produksi->foto = $filename;
         // }
-        $produksi->save();
-        foreach ($request->addmore as $key => $value) {
-            $produksidetail = ProduksiDetail::where('id_laporan_produksi',$id);
-            $produksidetail->id_laporan_produksi = $id;
-            $produksidetail->nomor_laporan = $request->nomor;
-            $produksidetail->no_matras = $value['matras'];
-            $produksidetail->id_aluminium_base = $value['nama'];
-            $produksidetail->berat = $value['berat'];
-            $produksidetail->qty = $value['qty'];
-            $produksidetail->total = $value['subtotal'];
-            $produksidetail->save();
-        }
+        // $produksi->save();
+        // foreach ($request->addmore as $key => $value) {
+        //     $produksidetail = ProduksiDetail::('id_laporan_produksi',$id);
+        //     $produksidetail->id_laporan_produksi = $id;
+        //     $produksidetail->nomor_laporan = $request->nomor;
+        //     $produksidetail->no_matras = $value['matras'];
+        //     $produksidetail->id_aluminium_base = $value['nama'];
+        //     $produksidetail->berat = $value['berat'];
+        //     $produksidetail->qty = $value['qty'];
+        //     $produksidetail->total = $value['subtotal'];
+        //     $produksidetail->save();
+    // }
     }
 
     /**
