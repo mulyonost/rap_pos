@@ -154,6 +154,9 @@
 <script src="{{ asset('AdminLTE/plugins/select2/js/select2.js') }}"></script>
 <script src="{{ asset('AdminLTE/plugins/select2/js/select2.min.js') }}"></script>
 
+{{--My Javascript Custom --}}
+<script src="{{ asset('js/rapjs.js') }}"></script>
+
 @stack('scripts')
 </body>
 </html>

@@ -129,7 +129,6 @@ class ProduksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $produksi = Produksi::find($id);
         $produksi->nomor_laporan = $request->nomor;
         $produksi->tanggal = $request->tanggal;
@@ -159,9 +158,9 @@ class ProduksiController extends Controller
             $produksidetail->qty = $value['qty'];
             $produksidetail->total = $value['subtotal'];
             $produksidetail->save();
-         }
+        }
 
-         return redirect('produksi');
+        return redirect('produksi');
     }
 
     /**

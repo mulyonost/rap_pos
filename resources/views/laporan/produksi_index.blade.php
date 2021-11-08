@@ -43,6 +43,8 @@ function add_row(){
   var i=-1;
   i++;
   $('#mainbody').append('<tr><td>' +
+    '<input class="form-control" type="hidden" name="addmore[' +i+ '][id]" id="id' +i+ '" value="">' +
+    '<input type="hidden" class="form-control id_aluminium" name="addmore[' +i+ '][id_aluminium]" id="id_aluminium' +i+ '" value="">' +
     '<input class="form-control" type="text" name="addmore['+i+'][matras]" id="matras'+i+'"></td>' +
     '<td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
     '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
@@ -111,6 +113,7 @@ function add_row(){
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=id_laporan_produksi]').focus();
+        $('#modal-form [name=showfoto]').attr("src", null);
 
     }
 
@@ -134,6 +137,7 @@ function add_row(){
                 $('#modal-form [name=jumlah_avalan]').val(response.produksi.jumlah_avalan);
                 $('#modal-form [name=mesin]').val(response.produksi.mesin);
                 $('#modal-form [name=shift]').val(response.produksi.shift);
+                $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/laporan/produksi') }}' + '/' + response.produksi.foto);
                 // $('#modal-form [name=foto]').val(response.produksi.foto);
                 $('#modal-form [name=anggota]').val(response.produksi.anggota);
                 $('#modal-form [name=total_produksi]').val(response.produksi.total_produksi);
@@ -148,14 +152,14 @@ function add_row(){
                         data += '<input class="form-control" type="hidden" name="addmore[' +i+ '][id]" id="id' +i+ '" value="' + response.produksidetail[i].id + '">'
                         data += '<input type="hidden" class="form-control id_aluminium" name="addmore[' +i+ '][id_aluminium]" id="id_aluminium' +i+ '" value="' + response.produksidetail[i].id_aluminium_base + '">'
                         data += '<td>' + '<input type="text" class="form-control matras" name="addmore[' +i+ '][matras]" id="matras' +i+ '" value="' + response.produksidetail[i].no_matras + '">' + '</td>'
-                        data += '<td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
+                        // data += '<td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
                                     // '<option selected="selected" value="' + response.produksidetail[i].id_aluminium_base + '" >' + response.produksidetail[i].aluminium.nama + '</option>' +
-                                    '@foreach($produk as $pro)' +
-                                        '<option value="{{$pro->id}}" @if($pro->id== '+ response.produksidetail[i].id_aluminium_base +' ) selected="selected" @endif data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
-                                    '@endforeach' +
-                                    '</select></td>';
+                                    // '@foreach($produk as $pro)' + console.log(response.produksidetail[i].id_aluminium_base) +
+                                    //     '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
+                                    // '@endforeach' +
+                                    // '</select></td>';
                         // data += '<td>' + response.produksidetail[i].id_aluminium_base + '</td>';
-                        // data += '<td>' + '<input type="text" class="form-control nama" name="addmore[' +i+ '][nama]" id="nama' +i+ '" value="' + response.produksidetail[i].aluminium.nama + '">' + '</td>'
+                        data += '<td>' + '<input type="text" class="form-control nama" name="addmore[' +i+ '][nama]" id="nama' +i+ '" value="' + response.produksidetail[i].aluminium.nama + '" disabled>' + '</td>'
                         data += '<td>' + '<input type="number" step="0.001" class="form-control berat" name="addmore[' +i+ '][berat]" id="berat' +i+ '" value="' + response.produksidetail[i].berat + '">' + '</td>'
                         data += '<td>' + '<input type="number" class="form-control qty" name="addmore[' +i+ '][qty]" id="qty' +i+ '" value="' + response.produksidetail[i].qty + '">' + '</td>'
                         data += '<td>' + '<input type="text" class="form-control subtotal" name="addmore[' +i+ '][subtotal]" id="subtotal' +i+ '"readonly>' + '</td>'

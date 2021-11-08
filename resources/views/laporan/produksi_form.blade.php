@@ -50,6 +50,9 @@
                       <div class="form-group">
                         <label for="">Foto</label>
                         <input class="form-control" type="file" name="foto" id="foto" >
+                        <div class="col-md-5">
+                          <img src="" name="showfoto" id="showfoto" class="img-thumbnail img-fluid"/>
+                        </div>                        
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -132,12 +135,17 @@ function recalc() {
 function getdate() {
 	var date= $('#tanggal').val();
   var newDate = date.replace(/-/g, "");
-  $('#nomor').val(newDate);
+  var mesin = $('#mesin').val();
+  $('#nomor').val(newDate + "-" + mesin);
 }
 
 $(function() {
-  $('#modal-form').on("keyup change blur shown.bs.modal", recalc).on("keyup change click blur", getdate);
+  $('#modal-form').on("keyup change blur shown.bs.modal", recalc);
 });
+
+$(function(){
+  $('#tanggal').on("change click", getdate);
+})
 
 $(document).ready(function () {
   $('.nama').select2({
@@ -153,6 +161,8 @@ var i=0;
 $('#add_new').click(function(){
   i++;
   $('#mainbody').append('<tr><td>' +
+    '<input class="form-control" type="hidden" name="addmore[' +i+ '][id]" id="id' +i+ '" value="">' +
+    '<input type="hidden" class="form-control id_aluminium" name="addmore[' +i+ '][id_aluminium]" id="id_aluminium' +i+ '" value="">' +
     '<input class="form-control" type="text" name="addmore['+i+'][matras]" id="matras'+i+'"></td>' +
     '<td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
     '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
