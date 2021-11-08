@@ -106,7 +106,6 @@ class ProduksiController extends Controller
 
         // $data = Produksi::find($id);
         // $detail = ProduksiDetail::where('id_laporan_produksi', $id)->get();
-
         return response()->json($data);
     }
 
@@ -130,7 +129,7 @@ class ProduksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->addmore);
+        dd($request->all());
         $produksi = Produksi::find($id);
         $produksi->nomor_laporan = $request->nomor;
         $produksi->tanggal = $request->tanggal;
@@ -140,29 +139,29 @@ class ProduksiController extends Controller
         $produksi->total_produksi = $request->total;
         $produksi->jumlah_billet = $request->jumlah_billet;
         $produksi->jumlah_avalan = $request->jumlah_avalan;
-        // if ($request->hasFile('foto')) {
-        //     $produksi_image = public_path("uploads/laporan/produksi/{$produksi->foto}");
-        //     if (File::exists($produksi_image)) {
-        //         File::delete($produksi_image);
-        //     };
-        //     $file = $request->file('foto');
-        //     $extension = $file->getClientOriginalExtension();
-        //     $filename = $request->nomor . date('YmdHms') . '.' . $extension;
-        //     $file->move('uploads/laporan/produksi', $filename);
-        //     $produksi->foto = $filename;
-        // }
-        // $produksi->save();
-        // foreach ($request->addmore as $key => $value) {
-        //     $produksidetail = ProduksiDetail::('id_laporan_produksi',$id);
-        //     $produksidetail->id_laporan_produksi = $id;
-        //     $produksidetail->nomor_laporan = $request->nomor;
-        //     $produksidetail->no_matras = $value['matras'];
-        //     $produksidetail->id_aluminium_base = $value['nama'];
-        //     $produksidetail->berat = $value['berat'];
-        //     $produksidetail->qty = $value['qty'];
-        //     $produksidetail->total = $value['subtotal'];
-        //     $produksidetail->save();
-    // }
+        if ($request->hasFile('foto')) {
+            $produksi_image = public_path("uploads/laporan/produksi/{$produksi->foto}");
+            if (File::exists($produksi_image)) {
+                File::delete($produksi_image);
+            };
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->nomor . date('YmdHms') . '.' . $extension;
+            $file->move('uploads/laporan/produksi', $filename);
+            $produksi->foto = $filename;
+        }
+        $produksi->save();
+        foreach ($request->addmore as $key => $value) {
+            $produksidetail = ProduksiDetail::find($value['id']);
+            $produksidetail->id_aluminium_base = $value['id_aluminium'];
+            $produksidetail->no_matras = $value['matras'];
+            $produksidetail->berat = $value['berat'];
+            $produksidetail->qty = $value['qty'];
+            $produksidetail->total = $value['subtotal'];
+            $produksidetail->save();
+         }
+
+         return redirect('produksi');
     }
 
     /**

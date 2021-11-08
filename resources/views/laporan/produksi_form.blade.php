@@ -76,7 +76,7 @@
                         </tr>
                       </thead>
                       <tbody id="mainbody">
-                        <tr>
+                        <!-- <tr>
                           <td><input class="form-control" type="text" name="addmore[0][matras]" id="matras0"></td>
                           <td><select class="form-control nama" name="addmore[0][nama]" id="nama0" required >
                               <option disabled="disabled" selected="selected" value="" >Select Produk</option>
@@ -84,12 +84,11 @@
                                   <option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>
                               @endforeach
                           </select></td>
-                          {{-- <td><input class="form-control nama" type="text" name="addmore[0][nama]" id="nama0" required></td> --}}
                           <td><input step=".001" class="form-control berat" type="number" name="addmore[0][berat]" id="berat0" required></td>
                           <td><input class="form-control qty" type="number" name="addmore[0][qty]" id=qty0 required></td>
                           <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
                           <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>               
                   </div>
