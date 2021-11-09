@@ -53,9 +53,11 @@
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'tanggal'},
-                {data: 'total_btg'},
-                {data: 'total_kg'},
-                {data: 'keterangan', render: $.fn.dataTable.render.number('.', ',', 0, '', ' Kg') },
+                {data: 'customer.nama'},
+                {data: 'total_nota', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
+                {data: 'timbangan_mobil'},
+                {data: 'due_date'},
+                {data: 'status'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });

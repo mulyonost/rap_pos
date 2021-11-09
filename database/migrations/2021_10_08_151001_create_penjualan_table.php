@@ -15,7 +15,7 @@ class CreatePenjualanTable extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_penjualan_po')->constrained('penjualan_po')->nullable();
+            // $table->foreignID('id_penjualan_po')->constrained('penjualan_po')->nullable();
             $table->string('nomor');
             $table->foreignID('id_customer')->constrained('customers');
             $table->integer('timbangan_mobil')->nullable();
@@ -23,7 +23,7 @@ class CreatePenjualanTable extends Migration
             $table->string('foto_nota')->nullable();
             $table->date('tanggal');
             $table->date('due_date');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->boolean('status');
             $table->bigInteger('total_nota');
             $table->integer('diskon');

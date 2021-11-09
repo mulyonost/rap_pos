@@ -24,13 +24,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Customer</label>
-                                <input type="text" class="form-control" name="customer" id="customer" value="">
+                                <select class="form-control nama" name="customer" id="customer" required>
+                                            <option selected="selected">Pilih Supplier</option>
+                                        @foreach ($customer as $customer)
+                                            <option value="{{$customer->id}}">{{$customer->nama}}</option>
+                                        @endforeach
+                                        </select>      
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Jatuh Tempo</label>
-                                <input type="date" class="form-control" name="jatuh_tempo" id="jatuh_tempo" value="">
+                                <input type="date" class="form-control" name="due_date" id="due_date" value="">
                             </div>
                             <div class="form-group">
                                 <label for="">Foto Mobil</label>
@@ -48,7 +53,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Status Pelunasan</label>
-                                <input type="text" class="form-control" name="status" id="status" value="">
+                                <select class="form-control"  name="status" id="status">
+                                    <option value="0">Belum Lunas</option>
+                                    <option value="1">Lunas</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="">Keterangan</label>
@@ -74,9 +82,11 @@
                             <tbody id="mainbody">
                                 <tr>
                                     <td><select class="form-control nama" name="addmore[0][nama]" id="nama0" required>
-                                            <option disabled="disabled" selected="selected" value="">Select Produk
-                                            </option>
-                                        </select></td>
+                                        @foreach ($aluminium as $alma)
+                                            <option value="{{$alma->id}}">{{$alma->nama}}</option>
+                                        @endforeach
+                                        </select>                                        
+                                    </td>
                                     <td><input class="form-control colly" type="number" name="addmore[0][colly]" id="colly0" required></td>
                                     <td><input class="form-control isi" type="number" name="addmore[0][isi]" id="isi0" required></td>
                                     <td><input class="form-control qty" type="number" name="addmore[0][qty]" id="qty0" required></td>
@@ -90,7 +100,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>Total Nota</td>
-                                    <td colspan="2"><input type="number" step="any" class="form-control name="totalNota" id="totalNota" disabled>
+                                    <td colspan="2"><input type="number" step="any" class="form-control" name="total_nota" id="total_nota" readonly>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -100,7 +110,7 @@
                                     <td></td>
                                     <td>Diskon</td>
                                     <td><input type="number" step="any" class="form-control" name="diskon_persen" id="diskon_persen"></td>
-                                    <td><input type="number" step="any" class="form-control" name="diskon_rupiah" id="diskon_rupiah" disabled></td>
+                                    <td><input type="number" step="any" class="form-control" name="diskon_rupiah" id="diskon_rupiah" readonly></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -108,7 +118,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>Total Akhir</td>
-                                    <td colspan="2"><input type="number" step="any" class="form-control" id="total_akhir" disabled>
+                                    <td colspan="2"><input type="number" step="any" class="form-control" name="total_akhir" id="total_akhir" readonly>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -160,7 +170,7 @@
             });
             diskonRupiah = diskonPersen/100 * totalNota;
             totalAkhir = totalNota - diskonRupiah;
-            $('#totalNota').val(totalNota);
+            $('#total_nota').val(totalNota);
             $('#diskon_rupiah').val(diskonRupiah);
             $('#total_akhir').val(totalAkhir);
         }
@@ -186,8 +196,10 @@
         $('#add_new').click(function() {
             i++;
             $('#mainbody').append('<tr><td>' +
-                '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
-                '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
+                '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
+                    '@foreach ($aluminium as $alma)' +
+                    '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
+                    '@endforeach' +
                 '</select></td>' +
                 '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
                 '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +

@@ -81,8 +81,6 @@ class AluminiumController extends Controller
         $aluminium->keterangan = $request->keterangan;
         $aluminium->save();
 
-
-
         return view('penjualan.aluminium_index');
     }
 
