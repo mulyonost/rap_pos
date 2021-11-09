@@ -136,6 +136,9 @@ $('#mainbody').append('<tr><td>' +
   '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
   '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
 )
+$('.nama').select2({
+    theme: "bootstrap"
+  });
 });
 
 $( document ).on('click', '.remove', function(event){

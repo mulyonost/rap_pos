@@ -84,7 +84,6 @@ class PackingController extends Controller
             $packingdetail->qty_subtotal = $value['subtotal'];
             $packingdetail->save();
         }
-
     }
 
     /**
@@ -95,7 +94,11 @@ class PackingController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = array();
+        $data['packing'] = Packing::find($id);
+        $data['packingdetail'] = PackingDetail::where('id_laporan_packing', $id)->with('aluminium')->get();
+
+        return response()->json($data);
     }
 
     /**

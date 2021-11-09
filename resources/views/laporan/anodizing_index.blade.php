@@ -84,8 +84,25 @@
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nomor]').focus();
-
     }
+
+function add_row(){
+  $('#mainbody').append('<tr><td>' +
+    '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
+    '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
+      '@foreach($produk as $pro)' +
+        '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
+      '@endforeach' +
+    '</select></td>' +
+    '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
+    '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
+    '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
+    '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
+  )
+  $('.nama').select2({
+    theme: "bootstrap"
+  });
+}
 
     function editForm(url){
         $('#modal-form').modal('show');
@@ -96,20 +113,24 @@
         $('#modal-form [name=_method]').val('put');
         $('#modal-form [name=nama]').focus();
 
-        // var array = jQuery.parseJSON(response);
-        // produksi = array[0];
-        // produksidetail = array[1]
         $.get(url)
             .done((response) => {
-                $('#modal-form [name=nomor]').val(response.nomor_laporan);
-                $('#modal-form [name=tanggal]').val(response.tanggal);
-                $('#modal-form [name=jumlah_billet]').val(response.jumlah_billet);
-                $('#modal-form [name=jumlah_avalan]').val(response.jumlah_avalan);
-                $('#modal-form [name=mesin]').val(response.mesin);
-                $('#modal-form [name=shift]').val(response.shift);
-                $('#modal-form [name=foto]').val(response.foto);
-                $('#modal-form [name=anggota]').val(response.anggota);
-                $('#modal-form [name=total_produksi]').val(response.total_produksi);
+                $('#mainbody').empty();
+                $('#modal-form [name=nomor]').val(response.anodizing.nomor);
+                $('#modal-form [name=tanggal]').val(response.anodizing.tanggal);
+                $('#modal-form [name=keterangan]').val(response.anodizing.keterangan);
+                $('#modal-form [name=foto]').val(response.anodizing.foto);
+                $('#modal-form [name=total_btg]').val(response.anodizing.total_btg);
+                $('#modal-form [name=total_kg]').val(response.anodizing.total_kg);
+                if(response.anodizingdetail.length > 0){
+                for (i=0 ; i < response.anodizingdetail.length; i++){
+                    console.log(response.anodizingdetail[i])
+                    add_row();                    
+                    $('#nama'+i+'').val(response.anodizingdetail[i].id_aluminium);
+                    $('#qty'+i+'').val(response.anodizingdetail[i].qty);
+                    $('#berat'+i+'').val(response.anodizingdetail[i].berat);
+                }
+            }
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

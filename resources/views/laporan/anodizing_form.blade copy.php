@@ -65,7 +65,6 @@
                             <td><input class="form-control qty" type="number" name="addmore[0][qty]" id=qty0 required></td>
                           <td><input step=".001" class="form-control berat" type="number" name="addmore[0][berat]" id="berat0" required></td>
                           <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
-                          <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td>
                         </tr>
                       </tbody>
                     </table>               
@@ -121,18 +120,10 @@ $(function() {
   $('#modal-form').on("keyup change blur", recalc).on("keyup change click blur", getdate);
 });
 
-$(document).ready(function () {
-  $('.nama').select2({
-    theme: "bootstrap"
-  })
-});
 
-$(document).on('select2:open', () => {
-    document.querySelector('.select2-search__field').focus();
-  });
 
-  var i=0;
-  $('#add_new').click(function(){
+var i=0;
+$('#add_new').click(function(){
   i++;
   $('#mainbody').append('<tr><td>' +
     '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
@@ -143,17 +134,8 @@ $(document).on('select2:open', () => {
     '</select></td>' +
     '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
     '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
-    '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
-    '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
+    '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>'
   )
-  $('.nama').select2({
-    theme: "bootstrap"
-  });
-});
-
-$( document ).on('click', '.remove', function(event){
-  jQuery(this).parent().parent().remove();
-  return false;
 });
 
 </script>

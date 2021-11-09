@@ -74,4 +74,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/anodizingreports', LaporanAnodizingController::class);
 
     Route::resource('/packingreports', LaporanPackingController::class);
+    Route::get('/packingreports/detail', [LaporanPackingController::class, 'detail'])->name('packingreports.detail');
 });

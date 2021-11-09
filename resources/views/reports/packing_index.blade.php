@@ -18,6 +18,7 @@
             <td>Total Colly</td>
             <td>Total Btg</td>
             <td>Total Kg</td>
+            <td>Detail</td>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
             <td>{{ number_format($produksi->colly) }}</td> 
             <td>{{ number_format($produksi->btg) }}</td> 
             <td>{{ number_format($berat) }} Kg</td> 
+            <td><a href="{{ route('packingreports.show', $produksi->id_aluminium) }}">Detail</a></td>
             <?php $grandtotal += $berat; ?>
         </tr>
         @endforeach

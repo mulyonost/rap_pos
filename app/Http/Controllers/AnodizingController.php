@@ -91,7 +91,13 @@ class AnodizingController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = array();
+        $data['anodizing'] = Anodizing::find($id);
+        $data['anodizingdetail'] = AnodizingDetail::where('id_laporan_anodizing', $id)->with('aluminium')->get();
+
+        // $data = Produksi::find($id);
+        // $detail = ProduksiDetail::where('id_laporan_produksi', $id)->get();
+        return response()->json($data);
     }
 
     /**

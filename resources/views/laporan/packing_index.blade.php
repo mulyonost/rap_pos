@@ -39,6 +39,26 @@
 
 @push('scripts')
 <script>
+    function add_row(){
+    $('#mainbody').append('<tr><td>' +
+        '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
+        '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
+            '@foreach($produk as $pro)' +
+            '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
+            '@endforeach' +
+        '</select></td>' +
+        '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
+        '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
+        '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
+        '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
+            )
+            $('.nama').select2({
+            theme: "bootstrap"
+        });
+    }
+
+
+
     let table;
 
     $(function () {
@@ -101,15 +121,24 @@
         // produksidetail = array[1]
         $.get(url)
             .done((response) => {
-                $('#modal-form [name=nomor]').val(response.nomor_laporan);
-                $('#modal-form [name=tanggal]').val(response.tanggal);
-                $('#modal-form [name=jumlah_billet]').val(response.jumlah_billet);
-                $('#modal-form [name=jumlah_avalan]').val(response.jumlah_avalan);
-                $('#modal-form [name=mesin]').val(response.mesin);
-                $('#modal-form [name=shift]').val(response.shift);
-                $('#modal-form [name=foto]').val(response.foto);
-                $('#modal-form [name=anggota]').val(response.anggota);
-                $('#modal-form [name=total_produksi]').val(response.total_produksi);
+                $('#mainbody').empty();
+                console.log(response.packing)
+                $('#modal-form [name=nomor]').val(response.packing.nomor);
+                $('#modal-form [name=tanggal]').val(response.packing.tanggal);
+                $('#modal-form [name=keterangan]').val(response.packing.keterangan);
+                $('#modal-form [name=total_btg]').val(response.packing.total_btg);
+                $('#modal-form [name=total_colly]').val(response.packing.total_colly);
+                $('#modal-form [name=foto]').val(response.packing.foto);
+                if(response.packingdetail.length > 0){
+                for (i=0 ; i < response.packingdetail.length; i++){
+                    console.log(response.packingdetail[i])
+                    add_row();                    
+                    $('#nama'+i+'').val(response.packingdetail[i].id_aluminium);
+                    $('#qty'+i+'').val(response.packingdetail[i].qty_colly);
+                    $('#berat'+i+'').val(response.packingdetail[i].qty_isi);
+                    $('#subtotal'+i+'').val(response.packingdetail[i].qty_subtotal);
+                }
+            }
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

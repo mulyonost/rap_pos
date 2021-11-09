@@ -16,4 +16,9 @@ class PackingDetail extends Model
     {
         return $this->belongsTo(Aluminium::class, 'id_aluminium', 'id');
     }
+
+    public function master()
+    {
+        return $this->belongsTo(Packing::class, 'id_laporan_packing', 'id');
+    }
 }
