@@ -9,6 +9,11 @@ class PenjualanDetail extends Model
 {
     use HasFactory;
     protected $table = "penjualan_detail";
-    protected $primaryKey ="id";
-    protected $guarded =[];
+    protected $primaryKey = "id";
+    protected $guarded = [];
+
+    public function aluminium()
+    {
+        return $this->belongsTo(Aluminium::class, 'id_aluminium', 'id');
+    }
 }

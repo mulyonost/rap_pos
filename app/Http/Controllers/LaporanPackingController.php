@@ -6,6 +6,7 @@ use App\Models\Packing;
 use App\Models\Aluminium;
 use Illuminate\Http\Request;
 use App\Models\PackingDetail;
+use App\Models\PenjualanDetail;
 
 class LaporanPackingController extends Controller
 {
@@ -20,7 +21,15 @@ class LaporanPackingController extends Controller
             ->sortBy(function ($aluminium, $key) {
                 return $aluminium->aluminium->nama;
             });
-        return view('reports.packing_index', compact('packing_detail', 'packing', 'group'));
+
+        $groupout = PenjualanDetail::selectRaw('penjualan_detail.id_aluminium, sum(colly) as colly, sum(subtotal) as subtotal, sum(qty) as qty')
+            ->with('aluminium')
+            ->groupBy('penjualan_detail.id_aluminium')
+            ->get()
+            ->sortBy(function ($aluminium, $key) {
+                return $aluminium->aluminium->nama;
+            });
+        return view('reports.packing_index', compact('packing_detail', 'packing', 'group', 'groupout'));
     }
 
     public function show($id)

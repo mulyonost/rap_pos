@@ -74,8 +74,7 @@ class PenjualanController extends Controller
         $penjualan->save();
 
         $id = $penjualan->id;
-        foreach ($request->addmore as $key=>$value)
-        {
+        foreach ($request->addmore as $key => $value) {
             $penjualandetail = new PenjualanDetail();
             $penjualandetail->id_penjualan = $id;
             $penjualandetail->id_aluminium = $value['nama'];
@@ -97,7 +96,11 @@ class PenjualanController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = array();
+        $data['penjualan'] = Penjualan::find($id);
+        $data['penjualandetail'] = PenjualanDetail::where('id_penjualan', $id)->with('aluminium')->get();
+
+        return response()->json($data);
     }
 
     /**

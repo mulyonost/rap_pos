@@ -25,7 +25,7 @@
                             <div class="form-group">
                                 <label for="">Customer</label>
                                 <select class="form-control nama" name="customer" id="customer" required>
-                                            <option selected="selected">Pilih Supplier</option>
+                                            <option disabled="disabled" selected="selected" >Pilih Supplier</option>
                                         @foreach ($customer as $customer)
                                             <option value="{{$customer->id}}">{{$customer->nama}}</option>
                                         @endforeach
@@ -35,7 +35,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Jatuh Tempo</label>
-                                <input type="date" class="form-control" name="due_date" id="due_date" value="">
+                                <input type="date" class="form-control" name="due_date" id="due_date" value="<?= date('Y-m-d') ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Foto Mobil</label>
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table-striped" width="100%" id="table">
+                        <table class="table-hover" width="100%" id="table">
                             <thead>
                                 <tr>
                                     <th width="40%">Nama Aluminium</th>
@@ -82,6 +82,7 @@
                             <tbody id="mainbody">
                                 <tr>
                                     <td><select class="form-control nama" name="addmore[0][nama]" id="nama0" required>
+                                        <option value="">Pilih Barang</option>
                                         @foreach ($aluminium as $alma)
                                             <option value="{{$alma->id}}">{{$alma->nama}}</option>
                                         @endforeach
@@ -140,79 +141,96 @@
 <!-- /.modal -->
 
 @push('scripts')
-    <script>
-        var numRows = 2,
-            ti = 5;
+<script>
+    var numRows = 2, ti = 5;
 
-        function isNumber(n) {
-            return !isNaN(parseFloat(n)) && isFinite(n);
-        }
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
 
-        function recalc() {
-            let colly = 0;
-            let isi = 0;
-            let qty = 0;
-            let harga = 0;
-            let subtotal = 0;
-            let totalNota = 0;
-            let diskonPersen = $('#diskon_persen').val();
-            let diskonRupiah = 0;
-            let totalAkhir = 0;
-            $('#table').find('tr').each(function() {
-                let colly = $(this).find('input.colly').val();
-                let isi = $(this).find('input.isi').val();
-                let harga = $(this).find('input.harga').val();
-                let qty = (colly * isi);
-                let subtotal = (qty * harga);
-                $(this).find('input.qty').val(Math.round(qty * 100) / 100);
-                $(this).find('input.subtotal').val(subtotal);
-                totalNota += subtotal ? subtotal : 0;
-            });
-            diskonRupiah = diskonPersen/100 * totalNota;
-            totalAkhir = totalNota - diskonRupiah;
-            $('#total_nota').val(totalNota);
-            $('#diskon_rupiah').val(diskonRupiah);
-            $('#total_akhir').val(totalAkhir);
-        }
-
-        function getdate() {
-            var date = $('#tanggal').val();
-            var newDate = date.replace(/-/g, "");
-            let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-            var nomor = "RAP-" + newDate + "-" + r
-
-            $('#nomor').val(nomor);
-        }
-
-        $(function() {
-            $('#modal-form').on("keyup change blur", recalc);
+    function recalc() {
+        let colly = 0;
+        let isi = 0;
+        let qty = 0;
+        let harga = 0;
+        let subtotal = 0;
+        let totalNota = 0;
+        let diskonPersen = $('#diskon_persen').val();
+        let diskonRupiah = 0;
+        let totalAkhir = 0;
+        $('#table').find('tr').each(function() {
+            let colly = $(this).find('input.colly').val();
+            let isi = $(this).find('input.isi').val();
+            let harga = $(this).find('input.harga').val();
+            let qty = (colly * isi);
+            let subtotal = (qty * harga);
+            $(this).find('input.qty').val(Math.round(qty * 100) / 100);
+            $(this).find('input.subtotal').val(subtotal);
+            totalNota += subtotal ? subtotal : 0;
         });
+        diskonRupiah = diskonPersen/100 * totalNota;
+        totalAkhir = totalNota - diskonRupiah;
+        $('#total_nota').val(totalNota);
+        $('#diskon_rupiah').val(diskonRupiah);
+        $('#total_akhir').val(totalAkhir);
+    }
 
-        $(function() {
-            $('#tanggal').on("click change", getdate);
-        });
+    function getdate() {
+        var date = $('#tanggal').val();
+        var newDate = date.replace(/-/g, "");
+        let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
+        var nomor = "RAP-" + newDate + "-" + r;
+        $('#nomor').val(nomor);
+    }
 
-        var i = 0;
-        $('#add_new').click(function() {
-            i++;
-            $('#mainbody').append('<tr><td>' +
-                '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
-                    '@foreach ($aluminium as $alma)' +
-                    '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
-                    '@endforeach' +
-                '</select></td>' +
-                '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
-                '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
-                '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
-                '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-                '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
-                '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
-            )
-        });
+    $(function() {
+        $('#modal-form').on("keyup change blur", recalc);
+    });
 
-        $(document).on('click', '.remove', function(event) {
-            jQuery(this).parent().parent().remove();
-            return false;
+    $(function() {
+        $('#tanggal').on("click change", getdate);
+    });
+
+    var i = 0;
+    $('#add_new').click(function() {
+        i++;
+        $('#mainbody').append('<tr><td>' +
+        '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
+            '<option value="">Pilih Barang</option>' +
+            '@foreach ($aluminium as $alma)' +
+            '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
+            '@endforeach' +
+        '</select></td>' +
+        '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
+        '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
+        '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
+        '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
+        '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
+        '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
+        )
+        $('.nama').select2({
+            theme: "bootstrap"
         });
-    </script>
+    });
+
+    $(document).on('click', '.remove', function(event) {
+        jQuery(this).parent().parent().remove();
+        return false;
+    });
+
+    $(document).ready(function () {
+        $('.nama').select2({
+        theme: "bootstrap"
+        })
+    });
+
+    $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+    });
+
+    $('.nama').select2({
+        theme: "bootstrap"
+    });
+
+</script>
 @endpush

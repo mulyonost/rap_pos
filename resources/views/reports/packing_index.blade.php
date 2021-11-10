@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+{{-- <?= dd($groupout); ?> --}}
 @section('title')
     Laporan Packing
 @endsection
@@ -11,6 +11,8 @@
 @endsection
 
 @section('content')
+<div class="row">
+<div class=col-md-5>
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
@@ -41,6 +43,33 @@
             <td><?php echo number_format($grandtotal); ?> kg</td>
         </tr>
     </tbody>
-
 </table>
+</div>
+<div class="col-md-5">
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <td>Nama Barang</td>
+                <td>Total Colly</td>
+                <td>Total Btg</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php  $grandtotal=0; ?>
+        @foreach ($groupout as $produksi)
+            <tr>
+                <td>{{ $produksi->aluminium->nama }}</td>
+                <td>{{ number_format($produksi->colly) }}</td> 
+                <td>{{ number_format($produksi->qty) }}</td> 
+            </tr>
+            @endforeach
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
 @endsection
