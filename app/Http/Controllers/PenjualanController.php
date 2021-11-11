@@ -74,6 +74,8 @@ class PenjualanController extends Controller
         $penjualan->save();
 
         $id = $penjualan->id;
+
+        session(['id_penjualan' => $id]);
         foreach ($request->addmore as $key => $value) {
             $penjualandetail = new PenjualanDetail();
             $penjualandetail->id_penjualan = $id;
@@ -141,6 +143,18 @@ class PenjualanController extends Controller
 
     public function cetaksj()
     {
-        return view ('penjualan.penjualan_sj');
+        $id_penjualan = session('id_penjualan');
+        $penjualan = Penjualan::with('customer')->find($id_penjualan);
+        $penjualandetail = PenjualanDetail::where('id_penjualan', $id_penjualan)->with('aluminium')->get();
+
+        return view('penjualan.penjualan_sj', compact('penjualan', 'penjualandetail'));
+    }
+
+    public function cetakulangsj($id)
+    {
+        $penjualan = Penjualan::with('customer')->find($id);
+        $penjualandetail = PenjualanDetail::where('id_penjualan', $id)->with('aluminium')->get();
+
+        return view('penjualan.penjualan_sj', compact('penjualan', 'penjualandetail'));
     }
 }
