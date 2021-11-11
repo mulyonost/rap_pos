@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/aluminiumbase', AluminiumBaseController::class);
 
     Route::get('/penjualan/sale/data', [PenjualanController::class, 'data'])->name('sale.data');
+    Route::get('/penjualan/sale/cetak', [PenjualanController::class, 'cetaksj'])->name('sale.cetaksj');
     Route::resource('/penjualan/sale', PenjualanController::class);
 
     Route::get('/kas/data', [KasController::class, 'data'])->name('kas.data');

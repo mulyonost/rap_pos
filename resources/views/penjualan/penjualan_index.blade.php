@@ -20,6 +20,7 @@
                 <table class="table table-striped table-bordered" width="99.8%">
                     <thead>
                         <th width="5%">No</th>
+                        <th>Nomor</th>
                         <th>Tanggal</th>
                         <th>Nama Customer</th>
                         <th>Total Nota</th>
@@ -45,6 +46,9 @@
 
     $(function () {
         table = $('.table').DataTable({
+            buttons: [
+                'excel', 'pdf'
+            ],
             processing: true,
             autowidth: true,
             ajax: {
@@ -52,9 +56,10 @@
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
+                {data: 'nomor'},
                 {data: 'tanggal'},
                 {data: 'customer.nama'},
-                {data: 'total_nota', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
+                {data: 'total_akhir', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
                 {data: 'timbangan_mobil'},
                 {data: 'due_date'},
                 {data: 'status'},
@@ -81,10 +86,18 @@
 
     });
 
+    var date = $('#tanggal').val();
+        var newDate = date.replace(/-/g, "");
+        let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
+        var nomor = "RAP-" + newDate + "-" + r;
+
+
+
     function addForm(url){
         $('#modal-form').modal('show');
         $('#modal-form .modal-title').text('Input Penjualan');
         $('#modal-form form')[0].reset();
+        $('#nomor').val(nomor);
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nomor]').focus();

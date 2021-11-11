@@ -25,7 +25,7 @@ class PenjualanController extends Controller
 
     public function data()
     {
-        $penjualan = Penjualan::orderBy('tanggal')->with('customer')->get();
+        $penjualan = Penjualan::orderBy('tanggal', 'desc')->with('customer')->get();
         return datatables()
             ->of($penjualan)
             ->addIndexColumn()
@@ -137,5 +137,10 @@ class PenjualanController extends Controller
         $penjualan = Penjualan::find($id);
         $penjualan->delete();
         return response()->json('Data berhasil dihapus', 200);
+    }
+
+    public function cetaksj()
+    {
+        return view ('penjualan.penjualan_sj');
     }
 }

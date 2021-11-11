@@ -116,6 +116,7 @@
 
         $.get(url)
             .done((response) => {
+                $('#modal-form [name=base]').val(response.base_id);
                 $('#modal-form [name=nama]').val(response.nama);
                 $('#modal-form [name=finishing]').val(response.finishing);
                 $('#modal-form [name=kategori]').val(response.kategori);

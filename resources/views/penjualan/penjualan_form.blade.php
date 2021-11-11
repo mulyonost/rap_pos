@@ -128,8 +128,9 @@
                         </table>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
+                    <a href="{{ route('sale.cetaksj') }}" target="_blank" class="btn btn-default">Cetak SJ</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
@@ -188,7 +189,7 @@
     });
 
     $(function() {
-        $('#tanggal').on("click change", getdate);
+        $('#tanggal').on("change", getdate);
     });
 
     var i = 0;
