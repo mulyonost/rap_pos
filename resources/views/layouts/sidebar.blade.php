@@ -34,6 +34,53 @@
             </p>
         </a>
         </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cart-plus"></i>
+              <p>
+                Input Master
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('aluminiumbase.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Aluminium Base</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('aluminium.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Aluminium</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('items.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Bahan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('avalan.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Avalan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('customers.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Customer</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('suppliers.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Supplier</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-paste"></i>
@@ -44,12 +91,6 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('aluminiumbase.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Aluminium Base</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Peleburan</p>
@@ -58,7 +99,7 @@
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Laporan Billet -> Produksi</p>
+                  <p>Laporan Billet</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -97,25 +138,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('items.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Master Bahan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('avalan.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Master Avalan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('suppliers.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Supplier</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/UI/buttons.html" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input PO Pembelian</p>
                 </a>
@@ -143,24 +166,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('aluminium.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Master Aluminium</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('customers.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Customer</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Editors</p>
-                </a>
-              </li>
               <li class="nav-item">
                 <a href="pages/forms/validation.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Items;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class ItemsController extends Controller
@@ -53,14 +54,22 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        $items = new Items();
+        // dd($request);
+        $items = new Items;
         $items->nama = $request->nama;
+        $items->unit = $request->unit;
         $items->kategori = $request->kategori;
         $items->stok_awal = $request->stok_awal;
         $items->stok_minimum = $request->stok_minimum;
         $items->stok_sekarang = 0;
-        $items->harga_beli = $request->harga_beli;
-        $items->foto = $request->foto;
+        $items->harga = $request->harga;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::slug($request->nama) . '.' . $extension;
+            $file->move('uploads/items/', $filename);
+            $items->foto = $filename;
+        }
         $items->keterangan = $request->keterangan;
         $items->save();
 
@@ -102,12 +111,19 @@ class ItemsController extends Controller
     {
         $items = Items::find($id);
         $items->nama = $request->nama;
+        $items->unit = $request->unit;
         $items->kategori = $request->kategori;
         $items->stok_awal = $request->stok_awal;
         $items->stok_minimum = $request->stok_minimum;
         $items->stok_sekarang = 0;
-        $items->harga_beli = $request->harga_beli;
-        $items->foto = $request->foto;
+        $items->harga = $request->harga;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::slug($request->nama) . '.' . $extension;
+            $file->move('uploads/items/', $filename);
+            $aluminiumbase->foto = $filename;
+        }
         $items->keterangan = $request->keterangan;
         $items->update();
 

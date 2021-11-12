@@ -17,10 +17,11 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('nama')->unique();
             $table->string('kategori');
+            $table->string('unit');
             $table->integer('stok_awal')->default(0);
             $table->integer('stok_minimum')->default(0);
-            $table->integer('stok_sekarang');
-            $table->integer('harga_beli');
+            $table->integer('stok_sekarang')->default(0);
+            $table->float('harga',12,2);
             $table->string('foto')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();

@@ -20,12 +20,11 @@
                 <table class="table table-striped table-bordered" width="99.8%">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Kategori</th>
                         <th>Nama</th>
+                        <th>Kategori</th>
                         <th>Stok Min</th>
                         <th>Stok Skrg</th>
                         <th>Harga</th>
-                        <th>Foto</th>
                         <th>Keterangan</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
@@ -53,23 +52,25 @@
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
-                {data: 'kategori'},
                 {data: 'nama'},
+                {data: 'kategori'},
                 {data: 'stok_minimum'},
                 {data: 'stok_sekarang'},
-                {data: 'harga_beli'},
-                {data: 'foto'},
+                {data: 'harga'},
                 {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
-
+        showData();
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
+                let formData = new FormData(this);
                 $.ajax({
                     url: $('#modal-form form').attr('action'),
+                    contentType : false,
+                    processData : false,
                     type: 'post',
-                    data: $('#modal-form form').serialize(),
+                    data: formData,
                 })
                 .done((response) => {
                     $('#modal-form').modal('hide');

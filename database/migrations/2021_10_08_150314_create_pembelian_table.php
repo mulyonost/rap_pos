@@ -15,11 +15,11 @@ class CreatePembelianTable extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_pembelian_po')->constrained('pembelian_po');
             $table->foreignID('id_supplier')->constrained('suppliers');
             $table->date('tanggal');
             $table->date('due_date');
             $table->boolean('status');
+            $table->boolean('foto');
             $table->integer('total');
             $table->timestamps();
         });
