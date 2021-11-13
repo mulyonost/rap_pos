@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Items;
+use App\Models\Suppliers;
 use Illuminate\Http\Request;
 
 class PembelianController extends Controller
@@ -13,7 +15,9 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        //
+        $item = Items::orderBy('nama');
+        $supplier = Suppliers::orderBy('nama');
+        return view('pembelian.pembelian_index', compact('item', 'supplier'));
     }
 
     /**

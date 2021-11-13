@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Penjualan Aluminium
+    Pembelian Bahan Baku
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Penjualan Aluminium</li>
+    <li class="breadcrumb-item active">Pembelian Bahan Baku</li>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('sale.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Penjualan Baru</button>
+                <button onclick="addForm('{{ route('bahan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Pembelian Baru</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -22,9 +22,8 @@
                         <th width="5%">No</th>
                         <th>Nomor</th>
                         <th>Tanggal</th>
-                        <th>Nama Customer</th>
+                        <th>Nama Supplier</th>
                         <th>Total Nota</th>
-                        <th>Rp/Kg</th>
                         <th>Jatuh Tempo</th>
                         <th>Status</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
@@ -37,7 +36,7 @@
         </div>
     </div>
 </div>
-@includeIf('penjualan.penjualan_form')
+@includeIf('pembelian.pembelian_form')
 @endsection
 
 @push('scripts')
@@ -107,7 +106,7 @@
         $('#mainbody').append('<tr><td>' +
                 '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
                     '<option value="">Pilih Barang</option>' +
-                    '@foreach ($aluminium as $alma)' +
+                    '@foreach ($item as $alma)' +
                     '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
                     '@endforeach' +
                 '</select></td>' +
