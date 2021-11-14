@@ -96,6 +96,7 @@
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nama]').focus();
         $('#modal-form [name=showfoto]').attr("src", null);
+        $('#modal-form [name=link]').attr("href", null);
 
     }
 
@@ -117,6 +118,7 @@
                 $('#modal-form [name=stok_minimum]').val(response.stok_minimum);
                 $('#modal-form [name=stok_sekarang]').val(response.stok_sekarang);
                 $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/aluminium') }}' + '/' + response.foto);
+                $('#modal-form [name=link]').attr("href", '{{ asset('uploads/aluminium') }}' + '/' + response.foto);
                 $('#modal-form [name=keterangan]').val(response.keterangan);
             })
             .fail((errors) => {

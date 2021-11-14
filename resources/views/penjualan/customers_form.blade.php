@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog modal-lg">
-        <form action="" method="post" class="form-horizontal">
+        <form action="" method="post" class="form-horizontal" autocomplete="off">
             @csrf
             @method('post')
 

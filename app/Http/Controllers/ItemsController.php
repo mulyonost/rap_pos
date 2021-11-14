@@ -73,7 +73,7 @@ class ItemsController extends Controller
         $items->keterangan = $request->keterangan;
         $items->save();
 
-        return response('Data berhasil disimpan', 200);
+        return redirect('master/items');
     }
 
     /**
@@ -122,12 +122,12 @@ class ItemsController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = Str::slug($request->nama) . '.' . $extension;
             $file->move('uploads/items/', $filename);
-            $aluminiumbase->foto = $filename;
+            $items->foto = $filename;
         }
         $items->keterangan = $request->keterangan;
         $items->update();
 
-        return response('Data berhasil disimpan', 200);
+        return redirect('master/items');
     }
 
     /**

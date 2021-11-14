@@ -81,7 +81,7 @@ class AluminiumController extends Controller
         $aluminium->keterangan = $request->keterangan;
         $aluminium->save();
 
-        return view('penjualan.aluminium_index');
+        return redirect('master/aluminium');
     }
 
     /**
@@ -141,7 +141,7 @@ class AluminiumController extends Controller
         $aluminium->keterangan = $request->keterangan;
         $aluminium->update();
 
-        return redirect('penjualan/aluminium');
+        return redirect('master/aluminium');
     }
 
     /**

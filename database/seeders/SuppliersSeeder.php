@@ -15,7 +15,7 @@ class SuppliersSeeder extends Seeder
     {
         \DB::table('suppliers')->insert([
             [
-                'nama' => 'Amin Logam',
+                'nama' => 'PT. Lautan Luas Indonesia',
                 'alamat' => 'Jl. Sunu 3 No 22',
                 'kontak' => '08535455452',
                 'nama_kontak' => 'Ko Amin',

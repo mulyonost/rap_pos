@@ -118,30 +118,18 @@
     }
 
     function recalc() {
-        let colly = 0;
-        let isi = 0;
         let qty = 0;
         let harga = 0;
         let subtotal = 0;
         let totalNota = 0;
-        let diskonPersen = $('#diskon_persen').val();
-        let diskonRupiah = 0;
-        let totalAkhir = 0;
         $('#table').find('tr').each(function() {
-            let colly = $(this).find('input.colly').val();
-            let isi = $(this).find('input.isi').val();
+            let qty = $(this).find('input.qty').val();
             let harga = $(this).find('input.harga').val();
-            let qty = (colly * isi);
             let subtotal = (qty * harga);
-            $(this).find('input.qty').val(Math.round(qty * 100) / 100);
             $(this).find('input.subtotal').val(subtotal);
             totalNota += subtotal ? subtotal : 0;
         });
-        diskonRupiah = diskonPersen/100 * totalNota;
-        totalAkhir = totalNota - diskonRupiah;
         $('#total_nota').val(totalNota);
-        $('#diskon_rupiah').val(diskonRupiah);
-        $('#total_akhir').val(totalAkhir);
     }
 
     function getdate() {
@@ -170,8 +158,6 @@
             '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
             '@endforeach' +
         '</select></td>' +
-        '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
-        '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
         '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
         '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
         '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +

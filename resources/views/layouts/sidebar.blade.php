@@ -36,7 +36,7 @@
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cart-plus"></i>
+              <i class="nav-icon fas fa-plus-circle"></i>
               <p>
                 Input Master
                 <i class="fas fa-angle-left right"></i>
@@ -121,7 +121,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('pengambilan.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Pengambilan Bahan</p>
                 </a>
@@ -199,7 +199,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-file-alt"></i>
+              <i class="nav-icon fas fa-chart-line"></i>
               <p>
                 Reports
                 <i class="fas fa-angle-left right"></i>
@@ -226,7 +226,6 @@
               </li>
             </ul>
           </li>
-          <li class="nav-header">EXAMPLES</li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

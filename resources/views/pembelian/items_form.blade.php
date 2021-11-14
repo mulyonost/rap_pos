@@ -78,6 +78,7 @@
                       <label for="foto" class="col-md-2 col-md-offset-1 control-label">Foto</label>
                       <div class="col-md-5">
                           <input type="file" name="foto" id="foto" class="form-control">
+                          <a href="" name="link" id="link" target="_blank"><img src="" name="showfoto" id="showfoto" class="img-thumbnail"></a>
                           <span class="help-block with-errors"></span>
                       </div>
                   </div>

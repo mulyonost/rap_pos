@@ -56,7 +56,7 @@
                 {data: 'kategori'},
                 {data: 'stok_minimum'},
                 {data: 'stok_sekarang'},
-                {data: 'harga'},
+                {data: 'harga', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
                 {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
@@ -90,6 +90,8 @@
         $('#modal-form .modal-title').text('Tambah Bahan');
 
         $('#modal-form form')[0].reset();
+        $('#modal-form [name=showfoto]').attr("src", null);
+        $('#modal-form [name=link]').attr("href", null);
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nama]').focus();
@@ -108,11 +110,14 @@
         $.get(url)
             .done((response) => {
                 $('#modal-form [name=nama]').val(response.nama);
+                $('#modal-form [name=unit]').val(response.unit);
                 $('#modal-form [name=kategori]').val(response.kategori);
                 $('#modal-form [name=stok_awal]').val(response.stok_awal);
                 $('#modal-form [name=stok_minimum]').val(response.stok_minimum);
-                $('#modal-form [name=harga_beli]').val(response.harga_beli);
-                $('#modal-form [name=foto]').val(response.foto);
+                $('#modal-form [name=stok_sekarang]').val(response.stok_sekarang);
+                $('#modal-form [name=harga]').val(response.harga);
+                $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/items') }}' + '/' + response.foto);
+                $('#modal-form [name=link]').attr("href", '{{ asset('uploads/items') }}' + '/' + response.foto);
                 $('#modal-form [name=keterangan]').val(response.keterangan);
             })
             .fail((errors) => {

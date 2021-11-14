@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Items;
-use App\Models\Pembelian;
-use App\Models\PembelianDetail;
-use App\Models\Suppliers;
+use App\Models\PengambilanBahan;
+use App\Models\PengambilanBahanDetail;
 use Illuminate\Http\Request;
 
-class PembelianController extends Controller
+class PengambilanBahanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,21 +17,21 @@ class PembelianController extends Controller
     public function index()
     {
         $item = Items::orderBy('nama')->get();
-        $supplier = Suppliers::orderBy('nama')->get();
-        return view('pembelian.pembelian_index', compact('item', 'supplier'));
+        return view('laporan.pengambilan_bahan_index', compact('item'));
     }
+
 
     public function data()
     {
-        $pembelian = Pembelian::orderBy('id', 'desc')->get();
+        $pengambilan = PengambilanBahan::orderBy('id', 'desc')->get();
         return datatables()
-            ->of($pembelian)
+            ->of($pengambilan)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($pembelian) {
+            ->addColumn('aksi', function ($pengambilan) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('bahan.update', $pembelian->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('bahan.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('pengambilan.update', $pengambilan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('pengambilan.destroy', $pengambilan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })
@@ -58,34 +57,27 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        $pembelian = new Pembelian();
-        $pembelian->nomor = $request->nomor;
-        $pembelian->id_supplier = $request->supplier;
-        $pembelian->tanggal = $request->tanggal;
-        $pembelian->due_date = $request->due_date;
-        $pembelian->status = $request->status;
-        $pembelian->foto = $request->foto_nota;
-        $pembelian->total = $request->total_nota;
-        $pembelian->keterangan = $request->keterangan;
+        $pengambilan = new PengambilanBahan();
+        $pengambilan->nomor = $request->nomor;
+        $pengambilan->tanggal = $request->tanggal;
+        $pengambilan->divisi = $request->divisi;
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
             $filename = $request->nomor . date('YmdHms') . '.' . $extension;
-            $file->move('uploads/pembelian/bahan', $filename);
-            $pembelian->foto = $filename;
+            $file->move('uploads/laporan/pengambilan', $filename);
+            $pengambilan->foto = $filename;
         }
-        $pembelian->save();
+        $pengambilan->keterangan = $request->keterangan;
+        $pengambilan->save();
 
-        $id_pembelian = $pembelian->id;
-
+        $id = $pengambilan->id;
         foreach ($request->addmore as $key => $value) {
-            $pembeliandetail = new PembelianDetail();
-            $pembeliandetail->id_pembelian = $id_pembelian;
-            $pembeliandetail->id_item = $value['nama'];
-            $pembeliandetail->qty = $value['qty'];
-            $pembeliandetail->harga = $value['harga'];
-            $pembeliandetail->subtotal = $value['subtotal'];
-            $pembeliandetail->save();
+            $pengambilandetail = new PengambilanBahanDetail();
+            $pengambilandetail->id_pengambilan_bahan = $id;
+            $pengambilandetail->id_item = $value['item'];
+            $pengambilandetail->qty = $value['qty'];
+            $pengambilandetail->save();
         }
     }
 
@@ -131,6 +123,12 @@ class PembelianController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pengambilan = PengambilanBahan::find($id);
+        // $pengambilan_image = public_path("uploads/laporan/produksi/{$pengambilan->foto}");
+        // if (File::exists($pengambilan_image)) {
+        //     File::delete($pengambilan_image);
+        // };
+        $pengambilan->delete();
+        return response()->json('Data berhasil dihapus', 200);
     }
 }

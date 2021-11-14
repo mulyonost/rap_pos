@@ -16,6 +16,7 @@ use App\Http\Controllers\AluminiumBaseController;
 use App\Http\Controllers\LaporanPackingController;
 use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\LaporanAnodizingController;
+use App\Http\Controllers\PengambilanBahanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/master/suppliers/data', [SuppliersController::class, 'data'])->name('suppliers.data');
     Route::resource('/master/suppliers', SuppliersController::class);
 
-    // All Laporan Routes
+    // All Input Laporan Routes
 
     Route::get('/produksi/data', [ProduksiController::class, 'data'])->name('produksi.data');
     Route::resource('/produksi', ProduksiController::class);
@@ -67,21 +68,30 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/packing/data', [PackingController::class, 'data'])->name('packing.data');
     Route::resource('/packing', PackingController::class);
 
+    Route::get('/laporan/pengambilan/data', [PengambilanBahanController::class, 'data'])->name('pengambilan.data');
+    Route::resource('/laporan/pengambilan', PengambilanBahanController::class);
+
+
+    //All Kas Routes
+
+    Route::get('/kas/data', [KasController::class, 'data'])->name('kas.data');
+    Route::resource('/kas', KasController::class);
+
     // All Pembelian Routes
 
-    Route::get('/pembelian/bahan/data', [PembelianController::class, 'data'])->name('pembelian_bahan.data');
+    Route::get('/pembelian/bahan/data', [PembelianController::class, 'data'])->name('bahan.data');
     Route::resource('/pembelian/bahan', PembelianController::class);
+
+
+
+    // All Penjualan Routes
 
     Route::get('/penjualan/sale/data', [PenjualanController::class, 'data'])->name('sale.data');
     Route::get('/penjualan/sale/cetaksj', [PenjualanController::class, 'cetaksj'])->name('sale.cetaksj');
     Route::get('/penjualan/sale/cetakulangsj/{id}', [PenjualanController::class, 'cetakulangsj'])->name('sale.cetakulangsj');
     Route::resource('/penjualan/sale', PenjualanController::class)->except('cetakulangsj');
 
-    Route::get('/kas/data', [KasController::class, 'data'])->name('kas.data');
-    Route::resource('/kas', KasController::class);
-
-
-
+    // All Reports Routes
 
     Route::get('/produksireports', [LaporanProduksiController::class, 'index'])->name('produksireports.index');
     Route::get('/produksireports/date', [LaporanProduksiController::class, 'date'])->name('produksireports.date');

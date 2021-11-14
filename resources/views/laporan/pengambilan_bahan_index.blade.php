@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Pembelian Bahan Baku
+    Pengambilan Bahan
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Pembelian Bahan Baku</li>
+    <li class="breadcrumb-item active">Pengambilan Bahan</li>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('bahan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Pembelian Baru</button>
+                <button onclick="addForm('{{ route('pengambilan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Pembelian Baru</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -22,10 +22,8 @@
                         <th width="5%">No</th>
                         <th>Nomor</th>
                         <th>Tanggal</th>
-                        <th>Nama Supplier</th>
-                        <th>Total Nota</th>
-                        <th>Jatuh Tempo</th>
-                        <th>Status</th>
+                        <th>Divisi</th>
+                        <th>Keterangan</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
                     <tbody>
@@ -36,7 +34,7 @@
         </div>
     </div>
 </div>
-@includeIf('pembelian.pembelian_form')
+@includeIf('laporan.pengambilan_bahan_form')
 @endsection
 
 @push('scripts')
@@ -51,16 +49,14 @@
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('bahan.data') }}',
+                url: '{{ route('pengambilan.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'nomor'},
                 {data: 'tanggal'},
-                {data: 'id_supplier'},
-                {data: 'total', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
-                {data: 'due_date'},
-                {data: 'status'},
+                {data: 'divisi'},
+                {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
@@ -93,7 +89,7 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Input Penjualan');
+        $('#modal-form .modal-title').text('Pengambilan Bahan');
         $('#modal-form form')[0].reset();
         $('#nomor').val(nomor);
         $('#modal-form form').attr('action', url);
@@ -101,20 +97,18 @@
         $('#modal-form [name=nomor]').focus();
     }
 
-    function add_row_sale(){
+    function add_row(){
         $('#mainbody').append('<tr><td>' +
-                '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
-                    '<option value="">Pilih Barang</option>' +
-                    '@foreach ($item as $alma)' +
-                    '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
+            'Gambar <br>nanti disini</td>' +
+            '<td><select class="form-control" id="item[' + i + ']" name="addmore['+ i +'][item]">' +
+            '<option value="" selected="" disabled>Pilih Item</option>' +
+                    '@foreach ($item as $bahan)' +
+                    '<option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>' +
                     '@endforeach' +
                 '</select></td>' +
-                '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
-                '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
-                '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
-                '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-                '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
-                '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
+                '<td><input class="form-control" type="number" step="0.01" id="qty'+ i +'" name="addmore['+ i +'][qty]"></td>' +
+                '<td id="satuan" name="satuan">Ltr</td>' +
+                '<td><button id="remove_row" type="button" name="remove_row" class="ml-5 btn btn-sm btn-danger remove"> -</button></td></tr>'
             )
             $('.nama').select2({
                 theme: "bootstrap"

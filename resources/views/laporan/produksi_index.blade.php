@@ -109,6 +109,7 @@ function add_row(){
         $('#mainbody').empty();
         $('#modal-form form')[0].reset();
         $('#modal-form').ready(add_row);
+        $('#modal-form').ready(getNomorProduksi);
         $('#modal-form .modal-title').text('Input Data Produksi');
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
@@ -125,9 +126,6 @@ function add_row(){
         $('#modal-form [name=_method]').val('put');
         $('#modal-form [name=nama]').focus();
 
-        // var array = jQuery.parseJSON(response);
-        // produksi = array[0];
-        // produksidetail = array[1]
         $.get(url)
             .done((response) => {
                     console.log(response.produksidetail[0].aluminium.nama);

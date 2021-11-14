@@ -79,19 +79,7 @@
                         </tr>
                       </thead>
                       <tbody id="mainbody">
-                        <!-- <tr>
-                          <td><input class="form-control" type="text" name="addmore[0][matras]" id="matras0"></td>
-                          <td><select class="form-control nama" name="addmore[0][nama]" id="nama0" required >
-                              <option disabled="disabled" selected="selected" value="" >Select Produk</option>
-                              @foreach($produk as $pro)
-                                  <option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>
-                              @endforeach
-                          </select></td>
-                          <td><input step=".001" class="form-control berat" type="number" name="addmore[0][berat]" id="berat0" required></td>
-                          <td><input class="form-control qty" type="number" name="addmore[0][qty]" id=qty0 required></td>
-                          <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
-                          <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td>
-                        </tr> -->
+
                       </tbody>
                     </table>               
                   </div>
@@ -116,42 +104,13 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function recalc() {
-  var berat = 0;
-  var qty = 0;
-  var grandtotal = 0;
-  $('#kas_table').find('tr').each(function() {
-    var berat = $(this).find('input.berat').val();
-    var qty = $(this).find('input.qty').val();
-    var subtotal = (berat * qty);
-    let berat_max = $(this).find('option:selected').data('berat');
-    $(this).find('input.subtotal').val(Math.round(subtotal * 100) / 100);
-    // $(this).find('input.berat').val(berat_max);
-    grandtotal += isNumber(subtotal)  ? subtotal : 0;
-  });
-  $('#total').val(Math.round(grandtotal * 100) / 100 );
-}
-
-function getdate() {
-	var date= $('#tanggal').val();
-  var newDate = date.replace(/-/g, "");
-  var mesin = $('#mesin').val();
-  $('#nomor').val(newDate + "-" + mesin);
-}
-
 $(function() {
-  $('#modal-form').on("keyup change blur shown.bs.modal", recalc);
+  $('#modal-form').on("keyup change blur shown.bs.modal", recalcProduksi);
 });
 
 $(function(){
-  $('#tanggal').on("change click", getdate);
+  $('#tanggal').on("change click", getNomorProduksi);
 })
-
-$(document).ready(function () {
-  $('.nama').select2({
-    theme: "bootstrap"
-  })
-});
 
 $(document).on('select2:open', () => {
     document.querySelector('.select2-search__field').focus();
@@ -184,8 +143,6 @@ $( document ).on('click', '.remove', function(event){
   jQuery(this).parent().parent().remove();
             return false;
 });
-
-
 
 </script>
 @endpush

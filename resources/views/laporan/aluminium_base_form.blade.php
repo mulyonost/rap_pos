@@ -58,7 +58,7 @@
                       <label for="foto" class="col-md-2 col-md-offset-1 control-label">Foto</label>
                       <div class="col-md-5">
                           <input class="form-control" type="file" name="foto" id="foto" >
-                          <img src="" name="showfoto" id="showfoto" class="img-thumbnail" />
+                          <a href="" name="link" id="link" target="_blank"><img src="" name="showfoto" id="showfoto" class="img-thumbnail"></a>
                           <span class="help-block with-errors"></span>
                       </div>
                   </div>

@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog modal-xl">
-        <form action="javascript:;" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <form action="javascript:;" method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
             @csrf
             @method('post')
 
@@ -46,6 +46,7 @@
                         <select name="kategori" class="form-group form-control" aria-label="Default select example">
                             <option value="ALUMINIUM" selected>ALUMINIUM</option>
                             <option value="TANGGA">TANGGA</option>
+                            <option value="PINTU">PINTU</option>
                           </select>
                           <span class="help-block with-errors"></span>
                       </div>
@@ -92,7 +93,7 @@
                           <span class="help-block with-errors"></span>
                       </div>
                       <div class="col-md-5">
-                          <img src="{{ asset('/uploads/aluminium/') }}" alt="">
+                        <a href="" name="link" id="link"><img src="" name="showfoto" id="showfoto" class="img-thumbnail"></a>
                       </div>
                   </div>
                   <div class="form-group row">
@@ -115,3 +116,21 @@
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
+
+  @push('scripts')
+<script>
+    function getNama(){
+        let base = $('#base option:selected').text();
+        let warna = $('#finishing option:selected').val();
+        $('#nama').val(base + " " + warna);
+    }
+
+    $(function(){
+        $('#base').on('change', getNama);
+        $('#finishing').on('change', getNama);
+    })
+
+        
+
+</script>
+  @endpush
