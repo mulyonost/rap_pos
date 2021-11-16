@@ -15,7 +15,7 @@ class CreateAluminiumTable extends Migration
     {
         Schema::create('aluminium', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('base_id')->constrained('aluminium_base')->onDelete('cascade');
+            $table->foreignID('base_id')->constrained('aluminium_base');
             $table->string('base_name');
             $table->string('nama');
             $table->string('finishing');

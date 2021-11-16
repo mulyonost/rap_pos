@@ -16,7 +16,7 @@ class CreatePengambilanBahanDetailTable extends Migration
         Schema::create('pengambilan_bahan_detail', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_pengambilan_bahan')->constrained('pengambilan_bahan', 'id')->onDelete('cascade');
-            $table->foreignId('id_item')->constrained('items', 'id')->onDelete('cascade');
+            $table->foreignId('id_item')->constrained('items', 'id');
             $table->float('qty', 7, 2);
             $table->timestamps();
         });
