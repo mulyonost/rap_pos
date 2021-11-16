@@ -24,15 +24,15 @@ class PembelianController extends Controller
 
     public function data()
     {
-        $pembelian = Pembelian::orderBy('id', 'desc')->get();
+        $pembelian = Pembelian::orderBy('id', 'desc')->with('supplier')->get();
         return datatables()
             ->of($pembelian)
             ->addIndexColumn()
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('bahan.update', $pembelian->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('bahan.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('pembelian_bahan.update', $pembelian->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('pembelian_bahan.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })

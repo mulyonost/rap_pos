@@ -32,7 +32,7 @@
             <td>{{ number_format($produksi->colly) }}</td> 
             <td>{{ number_format($produksi->btg) }}</td> 
             <td>{{ number_format($berat) }} Kg</td> 
-            <td><a href="{{ route('packingreports.show', $produksi->id_aluminium) }}">Detail</a></td>
+            <td><a href="{{ route('reports_packing.show', $produksi->id_aluminium) }}">Detail</a></td>
             <?php $grandtotal += $berat; ?>
         </tr>
         @endforeach

@@ -30,8 +30,8 @@ class PengambilanBahanController extends Controller
             ->addColumn('aksi', function ($pengambilan) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('pengambilan.update', $pengambilan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('pengambilan.destroy', $pengambilan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('laporan_pengambilan.update', $pengambilan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('laporan_pengambilan.destroy', $pengambilan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })

@@ -14,57 +14,22 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Nomor Nota</label>
-                                <input type="text" class="form-control" name="nomor" id="nomor" required readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Tanggal</label>
-                                <input type="date" class="form-control" name="tanggal" id="tanggal"
-                                    value="<?= date('Y-m-d') ?>">
-                            </div>
-                            <div class="form-group">
                                 <label for="">Supplier</label>
                                 <select class="form-control nama" name="supplier" id="supplier" required>
                                             <option disabled="disabled" selected="selected" >Pilih Supplier</option>
                                         @foreach ($supplier as $supp)
                                             <option value="{{$supp->id}}">{{$supp->nama}}</option>
                                         @endforeach
-                                        </select>      
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Jatuh Tempo</label>
-                                <input type="date" class="form-control" name="due_date" id="due_date" value="<?= date('Y-m-d') ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Foto Nota</label>
-                                <input type="file" class="form-control" name="foto_nota" id="foto_nota" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Status Pelunasan</label>
-                                <select class="form-control"  name="status" id="status">
-                                    <option value="0">Belum Lunas</option>
-                                    <option value="1">Lunas</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Keterangan</label>
-                                <textarea class="form-control" name="keterangan" id="keterangan" cols="30"
-                                    rows="3"></textarea>
+                                        </select> 
                             </div>
                         </div>
                     </div>
                     <div class="table-responsive center">
-                        <table class="table-hover center" width="80%" id="table">
+                        <table class="table-hover center" width="50%" id="table">
                             <thead>
                                 <tr>
-                                    <th width="">Nama Item</th>
-                                    <th width="10%">Qty</th>
-                                    <th width="10%">Harga</th>
-                                    <th width="20%">Subtotal</th>
+                                    <th width="">Nama Avalan</th>
+                                    <th width="40%">Harga</th>
                                     <th><button id="add_new" type="button" name="add_new"
                                             class="btn btn-sm btn-success"> +</button></th>
                                 </tr>
@@ -73,32 +38,20 @@
                                 <tr>
                                     <td><select class="form-control nama" name="addmore[0][nama]" id="nama0" required>
                                         <option value="">Pilih Barang</option>
-                                        @foreach ($item as $bahan)
+                                        @foreach ($avalan as $bahan)
                                             <option value="{{$bahan->id}}">{{$bahan->nama}}</option>
                                         @endforeach
                                         </select>                                        
                                     </td>
-                                    <td><input class="form-control qty" type="number" name="addmore[0][qty]" id="qty0" required></td>
                                     <td><input class="form-control harga" type="number" name="addmore[0][harga]" id="harga0" required></td>
-                                    <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
                                     <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>
                                 </tr>
-                            <tfoot>
-                                <tr>
-                                    <td></td>
-                                </td>
-                                <td>Total Nota</td>
-                                <td colspan="2"><input type="number" step="any" class="form-control" name="total_nota" id="total_nota" readonly>
-                                <td></td>
-                                </tr>
-                            </tfoot>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
-                    <a href="" target="_blank" class="btn btn-default">Cetak SJ</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
@@ -154,13 +107,11 @@
         $('#mainbody').append('<tr><td>' +
         '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
             '<option value="">Pilih Barang</option>' +
-            '@foreach ($item as $alma)' +
+            '@foreach ($avalan as $alma)' +
             '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
             '@endforeach' +
         '</select></td>' +
-        '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
         '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-        '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
         '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
         )
         $('.nama').select2({

@@ -32,8 +32,8 @@ class PenjualanController extends Controller
             ->addColumn('aksi', function ($penjualan) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('sale.update', $penjualan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('sale.destroy', $penjualan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('penjualan_aluminium.update', $penjualan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('penjualan_aluminium.destroy', $penjualan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })

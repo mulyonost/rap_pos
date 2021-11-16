@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('anodizing.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Laporan Anodizing</button>
+                <button onclick="addForm('{{ route('laporan_anodizing.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Laporan Anodizing</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -46,7 +46,7 @@
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('anodizing.data') }}',
+                url: '{{ route('laporan_anodizing.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},

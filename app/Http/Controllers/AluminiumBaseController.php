@@ -29,8 +29,8 @@ class AluminiumBaseController extends Controller
             ->addColumn('aksi', function ($aluminium) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('aluminiumbase.update', $aluminium->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('aluminiumbase.destroy', $aluminium->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('master_aluminiumbase.update', $aluminium->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('master_aluminiumbase.destroy', $aluminium->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })

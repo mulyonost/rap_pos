@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('pengambilan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Pembelian Baru</button>
+                <button onclick="addForm('{{ route('laporan_pengambilan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Pembelian Baru</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -49,7 +49,7 @@
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('pengambilan.data') }}',
+                url: '{{ route('laporan_pengambilan.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},

@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pembelian extends Model
+class PembelianAvalanDetail extends Model
 {
     use HasFactory;
-
-    protected $table = 'pembelian';
+    protected $table = "pembelian_avalan_detail";
     protected $primaryKey = 'id';
     protected $guarded = [];
 
-    public function supplier()
+    public function master()
     {
-        return $this->belongsTo(Suppliers::class, 'id_supplier', 'id');
+        return $this->belongsTo(PembelianAvalan::class, 'id_pembelian_avalan', 'id');
     }
 }

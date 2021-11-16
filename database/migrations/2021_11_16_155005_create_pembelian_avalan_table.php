@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenjualanTable extends Migration
+class CreatePembelianAvalanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,18 @@ class CreatePenjualanTable extends Migration
      */
     public function up()
     {
-        Schema::create('penjualan', function (Blueprint $table) {
+        Schema::create('pembelian_avalan', function (Blueprint $table) {
             $table->id();
-            // $table->foreignID('id_penjualan_po')->constrained('penjualan_po')->nullable();
             $table->string('nomor');
-            $table->foreignID('id_customer')->constrained('customers');
-            $table->integer('timbangan_mobil')->nullable();
-            $table->string('foto_mobil')->nullable();
-            $table->string('foto_nota')->nullable();
             $table->date('tanggal');
             $table->date('due_date');
-            $table->string('keterangan')->nullable();
-            $table->boolean('status');
+            $table->foreignId('id_supplier')->constrained('suppliers')->onDelete('cascade');
             $table->bigInteger('total_nota');
             $table->integer('diskon');
             $table->bigInteger('total_akhir');
+            $table->string('foto_nota')->nullable();
+            $table->boolean('status');
+            $table->string('keterangan')->nullable();
             $table->string('created_by')->nullable();
             $table->timestamps();
         });
@@ -40,6 +37,6 @@ class CreatePenjualanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penjualan');
+        Schema::dropIfExists('pembelian_avalan');
     }
 }

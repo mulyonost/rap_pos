@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Penjualan Aluminium
+    Pembelian Avalan
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Penjualan Aluminium</li>
+    <li class="breadcrumb-item active">Pembelian Avalan</li>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('penjualan_aluminium.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Penjualan Baru</button>
+                <button onclick="addForm('{{ route('pembelian_avalan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Pembelian Baru</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -22,99 +22,61 @@
                         <th width="5%">No</th>
                         <th>Nomor</th>
                         <th>Tanggal</th>
-                        <th>Nama Customer</th>
+                        <th>Supplier</th>
                         <th>Total Nota</th>
-                        <th>Rp/Kg</th>
-                        <th>Jatuh Tempo</th>
                         <th>Status</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
                     <tbody>
 
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
 </div>
-@includeIf('penjualan.penjualan_form')
+@includeIf('pembelian.pembelian_avalan_form')
 @endsection
 
 @push('scripts')
 <script>
     let table;
-    // let numFormat = render: $.fn.dataTable.render.number('.', ',', 0, 'Rp').display;
 
     $(function () {
         table = $('.table').DataTable({
-            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf'
+            ],
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('penjualan_aluminium.data') }}',
+                url: '{{ route('pembelian_avalan.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'nomor'},
                 {data: 'tanggal'},
-                {data: 'customer.nama'},
-                {data: 'total_akhir', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
-                {data: 'timbangan_mobil'},
-                {data: 'due_date'},
+                {data: 'supplier.nama'},
+                {data: 'total_akhir'},
                 {data: 'status'},
                 {data: 'aksi', searchable:false, sortable:false}
-            ],
-            buttons: [
-                {
-                extend : 'copyHtml5',
-                exportOptions : {orthogonal : 'export'}
-                }
-            ],
-            footerCallback: function( tfoot, data, start, end, display ) {
-                var api = this.api(), data;
-    
-                // Remove the formatting to get integer data for summation
-                var intVal = function ( i ) {
-                    return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '')*1 :
-                        typeof i === 'number' ?
-                            i : 0;
-                };
-    
-                // Total over all pages
-                total = api
-                    .column( 4 )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );
-    
-                // Total over this page
-                pageTotal = api
-                    .column( 4, { page: 'current'} )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );
-    
-                // Update footer
- 
-                $( api.column( 4 ).footer() ).html(
-                    pageTotal +' ('+ total +' total)'
-                );
+            ]
+        });
+        $('#modal-form').validator().on('submit', function (e) {
+            if (! e.preventDefault()) {
+                $.ajax({
+                    url: $('#modal-form form').attr('action'),
+                    type: 'post',
+                    data: $('#modal-form form').serialize(),
+                })
+                .done((response) => {
+                    $('#modal-form').modal('hide');
+                    table.ajax.reload();
+                })
+                .fail((errors) => {
+                    alert('Tidak dapat menyimpan data');
+                    return;
+                })
             }
         })
 
@@ -129,7 +91,7 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Input Penjualan');
+        $('#modal-form .modal-title').text('Pengambilan Bahan');
         $('#modal-form form')[0].reset();
         $('#nomor').val(nomor);
         $('#modal-form form').attr('action', url);
@@ -137,20 +99,18 @@
         $('#modal-form [name=nomor]').focus();
     }
 
-    function add_row_sale(){
+    function add_row(){
         $('#mainbody').append('<tr><td>' +
-                '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
-                    '<option value="">Pilih Barang</option>' +
-                    '@foreach ($aluminium as $alma)' +
-                    '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
+            'Gambar <br>nanti disini</td>' +
+            '<td><select class="form-control" id="item[' + i + ']" name="addmore['+ i +'][item]">' +
+            '<option value="" selected="" disabled>Pilih Item</option>' +
+                    '@foreach ($avalan as $bahan)' +
+                    '<option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>' +
                     '@endforeach' +
                 '</select></td>' +
-                '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
-                '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
-                '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
-                '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-                '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
-                '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
+                '<td><input class="form-control" type="number" step="0.01" id="qty'+ i +'" name="addmore['+ i +'][qty]"></td>' +
+                '<td id="satuan" name="satuan">Ltr</td>' +
+                '<td><button id="remove_row" type="button" name="remove_row" class="ml-5 btn btn-sm btn-danger remove"> -</button></td></tr>'
             )
             $('.nama').select2({
                 theme: "bootstrap"

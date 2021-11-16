@@ -30,8 +30,8 @@ class PackingController extends Controller
             ->addColumn('aksi', function ($packing) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('packing.update', $packing->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('packing.destroy', $packing->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('laporan_packing.update', $packing->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('laporan_packing.destroy', $packing->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })

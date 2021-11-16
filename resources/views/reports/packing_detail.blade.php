@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-<a href="{{ route('packingreports.index') }}">Back</a>
+<a href="{{ route('reports_packing.index') }}">Back</a>
 <h2>{{ $aluminium->nama }}</h2>
 <table class="table table-bordered table-responsive">
     <thead>

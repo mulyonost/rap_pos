@@ -130,7 +130,7 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
-                    <a href="{{ route('sale.cetaksj') }}" target="_blank" class="btn btn-default">Cetak SJ</a>
+                    <a href="{{ route('penjualan_aluminium.cetaksj') }}" target="_blank" class="btn btn-default">Cetak SJ</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>

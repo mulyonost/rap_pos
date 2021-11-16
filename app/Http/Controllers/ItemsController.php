@@ -15,7 +15,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        return view('pembelian.items_index');
+        return view('master.items_index');
     }
 
     public function data()
@@ -27,8 +27,8 @@ class ItemsController extends Controller
             ->addColumn('aksi', function ($item) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('items.update', $item->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('items.destroy', $item->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('master_items.update', $item->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('master_items.destroy', $item->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })

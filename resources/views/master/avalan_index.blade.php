@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Bahan
+    Daftar Avalan
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Bahan</li>
+    <li class="breadcrumb-item active">Avalan</li>
 @endsection
 
 @section('content')
@@ -14,18 +14,14 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('items.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Bahan</button>
+                <button onclick="addForm('{{ route('master_avalan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Avalan</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
                     <thead>
                         <th width="5%">No</th>
                         <th>Nama</th>
-                        <th>Kategori</th>
-                        <th>Stok Min</th>
-                        <th>Stok Skrg</th>
                         <th>Harga</th>
-                        <th>Keterangan</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
                     <tbody>
@@ -36,7 +32,7 @@
         </div>
     </div>
 </div>
-@includeIf('pembelian.items_form')
+@includeIf('master.avalan_form')
 @endsection
 
 @push('scripts')
@@ -48,29 +44,22 @@
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('items.data') }}',
+                url: '{{ route('master_avalan.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'nama'},
-                {data: 'kategori'},
-                {data: 'stok_minimum'},
-                {data: 'stok_sekarang'},
-                {data: 'harga', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
-                {data: 'keterangan'},
+                {data: 'harga'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
-        showData();
+
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
-                let formData = new FormData(this);
                 $.ajax({
                     url: $('#modal-form form').attr('action'),
-                    contentType : false,
-                    processData : false,
                     type: 'post',
-                    data: formData,
+                    data: $('#modal-form form').serialize(),
                 })
                 .done((response) => {
                     $('#modal-form').modal('hide');
@@ -87,11 +76,9 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah Bahan');
+        $('#modal-form .modal-title').text('Tambah Avalan');
 
         $('#modal-form form')[0].reset();
-        $('#modal-form [name=showfoto]').attr("src", null);
-        $('#modal-form [name=link]').attr("href", null);
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nama]').focus();
@@ -110,15 +97,7 @@
         $.get(url)
             .done((response) => {
                 $('#modal-form [name=nama]').val(response.nama);
-                $('#modal-form [name=unit]').val(response.unit);
-                $('#modal-form [name=kategori]').val(response.kategori);
-                $('#modal-form [name=stok_awal]').val(response.stok_awal);
-                $('#modal-form [name=stok_minimum]').val(response.stok_minimum);
-                $('#modal-form [name=stok_sekarang]').val(response.stok_sekarang);
                 $('#modal-form [name=harga]').val(response.harga);
-                $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/items') }}' + '/' + response.foto);
-                $('#modal-form [name=link]').attr("href", '{{ asset('uploads/items') }}' + '/' + response.foto);
-                $('#modal-form [name=keterangan]').val(response.keterangan);
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

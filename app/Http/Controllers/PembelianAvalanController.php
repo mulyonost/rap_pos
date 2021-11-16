@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Avalan;
+use App\Models\Suppliers;
 use Illuminate\Http\Request;
+use App\Models\AvalanSupplier;
+use App\Models\PembelianAvalan;
 
-class AvalanController extends Controller
+class PembelianAvalanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,20 +17,22 @@ class AvalanController extends Controller
      */
     public function index()
     {
-        return view('master.avalan_index');
+        $supplier = Suppliers::where('kategori', 'avalan')->orderBy('nama')->get();
+        $avalan = Avalan::orderBy('nama');
+        return view('pembelian.pembelian_avalan_index', compact('supplier', 'avalan'));
     }
 
     public function data()
     {
-        $avalan = Avalan::orderBy('id', 'desc')->get();
+        $pembelianav = PembelianAvalan::orderBy('id', 'desc')->get();
         return datatables()
-            ->of($avalan)
+            ->of($pembelianav)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($avalan) {
+            ->addColumn('aksi', function ($pembelianav) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('master_avalan.update', $avalan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('master_avalan.destroy', $avalan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('pembe$pembelianav.update', $pembelianav->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('pembe$pembelianav.destroy', $pembelianav->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })
@@ -53,12 +58,7 @@ class AvalanController extends Controller
      */
     public function store(Request $request)
     {
-        $avalan = new Avalan;
-        $avalan->nama = $request->nama;
-        $avalan->harga = $request->harga;
-
-        $avalan->save();
-        return response('Data berhasil disimpan', 200);
+        //
     }
 
     /**
@@ -69,9 +69,7 @@ class AvalanController extends Controller
      */
     public function show($id)
     {
-        $avalan = Avalan::find($id);
-
-        return response()->json($avalan);
+        //
     }
 
     /**
@@ -94,11 +92,7 @@ class AvalanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $avalan = Avalan::find($id);
-
-        $avalan->nama = $request->nama;
-        $avalan->harga = $request->harga;
-        $avalan->update();
+        //
     }
 
     /**
@@ -109,9 +103,6 @@ class AvalanController extends Controller
      */
     public function destroy($id)
     {
-        $avalan = Avalan::find($id);
-        $avalan->delete();
-
-        return response()->json('Data berhasil dihapus', 200);
+        //
     }
 }

@@ -26,8 +26,8 @@ class SuppliersController extends Controller
             ->addColumn('aksi', function ($supplier) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('suppliers.update', $supplier->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('suppliers.destroy', $supplier->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('master_suppliers.update', $supplier->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('master_suppliers.destroy', $supplier->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })
@@ -56,6 +56,7 @@ class SuppliersController extends Controller
         $supplier = new Suppliers();
         $supplier->nama = $request->nama;
         $supplier->alamat = $request->alamat;
+        $supplier->kategori = $request->kategori;
         $supplier->kontak = $request->kontak;
         $supplier->nama_kontak = $request->nama_kontak;
         $supplier->keterangan = $request->keterangan;
@@ -100,6 +101,7 @@ class SuppliersController extends Controller
         $supplier = Suppliers::find($id);
         $supplier->nama = $request->nama;
         $supplier->alamat = $request->alamat;
+        $supplier->kategori = $request->kategori;
         $supplier->kontak = $request->kontak;
         $supplier->nama_kontak = $request->nama_kontak;
         $supplier->keterangan = $request->keterangan;

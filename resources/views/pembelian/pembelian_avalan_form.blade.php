@@ -71,7 +71,7 @@
                                                 <td>Gambar <br>nanti disini</td>
                                                 <td><select class="form-control" id="item0" name="addmore[0][item]">
                                                     <option value="" selected="" disabled>Pilih Item</option>
-                                                    @foreach ($item as $bahan)
+                                                    @foreach ($avalan as $bahan)
                                                     <option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>
                                                     @endforeach
                                                 </select></td>
@@ -144,7 +144,7 @@
             'Gambar <br>nanti disini</td>' +
             '<td><select class="form-control" id="item[' + i + ']" name="addmore['+ i +'][item]">' +
             '<option value="" selected="" disabled>Pilih Item</option>' +
-                    '@foreach ($item as $bahan)' +
+                    '@foreach ($avalan as $bahan)' +
                     '<option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>' +
                     '@endforeach' +
                 '</select></td>' +

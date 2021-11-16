@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('produksi.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Laporan Produksi</button>
+                <button onclick="addForm('{{ route('laporan_produksi.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Laporan Produksi</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -69,7 +69,7 @@ function add_row(){
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('produksi.data') }}',
+                url: '{{ route('laporan_produksi.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},

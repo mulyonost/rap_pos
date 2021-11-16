@@ -31,8 +31,8 @@ class ProduksiController extends Controller
             ->addColumn('aksi', function ($produksi) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('produksi.update', $produksi->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('produksi.destroy', $produksi->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('laporan_produksi.update', $produksi->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('laporan_produksi.destroy', $produksi->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })
@@ -89,7 +89,7 @@ class ProduksiController extends Controller
             $produksidetail->save();
         }
 
-        return redirect('produksi');
+        return redirect('laporan/produksi');
     }
 
     /**

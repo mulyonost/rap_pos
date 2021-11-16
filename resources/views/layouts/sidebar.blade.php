@@ -44,39 +44,45 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('aluminiumbase.index') }}" class="nav-link">
+                <a href="{{ route('master_aluminiumbase.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Aluminium Base</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('aluminium.index') }}" class="nav-link">
+                <a href="{{ route('master_aluminium.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Aluminium</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('items.index') }}" class="nav-link">
+                <a href="{{ route('master_items.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Bahan</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('avalan.index') }}" class="nav-link">
+                <a href="{{ route('master_avalan.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Avalan</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('customers.index') }}" class="nav-link">
+                <a href="{{ route('master_customers.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customer</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('suppliers.index') }}" class="nav-link">
+                <a href="{{ route('master_suppliers.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Supplier</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('master_avalansupplier.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Harga Avalan</p>
                 </a>
               </li>
             </ul>
@@ -103,25 +109,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('produksi.index') }}" class="nav-link">
+                <a href="{{ route('laporan_produksi.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Produksi</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('anodizing.index') }}" class="nav-link">
+                <a href="{{ route('laporan_anodizing.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Anodizing</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('packing.index') }}" class="nav-link">
+                <a href="{{ route('laporan_packing.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Packing</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('pengambilan.index') }}" class="nav-link">
+                <a href="{{ route('laporan_pengambilan.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Pengambilan Bahan</p>
                 </a>
@@ -144,13 +150,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('bahan.index') }}" class="nav-link">
+                <a href="{{ route('pembelian_bahan.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input Pembelian Bahan</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/sliders.html" class="nav-link">
+                <a href="{{ route('pembelian_avalan.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Input Pembelian Avalan</p>
                 </a>
@@ -167,13 +173,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>PO Penjualan</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('sale.index')}}" class="nav-link">
+                <a href="{{route('penjualan_aluminium.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Nota Penjualan</p>
                 </a>
@@ -207,19 +213,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('produksireports.index') }}" class="nav-link">
+                <a href="{{ route('reports_produksi.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Produksi</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('anodizingreports.index') }}" class="nav-link">
+                <a href="{{ route('reports_anodizing.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Anodizing</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('packingreports.index') }}" class="nav-link">
+                <a href="{{ route('reports_packing.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Packing</p>
                 </a>

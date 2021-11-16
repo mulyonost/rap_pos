@@ -11,7 +11,7 @@
 
 @section('content')
 <div class="row">
-    <form action="{{ route('produksireports.date') }}">
+    <form action="{{ route('reports_produksi.date') }}">
         @csrf
         <label for="">Tanggal Awal</label>
         <input type="date" name="tanggal_awal" value="{{ $tanggalAwal ?? date('Y-m-01') }}">

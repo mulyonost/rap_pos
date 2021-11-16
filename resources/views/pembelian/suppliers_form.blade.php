@@ -20,6 +20,17 @@
                       </div>
                   </div>
                   <div class="form-group row">
+                        <label for="kategori" class="col-md-2 col-md-offset-1 control-label">Kategori</label>                     
+                      <div class="col-md-5">
+                          <select name="kategori" id="kategori" class="form-control">
+                              <option value="" selected="" disabled>Pilih Kategori</option>
+                              <option value="umum">Umum</option>
+                              <option value="avalan">Avalan</option>
+                          </select>
+                          <span class="help-block with-errors"></span>
+                      </div>
+                  </div>
+                  <div class="form-group row">
                       <label for="alamat" class="col-md-2 col-md-offset-1 control-label">Alamat</label>
                       <div class="col-md-5">
                           <input type="text" name="alamat" id="alamat" class="form-control">
