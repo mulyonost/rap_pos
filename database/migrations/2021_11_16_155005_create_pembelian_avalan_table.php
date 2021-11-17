@@ -20,8 +20,6 @@ class CreatePembelianAvalanTable extends Migration
             $table->date('due_date');
             $table->foreignId('id_supplier')->constrained('suppliers');
             $table->bigInteger('total_nota');
-            $table->integer('diskon');
-            $table->bigInteger('total_akhir');
             $table->string('foto_nota')->nullable();
             $table->boolean('status');
             $table->string('keterangan')->nullable();

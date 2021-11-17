@@ -18,7 +18,7 @@ class PembelianAvalanController extends Controller
     public function index()
     {
         $supplier = Suppliers::where('kategori', 'avalan')->orderBy('nama')->get();
-        $avalan = Avalan::orderBy('nama');
+        $avalan = Avalan::orderBy('nama')->get();
         return view('pembelian.pembelian_avalan_index', compact('supplier', 'avalan'));
     }
 
@@ -58,7 +58,17 @@ class PembelianAvalanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pembelianav = new PembelianAvalan;
+        $pembelianav->nomor = $request->nomor;
+        $pembelianav->tanggal = $request->tanggal;
+        $pembelianav->due_date = $request->due_date;
+        $pembelianav->id_supplier = $request->supplier;
+        $pembelianav->total_nota = $request->total_nota;
+        $pembelianav->diskon = $request->diskon;
+        $pembelianav->total_akhir = $request->diskon;
+        $pembelianav->foto_nota = $request->foto;
+        $pembelianav->status = $request->status;
+        $pembelianav->keterangan = $request->keterangan;
     }
 
     /**

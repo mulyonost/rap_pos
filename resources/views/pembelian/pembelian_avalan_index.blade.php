@@ -85,13 +85,13 @@
     var date = $('#tanggal').val();
         var newDate = date.replace(/-/g, "");
         let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-        var nomor = "RAP-" + newDate + "-" + r;
+        var nomor = "PA-" + newDate + "-" + r;
 
 
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Pengambilan Bahan');
+        $('#modal-form .modal-title').text('Pembelian Avalan');
         $('#modal-form form')[0].reset();
         $('#nomor').val(nomor);
         $('#modal-form form').attr('action', url);
@@ -100,17 +100,21 @@
     }
 
     function add_row(){
-        $('#mainbody').append('<tr><td>' +
-            'Gambar <br>nanti disini</td>' +
-            '<td><select class="form-control" id="item[' + i + ']" name="addmore['+ i +'][item]">' +
-            '<option value="" selected="" disabled>Pilih Item</option>' +
+        $('#mainbody').append(
+            '<tr>' +
+               '<td><select class="form-control" id="item' + i + '" name="addmore[' + i + '][item]">' +
+                    '<option value="" selected="" disabled>Pilih Item</option>' +
                     '@foreach ($avalan as $bahan)' +
                     '<option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>' +
                     '@endforeach' +
                 '</select></td>' +
-                '<td><input class="form-control" type="number" step="0.01" id="qty'+ i +'" name="addmore['+ i +'][qty]"></td>' +
-                '<td id="satuan" name="satuan">Ltr</td>' +
-                '<td><button id="remove_row" type="button" name="remove_row" class="ml-5 btn btn-sm btn-danger remove"> -</button></td></tr>'
+                '<td><input class="form-control qty" type="number" step="0.01" id="qty'+ i +'" name="addmore['+ i +'][qty]"></td>' +
+                '<td><input class="form-control potongan" type="number" step="0.01" id="potongan'+ i +'" name="addmore['+ i +'][potongan]"></td>' +
+                '<td><input class="form-control qty_akhir" type="number" step="0.01" id="qty_akhir'+ i +'" name="addmore['+ i +'][qty_akhir]" readonly tabindex="-1"></td>' +
+                '<td><input class="form-control harga" type="number" id="harga'+ i +'" name="addmore['+ i +'][harga]"></td>' +
+                '<td><input class="form-control subtotal" type="number" id="subtotal'+ i +'" name="addmore['+ i +'][subtotal]" readonly></td>' +
+                '<td><button id="remove_row" type="button" name="remove_row" class="ml-5 btn btn-sm btn-danger remove"> -</button></td>' +
+            '</tr>' 
             )
             $('.nama').select2({
                 theme: "bootstrap"
