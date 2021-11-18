@@ -18,6 +18,7 @@ class CreateAvalanTable extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -132,20 +132,12 @@
         $('#total_nota').val(totalNota);
     }
 
-    function getdate() {
-        var date = $('#tanggal').val();
-        var newDate = date.replace(/-/g, "");
-        let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-        var nomor = "RAP-" + newDate + "-" + r;
-        $('#nomor').val(nomor);
-    }
-
     $(function() {
         $('#modal-form').on("keyup change blur", recalc);
     });
 
     $(function() {
-        $('#tanggal').on("change", getdate);
+        $('#tanggal').on("change", getNomorPembelianBahan);
     });
 
     var i = 0;
@@ -168,10 +160,7 @@
         });
     });
 
-    $(document).on('click', '.remove', function(event) {
-        jQuery(this).parent().parent().remove();
-        return false;
-    });
+
 
     $(document).ready(function () {
         $('.nama').select2({

@@ -20,7 +20,7 @@ class AluminiumController extends Controller
     {
         $alma = Aluminium::orderBy('id')->get();
         $base = AluminiumBase::orderBy('nama')->get();
-        return view('penjualan.aluminium_index', compact('alma', 'base'));
+        return view('master.aluminium_index', compact('alma', 'base'));
     }
 
     public function data()

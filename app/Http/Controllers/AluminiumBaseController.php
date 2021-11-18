@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AluminiumBase;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\AluminiumBase;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class AluminiumBaseController extends Controller
 {
@@ -17,7 +18,7 @@ class AluminiumBaseController extends Controller
     public function index()
     {
         $aluminium = AluminiumBase::orderBy('nama')->get();
-        return view('laporan.aluminium_base_index', compact('aluminium'));
+        return view('master.aluminium_base_index', compact('aluminium'));
     }
 
     public function data()
@@ -66,14 +67,14 @@ class AluminiumBaseController extends Controller
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = Str::slug($request->nama) . '.' . $extension;
+            $filename = Str::slug($request->nama) . '-' . date('YmdHms') . '.' . $extension;
             $file->move('uploads/aluminium/', $filename);
             $aluminiumbase->foto = $filename;
         }
         $aluminiumbase->keterangan = $request->keterangan;
         $aluminiumbase->save();
 
-        return view('laporan.aluminium_base_index');
+        return view('master.aluminium_base_index');
     }
 
     /**
@@ -118,19 +119,20 @@ class AluminiumBaseController extends Controller
         $aluminiumbase->stok_sekarang = $request->stok_sekarang;
         if ($request->hasFile('foto')) {
             $aluminium_image = public_path("uploads/aluminium/{$aluminiumbase->foto}");
+            $aluminium_image_new = public_path("uploads/trash");
             if (File::exists($aluminium_image)) {
                 File::delete($aluminium_image);
             };
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = Str::slug($request->nama) . '.' . $extension;
+            $filename = Str::slug($request->nama) . '-' . date('YmdHms') . '.' . $extension;
             $file->move('uploads/aluminium/', $filename);
             $aluminiumbase->foto = $filename;
         }
         $aluminiumbase->keterangan = $request->keterangan;
         $aluminiumbase->save();
 
-        return view('laporan.aluminium_base_index');
+        return view('master.aluminium_base_index');
     }
 
     /**

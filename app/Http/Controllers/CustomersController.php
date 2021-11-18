@@ -14,7 +14,7 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        return view('penjualan.customers_index');
+        return view('master.customers_index');
     }
 
     public function data()

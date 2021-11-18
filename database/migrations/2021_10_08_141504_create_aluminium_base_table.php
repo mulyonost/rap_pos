@@ -23,6 +23,7 @@ class CreateAluminiumBaseTable extends Migration
             $table->integer('stok_sekarang');
             $table->string('foto')->nullable();
             $table->text('keterangan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

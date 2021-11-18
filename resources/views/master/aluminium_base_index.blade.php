@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Customers
+    Daftar Aluminium Produksi
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Customers</li>
+    <li class="breadcrumb-item active">Aluminium Base</li>
 @endsection
 
 @section('content')
@@ -14,17 +14,19 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('master_customers.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Customer</button>
+                <button onclick="addForm('{{ route('master_aluminiumbase.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Aluminium</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
                     <thead>
                         <th width="5%">No</th>
                         <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>Nama Kontak</th>
-                        <th>Kontak</th>
-                        <th>Keterangan</th>
+                        <th>Berat Avg</th>
+                        <th>Berat Maks</th>
+                        <th>Stok Awal</th>
+                        <th>Stok Min</th>
+                        <th>Stok Skrg</th>
+                        <th>Ket</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
                     <tbody>
@@ -35,7 +37,7 @@
         </div>
     </div>
 </div>
-@includeIf('penjualan.customers_form')
+@includeIf('master.aluminium_base_form')
 @endsection
 
 @push('scripts')
@@ -44,28 +46,34 @@
 
     $(function () {
         table = $('.table').DataTable({
+            pageLength: 25,
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('master_customers.data') }}',
+                url: '{{ route('master_aluminiumbase.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'nama'},
-                {data: 'alamat'},
-                {data: 'nama_kontak'},
-                {data: 'kontak'},
+                {data: 'berat_avg'},
+                {data: 'berat_maksimal'},
+                {data: 'stok_awal'},
+                {data: 'stok_minimum'},
+                {data: 'stok_sekarang'},
                 {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
-
+        showData();
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
+                let formData = new FormData(this);
                 $.ajax({
                     url: $('#modal-form form').attr('action'),
                     type: 'post',
-                    data: $('#modal-form form').serialize(),
+                    contentType : false,
+                    processData : false,
+                    data: formData,
                 })
                 .done((response) => {
                     $('#modal-form').modal('hide');
@@ -82,18 +90,19 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah Customer');
-
+        $('#modal-form .modal-title').text('Tambah Aluminium Produksi');
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nama]').focus();
+        $('#modal-form [name=showfoto]').attr("src", null);
+        $('#modal-form [name=link]').attr("href", null);
 
     }
 
     function editForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Customer');
+        $('#modal-form .modal-title').text('Edit Aluminium');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
@@ -103,9 +112,13 @@
         $.get(url)
             .done((response) => {
                 $('#modal-form [name=nama]').val(response.nama);
-                $('#modal-form [name=alamat]').val(response.alamat);
-                $('#modal-form [name=nama_kontak]').val(response.nama_kontak);
-                $('#modal-form [name=kontak]').val(response.kontak);
+                $('#modal-form [name=berat_avg]').val(response.berat_avg);
+                $('#modal-form [name=berat_maksimal]').val(response.berat_maksimal);
+                $('#modal-form [name=stok_awal]').val(response.stok_awal);
+                $('#modal-form [name=stok_minimum]').val(response.stok_minimum);
+                $('#modal-form [name=stok_sekarang]').val(response.stok_sekarang);
+                $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/aluminium') }}' + '/' + response.foto);
+                $('#modal-form [name=link]').attr("href", '{{ asset('uploads/aluminium') }}' + '/' + response.foto);
                 $('#modal-form [name=keterangan]').val(response.keterangan);
             })
             .fail((errors) => {
@@ -122,6 +135,7 @@
             '_method': 'delete'
         })
         .done((response) => {
+            alert('Data berhasil dihapus');
             table.ajax.reload();
         })
         .fail((errors) => {

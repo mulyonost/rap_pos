@@ -84,18 +84,11 @@
 
     });
 
-    var date = $('#tanggal').val();
-        var newDate = date.replace(/-/g, "");
-        let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-        var nomor = "RAP-" + newDate + "-" + r;
-
-
-
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Input Penjualan');
+        $('#modal-form .modal-title').text('Input Pembelian');
         $('#modal-form form')[0].reset();
-        $('#nomor').val(nomor);
+        getNomorPembelianBahan();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nomor]').focus();

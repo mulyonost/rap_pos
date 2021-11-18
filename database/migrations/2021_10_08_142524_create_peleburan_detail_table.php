@@ -15,7 +15,7 @@ class CreatePeleburanDetailTable extends Migration
     {
         Schema::create('peleburan_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('id_laporan_peleburan')->constrained('peleburan');
+            $table->foreignID('id_laporan_peleburan')->constrained('peleburan')->onDelete('cascade');
             $table->foreignID('id_avalan')->constrained('avalan');
             $table->integer('berat_avalan');
             $table->timestamps();

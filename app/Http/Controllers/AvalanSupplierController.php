@@ -16,7 +16,7 @@ class AvalanSupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Suppliers::orderBy('nama')->get();
+        $supplier = Suppliers::where('kategori', 'avalan')->orderBy('nama')->get();
         $avalan = Avalan::orderBy('nama')->get();
         return view('master.avalan_supplier_index', compact('supplier', 'avalan'));
     }

@@ -14,7 +14,7 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        return view('pembelian.suppliers_index');
+        return view('master.suppliers_index');
     }
 
     public function data()

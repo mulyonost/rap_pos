@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-@includeIf('penjualan.aluminium_form')
+@includeIf('master.aluminium_form')
 @endsection
 
 @push('scripts')

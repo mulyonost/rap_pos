@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('nama_kontak')->nullable();
             $table->string('keterangan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

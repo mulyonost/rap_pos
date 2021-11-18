@@ -18,7 +18,7 @@ class PembelianController extends Controller
     public function index()
     {
         $item = Items::orderBy('nama')->get();
-        $supplier = Suppliers::orderBy('nama')->get();
+        $supplier = Suppliers::where('kategori', 'umum')->orderBy('nama')->get();
         return view('pembelian.pembelian_index', compact('item', 'supplier'));
     }
 
@@ -131,6 +131,7 @@ class PembelianController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        $pembelian->delete();
     }
 }

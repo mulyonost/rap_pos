@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Suppliers
+    Daftar Customers
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Suppliers</li>
+    <li class="breadcrumb-item active">Customers</li>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('master_suppliers.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Supplier</button>
+                <button onclick="addForm('{{ route('master_customers.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Customer</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-@includeIf('pembelian.suppliers_form')
+@includeIf('master.customers_form')
 @endsection
 
 @push('scripts')
@@ -47,7 +47,7 @@
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('master_suppliers.data') }}',
+                url: '{{ route('master_customers.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
@@ -82,7 +82,7 @@
 
     function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah Supplier');
+        $('#modal-form .modal-title').text('Tambah Customer');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
@@ -93,7 +93,7 @@
 
     function editForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Supplier');
+        $('#modal-form .modal-title').text('Edit Customer');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);

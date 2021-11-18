@@ -20,3 +20,17 @@ function getNomorProduksi() {
   var mesin = $('#mesin').val();
   $('#nomor').val(newDate + "-" + mesin);
 }
+
+function getNomorPembelianBahan() {
+  var date = $('#tanggal').val();
+  var newDate = date.replace(/-/g, "");
+  let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
+  var nomor = "PB-" + newDate + "-" + r;
+  $('#nomor').val(nomor);
+}
+
+// Delete Row
+$(document).on('click', '.remove', function(event) {
+  jQuery(this).parent().parent().remove();
+  return false;
+});

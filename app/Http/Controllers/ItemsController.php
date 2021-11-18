@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Items;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ItemsController extends Controller
 {
@@ -139,6 +140,10 @@ class ItemsController extends Controller
     public function destroy($id)
     {
         $items = Items::find($id);
+        $item_image = public_path("uploads/items/{$items->foto}");
+        if (File::exists($item_image)) {
+            File::delete($item_image);
+        };
         $items->delete();
 
         return response()->json('Data berhasil dihapus', 200);

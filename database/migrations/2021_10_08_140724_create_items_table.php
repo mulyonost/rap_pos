@@ -21,10 +21,11 @@ class CreateItemsTable extends Migration
             $table->integer('stok_awal')->default(0);
             $table->integer('stok_minimum')->default(0);
             $table->integer('stok_sekarang')->default(0);
-            $table->float('harga',12,2);
+            $table->float('harga', 12, 2);
             $table->string('foto')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -31,6 +31,7 @@ class CreateAluminiumTable extends Migration
             $table->string('foto')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
