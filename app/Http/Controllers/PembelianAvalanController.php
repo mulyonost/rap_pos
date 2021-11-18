@@ -7,6 +7,7 @@ use App\Models\Suppliers;
 use Illuminate\Http\Request;
 use App\Models\AvalanSupplier;
 use App\Models\PembelianAvalan;
+use App\Models\PembelianAvalanDetail;
 
 class PembelianAvalanController extends Controller
 {
@@ -24,15 +25,15 @@ class PembelianAvalanController extends Controller
 
     public function data()
     {
-        $pembelianav = PembelianAvalan::orderBy('id', 'desc')->get();
+        $pembelianav = PembelianAvalan::orderBy('id', 'desc')->with('supplier')->get();
         return datatables()
             ->of($pembelianav)
             ->addIndexColumn()
             ->addColumn('aksi', function ($pembelianav) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('pembe$pembelianav.update', $pembelianav->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('pembe$pembelianav.destroy', $pembelianav->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('pembelian_avalan.update', $pembelianav->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="deleteData(`' . route('pembelian_avalan.destroy', $pembelianav->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
             })
@@ -63,12 +64,28 @@ class PembelianAvalanController extends Controller
         $pembelianav->tanggal = $request->tanggal;
         $pembelianav->due_date = $request->due_date;
         $pembelianav->id_supplier = $request->supplier;
-        $pembelianav->total_nota = $request->total_nota;
-        $pembelianav->diskon = $request->diskon;
-        $pembelianav->total_akhir = $request->diskon;
+        $pembelianav->total_nota = $request->total;
         $pembelianav->foto_nota = $request->foto;
         $pembelianav->status = $request->status;
         $pembelianav->keterangan = $request->keterangan;
+        $pembelianav->created_by = auth()->user()->name;
+        $pembelianav->save();
+
+        $id = $pembelianav->id;
+        foreach ($request->addmore as $key => $value)
+        {
+            $pembelianavdetail = new PembelianAvalanDetail;
+            $pembelianavdetail->id_pembelian_avalan = $id;
+            $pembelianavdetail->id_avalan = $value['item'];
+            $pembelianavdetail->qty = $value['qty'];
+            $pembelianavdetail->potongan = $value['potongan'];
+            $pembelianavdetail->qty_akhir = $value['qty_akhir'];
+            $pembelianavdetail->harga = $value['harga'];
+            $pembelianavdetail->subtotal = $value['subtotal'];
+            $pembelianavdetail->save();
+        }
+
+        return redirect ('pembelian/avalan');
     }
 
     /**
@@ -113,6 +130,7 @@ class PembelianAvalanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pembelianav = PembelianAvalan::find($id);
+        $pembelianav->delete();
     }
 }

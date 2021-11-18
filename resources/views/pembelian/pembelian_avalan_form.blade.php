@@ -40,9 +40,9 @@
                                         <div class="form-group">
                                             <label>Supplier</label>
                                             <select name="supplier" id="supplier" class="form-control">
-                                                <option value="" disabled selected>Pilih Supplier</option>
+                                                <!-- <option value="" disabled selected="">Pilih Supplier</option> -->
                                                 @foreach ($supplier as $supp)
-                                                <option value="{{ $supp->id_supplier }}">{{ $supp->nama }}</option>
+                                                <option value="{{ $supp->id }}">{{ $supp->nama }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

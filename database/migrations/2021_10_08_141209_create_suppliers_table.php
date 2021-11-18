@@ -17,9 +17,9 @@ class CreateSuppliersTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('kategori');
-            $table->string('alamat');
-            $table->string('kontak');
-            $table->string('nama_kontak');
+            $table->string('alamat')->nullable();
+            $table->string('kontak')->nullable();
+            $table->string('nama_kontak')->nullable();
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

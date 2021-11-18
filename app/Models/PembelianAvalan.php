@@ -11,4 +11,8 @@ class PembelianAvalan extends Model
     protected $table = 'pembelian_avalan';
     protected $primaryKey = 'id';
     protected $guarded = [];
+
+    public function supplier() {
+        return $this->belongsTo(Suppliers::class, 'id_supplier', 'id');
+    }
 }

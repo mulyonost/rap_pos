@@ -24,6 +24,7 @@
                         <th>Tanggal</th>
                         <th>Supplier</th>
                         <th>Total Nota</th>
+                        <th>Jatuh Tempo</th>
                         <th>Status</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
@@ -57,7 +58,8 @@
                 {data: 'nomor'},
                 {data: 'tanggal'},
                 {data: 'supplier.nama'},
-                {data: 'total_akhir'},
+                {data: 'total_nota'},
+                {data: 'due_date'},
                 {data: 'status'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
