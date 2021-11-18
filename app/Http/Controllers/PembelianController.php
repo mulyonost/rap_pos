@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Items;
 use App\Models\Pembelian;
-use App\Models\PembelianDetail;
 use App\Models\Suppliers;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PembelianDetail;
 
 class PembelianController extends Controller
 {
@@ -58,6 +59,7 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
+
         $pembelian = new Pembelian();
         $pembelian->nomor = $request->nomor;
         $pembelian->id_supplier = $request->supplier;
@@ -67,10 +69,10 @@ class PembelianController extends Controller
         $pembelian->foto = $request->foto_nota;
         $pembelian->total = $request->total_nota;
         $pembelian->keterangan = $request->keterangan;
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
+        if ($request->hasFile('foto_nota')) {
+            $file = $request->file('foto_nota');
             $extension = $file->getClientOriginalExtension();
-            $filename = $request->nomor . date('YmdHms') . '.' . $extension;
+            $filename = Str::slug($request->nama_supp) . '-' . $request->tanggal . '-' . date('YmdHms') . '.' . $extension;
             $file->move('uploads/pembelian/bahan', $filename);
             $pembelian->foto = $filename;
         }

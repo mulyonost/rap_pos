@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog modal-xl">
-        <form action="" method="post" class="form-horizontal" autocomplete="off">
+        <form action="" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
             @csrf
             @method('post')
             <div class="modal-content">
@@ -29,7 +29,8 @@
                                         @foreach ($supplier as $supp)
                                             <option value="{{$supp->id}}">{{$supp->nama}}</option>
                                         @endforeach
-                                        </select>      
+                                        </select>    
+                                        <input class="form-control" type="hidden" name="nama_supp" id="nama_supp">  
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -174,6 +175,16 @@
 
     $('.nama').select2({
         theme: "bootstrap"
+    });
+
+    function getSupplier() {
+        let supplier = $('#supplier option:selected').text();
+        $('#nama_supp').val(supplier);
+    }
+
+
+    $(function() {
+        $('#supplier').on("change click", getSupplier);
     });
 
 </script>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AvalanSupplier;
 use App\Models\PembelianAvalan;
 use App\Models\PembelianAvalanDetail;
+use Illuminate\Support\Str;
 
 class PembelianAvalanController extends Controller
 {
@@ -65,15 +66,20 @@ class PembelianAvalanController extends Controller
         $pembelianav->due_date = $request->due_date;
         $pembelianav->id_supplier = $request->supplier;
         $pembelianav->total_nota = $request->total;
-        $pembelianav->foto_nota = $request->foto;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::slug($request->nama_supp) . '-' . $request->tanggal . '-' . date('YmdHms') . '.' . $extension;
+            $file->move('uploads/pembelian/avalan', $filename);
+            $pembelianav->foto_nota = $filename;
+        }
         $pembelianav->status = $request->status;
         $pembelianav->keterangan = $request->keterangan;
         $pembelianav->created_by = auth()->user()->name;
         $pembelianav->save();
 
         $id = $pembelianav->id;
-        foreach ($request->addmore as $key => $value)
-        {
+        foreach ($request->addmore as $key => $value) {
             $pembelianavdetail = new PembelianAvalanDetail;
             $pembelianavdetail->id_pembelian_avalan = $id;
             $pembelianavdetail->id_avalan = $value['item'];
@@ -85,7 +91,7 @@ class PembelianAvalanController extends Controller
             $pembelianavdetail->save();
         }
 
-        return redirect ('pembelian/avalan');
+        return redirect('pembelian/avalan');
     }
 
     /**

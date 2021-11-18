@@ -64,12 +64,16 @@
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });
+        showData();
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
+                let formData = new FormData(this);
                 $.ajax({
                     url: $('#modal-form form').attr('action'),
                     type: 'post',
-                    data: $('#modal-form form').serialize(),
+                    contentType: false,
+                    processData: false,
+                    data: formData,
                 })
                 .done((response) => {
                     $('#modal-form').modal('hide');
