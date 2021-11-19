@@ -18,7 +18,7 @@ class CreatePembelianAvalanDetailTable extends Migration
             $table->foreignId('id_pembelian_avalan')->constrained('pembelian_avalan')->onDelete('cascade');
             $table->foreignId('id_avalan')->constrained('avalan');
             $table->integer('qty');
-            $table->float('potongan', 7, 2);
+            $table->float('potongan', 7, 2)->default(0);
             $table->float('qty_akhir', 7, 2);
             $table->integer('harga');
             $table->bigInteger('subtotal');

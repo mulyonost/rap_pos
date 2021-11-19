@@ -106,7 +106,7 @@
                                                     @endforeach
                                                 </select></td>
                                                 <td><input class="form-control qty" type="number" step="0.01" id="qty0" name="addmore[0][qty]"></td>
-                                                <td><input class="form-control potongan" type="number" step="0.01" id="potongan0" name="addmore[0][potongan]"></td>
+                                                <td><input class="form-control potongan" type="number" step="0.01" id="potongan0" name="addmore[0][potongan]" value=0></td>
                                                 <td><input class="form-control qty_akhir" type="number" step="0.01" id="qty_akhir0" name="addmore[0][qty_akhir]" readonly tabindex="-1"></td>
                                                 <td><input class="form-control harga" type="number" id="harga0" name="addmore[0][harga]"></td>
                                                 <td><input class="form-control subtotal" type="number" id="subtotal0" name="addmore[0][subtotal]" readonly></td>
@@ -175,12 +175,18 @@
         $('#nomor').val(nomor);
     }
 
+    function getJT() {
+        var date = $('#tanggal').val();
+        $('#due_date').val(date);
+    }
+
     $(function() {
         $('#modal-form').on("keyup change blur", recalc);
     });
 
     $(function() {
         $('#tanggal').on("change", getdate);
+        $('#tanggal').on("change", getJT);
     });
 
     var i = 0;
