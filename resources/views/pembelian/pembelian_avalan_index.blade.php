@@ -31,6 +31,18 @@
                     <tbody>
 
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -45,9 +57,7 @@
 
     $(function () {
         table = $('.table').DataTable({
-            buttons: [
-                'excel', 'pdf'
-            ],
+            dom: 'Bfrtip',
             processing: true,
             autowidth: true,
             ajax: {
@@ -58,11 +68,60 @@
                 {data: 'nomor'},
                 {data: 'tanggal'},
                 {data: 'supplier.nama'},
-                {data: 'total_nota'},
+                {data: 'total_nota', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')},
                 {data: 'due_date'},
-                {data: 'status'},
+                {data: 'status',
+                    render : function (data, type, row) {
+                        if (row.status === 0) {
+                            return '<p class= "text-danger"> Belum Lunas </p>';
+                        }
+                        else {
+                            return '<p class= "text-success"> Lunas </p>';
+                    }
+                    }
+                },
                 {data: 'aksi', searchable:false, sortable:false}
-            ]
+            ],
+            buttons: [
+                {
+                extend : 'copyHtml5',
+                exportOptions : {orthogonal : 'export'}
+                }
+            ],
+            footerCallback: function( tfoot, data, start, end, display ) {
+                var api = this.api(), data;
+                var numFormat = $.fn.dataTable.render.number('.', ',', 0, 'Rp').display;
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over all pages
+                total = api
+                    .column( 4 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Total over this page
+                pageTotal = api
+                    .column( 4, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Update footer
+ 
+                $( api.column( 4 ).footer() ).html(
+                    numFormat(pageTotal) +' ('+ numFormat(total) +' total)'
+                );
+            }
         });
         showData();
         $('#modal-form').validator().on('submit', function (e) {
