@@ -52,6 +52,13 @@
                       </div>
                   </div>
                   <div class="form-group row">
+                    <label for="packing" class="col-md-2 col-md-offset-1 control-label">Isi Packing</label>
+                    <div class="col-md-5">
+                        <input type="text" name="packing" id="packing" class="form-control">
+                        <span class="help-block with-errors"></span>
+                    </div>
+                </div>
+                  <div class="form-group row">
                       <label for="berat_maksimal" class="col-md-2 col-md-offset-1 control-label"> Berat Max</label>
                       <div class="col-md-5">
                           <input type="text" name="berat_maksimal" id="berat_maksimal" class="form-control">

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AluminiumBase;
 use App\Models\ProduksiDetail;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProduksiController extends Controller
 {
@@ -70,7 +71,7 @@ class ProduksiController extends Controller
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = $request->nomor . date('YmdHms') . '.' . $extension;
+            $filename = $request->nomor . '-' . date('YmdHms') . '.' . $extension;
             $file->move('uploads/laporan/produksi', $filename);
             $produksi->foto = $filename;
         }
@@ -145,14 +146,14 @@ class ProduksiController extends Controller
             };
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = $request->nomor . date('YmdHms') . '.' . $extension;
+            $filename = $request->nomor . '-' . date('YmdHms') . '.' . $extension;
             $file->move('uploads/laporan/produksi', $filename);
             $produksi->foto = $filename;
         }
         $produksi->save();
         foreach ($request->addmore as $key => $value) {
             $produksidetail = ProduksiDetail::find($value['id']);
-            $produksidetail->id_aluminium_base = $value['id_aluminium'];
+            $produksidetail->id_aluminium_base = $value['nama'];
             $produksidetail->no_matras = $value['matras'];
             $produksidetail->berat = $value['berat'];
             $produksidetail->qty = $value['qty'];
@@ -160,7 +161,7 @@ class ProduksiController extends Controller
             $produksidetail->save();
         }
 
-        return redirect('produksi');
+        return redirect('laporan/produksi');
     }
 
     /**
@@ -173,6 +174,7 @@ class ProduksiController extends Controller
     {
         $produksi = Produksi::find($id);
         $produksi_image = public_path("uploads/laporan/produksi/{$produksi->foto}");
+        $new_location = public_path('/uploads/trash');
         if (File::exists($produksi_image)) {
             File::delete($produksi_image);
         };

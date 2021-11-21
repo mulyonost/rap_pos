@@ -65,6 +65,7 @@ class AluminiumController extends Controller
         $aluminium->base_name = Str::slug(substr($request->nama, 0, -3), '-');
         $aluminium->finishing = $request->finishing;
         $aluminium->kategori = $request->kategori;
+        $aluminium->packing = $request->packing;
         $aluminium->berat_maksimal = $request->berat_maksimal;
         $aluminium->stok_awal = $request->stok_awal;
         $aluminium->stok_minimum = $request->stok_minimum;
@@ -122,6 +123,7 @@ class AluminiumController extends Controller
         $aluminium->base_name = Str::slug(substr($request->nama, 0, -3), '-');
         $aluminium->finishing = $request->finishing;
         $aluminium->kategori = $request->kategori;
+        $aluminium->packing = $request->packing;
         $aluminium->berat_maksimal = $request->berat_maksimal;
         $aluminium->stok_awal = $request->stok_awal;
         $aluminium->stok_minimum = $request->stok_minimum;

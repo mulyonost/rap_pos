@@ -23,6 +23,7 @@
                         <th>Kategori</th>
                         <th>Nama</th>
                         <th>Finish</th>
+                        <th>Isi Packing</th>
                         <th>Berat Maks</th>
                         <th>Stok Awal</th>
                         <th>Stok Min</th>
@@ -60,6 +61,7 @@
                 {data: 'kategori'},
                 {data: 'nama'},
                 {data: 'finishing'},
+                {data: 'packing'},
                 {data: 'berat_maksimal'},
                 {data: 'stok_awal'},
                 {data: 'stok_minimum'},
@@ -119,6 +121,7 @@
                 $('#modal-form [name=base]').val(response.base_id);
                 $('#modal-form [name=nama]').val(response.nama);
                 $('#modal-form [name=finishing]').val(response.finishing);
+                $('#modal-form [name=packing]').val(response.packing);
                 $('#modal-form [name=kategori]').val(response.kategori);
                 $('#modal-form [name=berat_maksimal]').val(response.berat_maksimal);
                 $('#modal-form [name=stok_awal]').val(response.stok_awal);

@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
   <div class="modal-dialog modal-xl">
-  <form action="" method="post" class="form-horizontal" autocomplete="off">
+  <form action="" method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
                   @csrf
                   @method('post')
           <div class="modal-content">
@@ -40,6 +40,10 @@
                     <div class="form-group">
                       <label for="">Foto</label>
                       <input class="form-control" type="file" name="foto" id="foto" >
+                      <div class="col-md-5">
+                        <a href="" name="link" id="link" target="_blank"><img src="" name="showfoto" id="showfoto" class="img-thumbnail"></a>
+                        <span class="help-block with-errors"></span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -85,65 +89,22 @@
 
 @push('scripts')
 <script>
-var numRows = 2, ti = 5;
-
-function isNumber(n) {
-return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function recalc() {
-var berat = 0;
-var qty = 0;
-var grandtotal = 0;
-var grandtotalbtg = 0;
-$('#kas_table').find('tr').each(function() {
-  var berat = $(this).find('input.berat').val();
-  var qty = $(this).find('input.qty').val();
-  var subtotal = (berat * qty);
-  var subtotalbtg = (qty * 1);
-  $(this).find('input.subtotal').val(Math.round(subtotal * 100) / 100);
-  grandtotal += isNumber(subtotal)  ? subtotal : 0;
-  grandtotalbtg += isNumber(subtotalbtg) ? subtotalbtg : 0;
-});
-$('#total_btg').val(Math.round(grandtotal * 100) / 100 );
-$('#total_colly').val(grandtotalbtg);
-}
-
-function getdate() {
-var date= $('#tanggal').val();
-var newDate = date.replace(/-/g, "");
-$('#nomor').val(newDate);
-}
 
 $(function() {
-$('#modal-form').on("keyup change blur", recalc).on("keyup change click blur", getdate);
+$('#modal-form').on("keyup change blur shown.bs.modal", recalcPacking);
 });
 
-
+$(function() {
+$('#modal-form').on("keyup change click blur", getNomorPacking);
+});
 
 var i=0;
 $('#add_new').click(function(){
-i++;
-$('#mainbody').append('<tr><td>' +
-  '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
-  '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
-    '@foreach($produk as $pro)' +
-      '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
-    '@endforeach' +
-  '</select></td>' +
-  '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
-  '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
-  '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
-  '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
-)
-$('.nama').select2({
+  addRowPacking();
+  i++;
+  $('.nama').select2({
     theme: "bootstrap"
   });
-});
-
-$( document ).on('click', '.remove', function(event){
-  jQuery(this).parent().parent().remove();
-            return false;
 });
 
 </script>

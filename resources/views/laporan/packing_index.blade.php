@@ -38,130 +38,135 @@
 @endsection
 
 @push('scripts')
+
 <script>
-    function add_row(){
-    $('#mainbody').append('<tr><td>' +
-        '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
-        '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
-            '@foreach($produk as $pro)' +
-            '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
-            '@endforeach' +
-        '</select></td>' +
-        '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
-        '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
-        '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
-        '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
-            )
-            $('.nama').select2({
-            theme: "bootstrap"
-        });
-    }
 
+var i =0;
+function addRowPacking(){
+$('#mainbody').append('<tr><td>' +
+    '<input class="form-control" type="hidden" name="addmore[' +i+ '][id]" id="id' +i+ '" value="">' +
+    '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
+    '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
+        '@foreach($produk as $pro)' +
+        '<option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>' +
+        '@endforeach' +
+    '</select></td>' +
+    '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required ></td>' +
+    '<td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" required ></td>' +
+    '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" required readonly></td>' +
+    '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td></tr>'
+    )}
 
+let table;
 
-    let table;
-
-    $(function () {
-        table = $('.table').DataTable({
-            processing: true,
-            autowidth: true,
-            ajax: {
-                url: '{{ route('laporan_packing.data') }}',
-            },
-            columns: [
-                {data: 'DT_RowIndex', searchable:false, sortable:false},
-                {data: 'tanggal'},
-                {data: 'total_btg'},
-                {data: 'total_colly'},
-                {data: 'keterangan', render: $.fn.dataTable.render.number('.', ',', 0, '', ' Kg') },
-                {data: 'aksi', searchable:false, sortable:false}
-            ]
-        });
-        $('#modal-form').validator().on('submit', function (e) {
-            if (! e.preventDefault()) {
-                $.ajax({
-                    url: $('#modal-form form').attr('action'),
-                    type: 'post',
-                    data: $('#modal-form form').serialize(),
-                })
-                .done((response) => {
-                    $('#modal-form').modal('hide');
-                    table.ajax.reload();
-                })
-                .fail((errors) => {
-                    alert('Tidak dapat menyimpan data');
-                    return;
-                })
-            }
-        })
-
+$(function () {
+    table = $('.table').DataTable({
+        processing: true,
+        autowidth: true,
+        ajax: {
+            url: '{{ route('laporan_packing.data') }}',
+        },
+        columns: [
+            {data: 'DT_RowIndex', searchable:false, sortable:false},
+            {data: 'tanggal'},
+            {data: 'total_btg'},
+            {data: 'total_colly'},
+            {data: 'keterangan', render: $.fn.dataTable.render.number('.', ',', 0, '', ' Kg') },
+            {data: 'aksi', searchable:false, sortable:false}
+        ]
     });
-
-    function addForm(url){
-        $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Input Data Packing');
-        $('#modal-form form')[0].reset();
-        $('#modal-form form').attr('action', url);
-        $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=nomor]').focus();
-
-    }
-
-    function editForm(url){
-        $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Laporan Produksi');
-
-        $('#modal-form form')[0].reset();
-        $('#modal-form form').attr('action', url);
-        $('#modal-form [name=_method]').val('put');
-        $('#modal-form [name=nama]').focus();
-
-        // var array = jQuery.parseJSON(response);
-        // produksi = array[0];
-        // produksidetail = array[1]
-        $.get(url)
+    showData();
+    $('#modal-form').validator().on('submit', function (e) {
+        if (! e.preventDefault()) {
+            $.ajax({
+                url: $('#modal-form form').attr('action'),
+                type: 'post',
+                contentType: false,
+                processData: false,
+                data: formData,
+            })
             .done((response) => {
-                $('#mainbody').empty();
-                console.log(response.packing)
-                $('#modal-form [name=nomor]').val(response.packing.nomor);
-                $('#modal-form [name=tanggal]').val(response.packing.tanggal);
-                $('#modal-form [name=keterangan]').val(response.packing.keterangan);
-                $('#modal-form [name=total_btg]').val(response.packing.total_btg);
-                $('#modal-form [name=total_colly]').val(response.packing.total_colly);
-                $('#modal-form [name=foto]').val(response.packing.foto);
-                if(response.packingdetail.length > 0){
-                for (i=0 ; i < response.packingdetail.length; i++){
-                    console.log(response.packingdetail[i])
-                    add_row();                    
-                    $('#nama'+i+'').val(response.packingdetail[i].id_aluminium);
-                    $('#qty'+i+'').val(response.packingdetail[i].qty_colly);
-                    $('#berat'+i+'').val(response.packingdetail[i].qty_isi);
-                    $('#subtotal'+i+'').val(response.packingdetail[i].qty_subtotal);
-                }
-            }
+                $('#modal-form').modal('hide');
+                table.ajax.reload();
             })
             .fail((errors) => {
-                alert('Tidak dapat menampilkan data');
+                alert('Tidak dapat menyimpan data');
                 return;
-            });
+            })
+        }
+    })
 
-    }
+});
 
-    function deleteData(url){
-        if (confirm('Yakin akan menghapus data ?')) {
-            $.post(url, {
-            '_token': $('[name=csrf-token]').attr('content'),
-            '_method': 'delete'
-        })
+function addForm(url){
+    $('#modal-form').modal('show');
+    $('#modal-form .modal-title').text('Input Data Packing');
+    $('#mainbody').empty();
+    $('#modal-form').ready(getNomorPacking);
+    $('#modal-form').ready(function() {
+        addRowPacking();
+        i++;
+        $('.nama').select2({
+            theme: "bootstrap"
+        });
+    });
+    $('#modal-form form')[0].reset();
+    $('#modal-form form').attr('action', url);
+    $('#modal-form [name=_method]').val('post');
+    $('#modal-form [name=showfoto]').attr("src", null);
+    $('#modal-form [name=nomor]').focus();
+}
+
+function editForm(url){
+    $('#modal-form').modal('show');
+    $('#modal-form .modal-title').text('Edit Laporan Produksi');
+
+    $('#modal-form form')[0].reset();
+    $('#modal-form form').attr('action', url);
+    $('#modal-form [name=_method]').val('put');
+    $('#modal-form [name=nama]').focus();
+
+    $.get(url)
         .done((response) => {
-            table.ajax.reload();
+            $('#mainbody').empty();
+            $('#modal-form [name=nomor]').val(response.packing.nomor);
+            $('#modal-form [name=tanggal]').val(response.packing.tanggal);
+            $('#modal-form [name=keterangan]').val(response.packing.keterangan);
+            $('#modal-form [name=link]').attr("href", '{{ asset('uploads/laporan/packing') }}' + '/' + response.packing.foto);
+            $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/laporan/packing') }}' + '/' + response.packing.foto);
+            if(response.packingdetail.length > 0){
+            for (i=0 ; i < response.packingdetail.length; i++){
+                addRowPacking();
+                $('#id'+i+'').val(response.packingdetail[i].id);
+                $('#nama'+i+'').val(response.packingdetail[i].id_aluminium);
+                $('#qty'+i+'').val(response.packingdetail[i].qty_colly);
+                $('#berat'+i+'').val(response.packingdetail[i].qty_isi);
+                $('#subtotal'+i+'').val(response.packingdetail[i].qty_subtotal);
+            }
+        }
         })
         .fail((errors) => {
-            alert('Tidak dapat menghapus data');
+            alert('Tidak dapat menampilkan data');
             return;
-        })
-        }
+        });
+
+}
+
+function deleteData(url){
+    if (confirm('Yakin akan menghapus data ?')) {
+        $.post(url, {
+        '_token': $('[name=csrf-token]').attr('content'),
+        '_method': 'delete'
+    })
+    .done((response) => {
+        table.ajax.reload();
+    })
+    .fail((errors) => {
+        alert('Tidak dapat menghapus data');
+        return;
+    })
     }
+}
     
 </script>
 @endpush

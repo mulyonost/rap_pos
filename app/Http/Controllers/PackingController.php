@@ -66,7 +66,7 @@ class PackingController extends Controller
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = date('YmdHms') . '.' . $extension;
+            $filename = $request->nomor . '-' . date('YmdHms') . '.' . $extension;
             $file->move('uploads/laporan/packing', $filename);
             $packing->foto = $filename;
         }
@@ -84,6 +84,8 @@ class PackingController extends Controller
             $packingdetail->qty_subtotal = $value['subtotal'];
             $packingdetail->save();
         }
+
+        return redirect('laporan/packing');
     }
 
     /**
@@ -121,7 +123,37 @@ class PackingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $packing = Packing::find($id);
+        $packing->tanggal = $request->tanggal;
+        $packing->nomor = $request->nomor;
+        $packing->total_btg = $request->total_btg;
+        $packing->total_colly = $request->total_colly;
+        $packing->total_cacat = $request->total_cacat;
+        if ($request->hasFile('foto')) {
+            $packing_image = public_path("uploads/laporan/packing/{$packing->foto}");
+            if (File::exists($packing_image)) {
+                File::delete($packing_image);
+            };
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->nomor . '-' . date('YmdHms') . '.' . $extension;
+            $file->move('uploads/laporan/packing', $filename);
+            $packing->foto = $filename;
+        }
+        $packing->keterangan = $request->keterangan;
+        $packing->save();
+
+        foreach ($request->addmore as $key => $value) {
+            $packingdetail = PackingDetail::find($value['id']);
+            $packingdetail->nomor = $request->nomor;
+            $packingdetail->id_aluminium = $value['nama'];
+            $packingdetail->qty_colly = $value['qty'];
+            $packingdetail->qty_isi = $value['berat'];
+            $packingdetail->qty_subtotal = $value['subtotal'];
+            $packingdetail->save();
+        }
+
+        return redirect('laporan/packing');
     }
 
     /**

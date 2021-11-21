@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Aluminium;
 use App\Models\Anodizing;
+use Illuminate\Http\Request;
 use App\Models\AnodizingDetail;
+use Illuminate\Support\Facades\File;
 
 class AnodizingController extends Controller
 {
@@ -65,7 +66,7 @@ class AnodizingController extends Controller
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension();
-            $filename = date('YmdHms') . '.' . $extension;
+            $filename = $request->nomor . '-' . date('YmdHms') . '.' . $extension;
             $file->move('uploads/laporan/anodizing', $filename);
             $anodizing->foto = $filename;
         }
@@ -81,6 +82,8 @@ class AnodizingController extends Controller
             $anodizingdetail->berat = $value['berat'];
             $anodizingdetail->save();
         }
+
+        return redirect('laporan/anodizing');
     }
 
     /**
@@ -118,7 +121,35 @@ class AnodizingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $anodizing = Anodizing::find($id);
+        $anodizing->tanggal = $request->tanggal;
+        $anodizing->nomor = $request->nomor;
+        $anodizing->total_btg = $request->total_btg;
+        $anodizing->total_kg = $request->total_kg;
+        $anodizing->keterangan = $request->keterangan;
+        if ($request->hasFile('foto')) {
+            $anodizing_image = public_path("uploads/laporan/anodizing/{$anodizing->foto}");
+            if (File::exists($anodizing_image)) {
+                File::delete($anodizing_image);
+            };
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->nomor . '-' . date('YmdHms') . '.' . $extension;
+            $file->move('uploads/laporan/anodizing', $filename);
+            $anodizing->foto = $filename;
+        }
+        $anodizing->save();
+
+        $id = $anodizing->id;
+        foreach ($request->addmore as $key => $value) {
+            $anodizingdetail = AnodizingDetail::find($value['id']);
+            $anodizingdetail->id_aluminium = $value['nama'];
+            $anodizingdetail->qty = $value['qty'];
+            $anodizingdetail->berat = $value['berat'];
+            $anodizingdetail->save();
+        }
+
+        return redirect('laporan/anodizing');
     }
 
     /**
@@ -129,6 +160,13 @@ class AnodizingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $anodizing = Anodizing::find($id);
+        $anodizing_image = public_path("uploads/laporan/anodizing/{$anodizing->foto}");
+        $new_location = public_path('/uploads/trash');
+        if (File::exists($anodizing_image)) {
+            File::delete($anodizing_image);
+        };
+        $anodizing->delete();
+        return response()->json('Data berhasil dihapus', 200);
     }
 }
