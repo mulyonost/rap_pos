@@ -130,6 +130,7 @@
                     </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-default" disabled></i>Pembayaran</button>
                     <a href="" target="_blank" class="btn btn-default">Cetak Nota</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
