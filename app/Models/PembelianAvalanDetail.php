@@ -16,4 +16,9 @@ class PembelianAvalanDetail extends Model
     {
         return $this->belongsTo(PembelianAvalan::class, 'id_pembelian_avalan', 'id');
     }
+
+    public function avalan()
+    {
+        return $this->belongsTo(Avalan::class, 'id_avalan', 'id');
+    }
 }

@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/bahan', PembelianController::class);
 
         Route::get('/avalan/data', [PembelianAvalanController::class, 'data'])->name('avalan.data');
+        // Route::get('/avalan/payment/{avalan}', [PembelianAvalanController::class, 'payment'])->name('avalan.payment');
         Route::resource('/avalan', PembelianAvalanController::class);
     });
 

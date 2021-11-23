@@ -71,19 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody id="mainbody">
-                                <tr>
-                                    <td><select class="form-control nama" name="addmore[0][nama]" id="nama0" required>
-                                        <option value="">Pilih Barang</option>
-                                        @foreach ($item as $bahan)
-                                            <option value="{{$bahan->id}}">{{$bahan->nama}}</option>
-                                        @endforeach
-                                        </select>                                        
-                                    </td>
-                                    <td><input class="form-control qty" type="number" name="addmore[0][qty]" id="qty0" required></td>
-                                    <td><input class="form-control harga" type="number" name="addmore[0][harga]" id="harga0" required></td>
-                                    <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
-                                    <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>
-                                </tr>
+
                             <tfoot>
                                 <tr>
                                     <td></td>
@@ -112,29 +100,9 @@
 
 @push('scripts')
 <script>
-    var numRows = 2, ti = 5;
-
-    function isNumber(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    }
-
-    function recalc() {
-        let qty = 0;
-        let harga = 0;
-        let subtotal = 0;
-        let totalNota = 0;
-        $('#table').find('tr').each(function() {
-            let qty = $(this).find('input.qty').val();
-            let harga = $(this).find('input.harga').val();
-            let subtotal = (qty * harga);
-            $(this).find('input.subtotal').val(subtotal);
-            totalNota += subtotal ? subtotal : 0;
-        });
-        $('#total_nota').val(totalNota);
-    }
 
     $(function() {
-        $('#modal-form').on("keyup change blur", recalc);
+        $('#modal-form').on("keyup change blur", recalcPembelian);
     });
 
     $(function() {
@@ -144,44 +112,13 @@
     var i = 0;
     $('#add_new').click(function() {
         i++;
-        $('#mainbody').append('<tr><td>' +
-        '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
-            '<option value="">Pilih Barang</option>' +
-            '@foreach ($item as $alma)' +
-            '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
-            '@endforeach' +
-        '</select></td>' +
-        '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
-        '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-        '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
-        '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
-        )
-        $('.nama').select2({
-            theme: "bootstrap"
-        });
-    });
-
-
-
-    $(document).ready(function () {
-        $('.nama').select2({
-        theme: "bootstrap"
-        })
-    });
-
-    $(document).on('select2:open', () => {
-        document.querySelector('.select2-search__field').focus();
-    });
-
-    $('.nama').select2({
-        theme: "bootstrap"
+        addRowPembelian();
     });
 
     function getSupplier() {
         let supplier = $('#supplier option:selected').text();
         $('#nama_supp').val(supplier);
     }
-
 
     $(function() {
         $('#supplier').on("change click", getSupplier);

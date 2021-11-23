@@ -135,15 +135,15 @@ function editForm(url){
             $('#modal-form [name=link]').attr("href", '{{ asset('uploads/laporan/packing') }}' + '/' + response.packing.foto);
             $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/laporan/packing') }}' + '/' + response.packing.foto);
             if(response.packingdetail.length > 0){
-            for (i=0 ; i < response.packingdetail.length; i++){
-                addRowPacking();
-                $('#id'+i+'').val(response.packingdetail[i].id);
-                $('#nama'+i+'').val(response.packingdetail[i].id_aluminium);
-                $('#qty'+i+'').val(response.packingdetail[i].qty_colly);
-                $('#berat'+i+'').val(response.packingdetail[i].qty_isi);
-                $('#subtotal'+i+'').val(response.packingdetail[i].qty_subtotal);
+                for (i=0 ; i < response.packingdetail.length; i++){
+                    addRowPacking();
+                    $('#id'+i+'').val(response.packingdetail[i].id);
+                    $('#nama'+i+'').val(response.packingdetail[i].id_aluminium);
+                    $('#qty'+i+'').val(response.packingdetail[i].qty_colly);
+                    $('#berat'+i+'').val(response.packingdetail[i].qty_isi);
+                }
+            recalcPacking();
             }
-        }
         })
         .fail((errors) => {
             alert('Tidak dapat menampilkan data');

@@ -68,7 +68,6 @@ function getNomorAnodizing() {
 }
 
 // FORM PACKING
-
 function recalcPacking() {
   var berat = 0;
   var qty = 0;
@@ -94,6 +93,23 @@ function getNomorPacking() {
 }
 
 
+// FORM PEMBELIAN BAHAN
+
+function recalcPembelian() {
+  let qty = 0;
+  let harga = 0;
+  let subtotal = 0;
+  let totalNota = 0;
+  $('#table').find('tr').each(function() {
+      let qty = $(this).find('input.qty').val();
+      let harga = $(this).find('input.harga').val();
+      let subtotal = (qty * harga);
+      $(this).find('input.subtotal').val(subtotal);
+      totalNota += subtotal ? subtotal : 0;
+  });
+  $('#total_nota').val(totalNota);
+}
+
 
 function getNomorPembelianBahan() {
   var date = $('#tanggal').val();
@@ -101,4 +117,37 @@ function getNomorPembelianBahan() {
   let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
   var nomor = "PB-" + newDate + "-" + r;
   $('#nomor').val(nomor);
+}
+
+
+// FORM PEMBELIAN AVALAN
+function recalcPembelianAvalan() {
+  let qty = 0;
+  let harga = 0;
+  let subtotal = 0;
+  let totalNota = 0;
+  $('#table-detail').find('tr').each(function() {
+      let qty = $(this).find('input.qty').val();
+      let potongan = $(this).find('input.potongan').val()
+      let harga = $(this).find('input.harga').val();
+      let qty_akhir = qty - potongan;
+      let subtotal = (qty_akhir * harga);
+      $(this).find('input.qty_akhir').val(qty_akhir);
+      $(this).find('input.subtotal').val(subtotal);
+      totalNota += subtotal ? subtotal : 0;
+  });
+  $('.total_nota').val(totalNota);
+}
+
+function getNomorPembelianAvalan() {
+  var date = $('#tanggal').val();
+  var newDate = date.replace(/-/g, "");
+  let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
+  var nomor = "PA-" + newDate + "-" + r;
+  $('#nomor').val(nomor);
+}
+
+function getPembelianAvalanJT() {
+  var date = $('#tanggal').val();
+  $('#due_date').val(date);
 }

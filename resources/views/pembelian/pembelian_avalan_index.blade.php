@@ -147,24 +147,25 @@
 
     });
 
-    var date = $('#tanggal').val();
-        var newDate = date.replace(/-/g, "");
-        let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-        var nomor = "PA-" + newDate + "-" + r;
-
-
-
     function addForm(url){
         $('#modal-form').modal('show');
         $('#modal-form .modal-title').text('Pembelian Avalan');
         $('#modal-form form')[0].reset();
-        $('#nomor').val(nomor);
+        $('#mainbody').empty();
+        $('#modal-form').ready(function() {
+            addPembelianAvalanRow();
+            i++;
+            $('.nama').select2({
+                theme: "bootstrap"
+            });            
+        });
+        getNomorPembelianAvalan();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nomor]').focus();
     }
 
-    function add_row(){
+    function addPembelianAvalanRow(){
         $('#mainbody').append(
             '<tr>' +
                '<td><select class="form-control" id="item' + i + '" name="addmore[' + i + '][item]">' +
@@ -174,22 +175,18 @@
                     '@endforeach' +
                 '</select></td>' +
                 '<td><input class="form-control qty" type="number" step="0.01" id="qty'+ i +'" name="addmore['+ i +'][qty]"></td>' +
-                '<td><input class="form-control potongan" type="number" step="0.01" id="potongan'+ i +'" name="addmore['+ i +'][potongan]"></td>' +
+                '<td><input class="form-control potongan" type="number" step="0.01" id="potongan'+ i +'" name="addmore['+ i +'][potongan]" value=0></td>' +
                 '<td><input class="form-control qty_akhir" type="number" step="0.01" id="qty_akhir'+ i +'" name="addmore['+ i +'][qty_akhir]" readonly tabindex="-1"></td>' +
-                '<td><input class="form-control harga" type="number" id="harga'+ i +'" name="addmore['+ i +'][harga]"></td>' +
+                '<td><input class="form-control harga" type="number" id="harga'+ i +'" name="addmore['+ i +'][harga]" value=0></td>' +
                 '<td><input class="form-control subtotal" type="number" id="subtotal'+ i +'" name="addmore['+ i +'][subtotal]" readonly></td>' +
                 '<td><button id="remove_row" type="button" name="remove_row" class="ml-5 btn btn-sm btn-danger remove"> -</button></td>' +
             '</tr>' 
             )
-            $('.nama').select2({
-                theme: "bootstrap"
-            });
         }
 
     function editForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Penjualan');
-
+        $('#modal-form .modal-title').text('Edit Pembelian Avalan');
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
@@ -198,25 +195,22 @@
         $.get(url)
             .done((response) => {
                 $('#mainbody').empty();
-                $('#modal-form [name=nomor]').val(response.penjualan.nomor);
-                $('#modal-form [name=tanggal]').val(response.penjualan.tanggal);
-                $('#modal-form [name=customer]').val(response.penjualan.id_customer);
-                $('#modal-form [name=due_date]').val(response.penjualan.due_date);
-                $('#modal-form [name=foto_mobil]').val(response.foto_mobil);
-                $('#modal-form [name=foto_barang]').val(response.foto_barang);
-                $('#modal-form [name=timbangan]').val(response.penjualan.timbangan_mobil);
-                $('#modal-form [name=status]').val(response.status);
+                console.log(response);
+                $('#modal-form [name=nomor]').val(response.pembelianav.nomor);
+                $('#modal-form [name=tanggal]').val(response.pembelianav.tanggal);
+                $('#modal-form [name=supplier]').val(response.pembelianav.id_supplier);
+                $('#modal-form [name=due_date]').val(response.pembelianav.due_date);
+                $('#modal-form [name=status]').val(response.pembelianav.status);
                 $('#modal-form [name=keterangan]').val(response.keterangan);
-                for (i=0; i<response.penjualandetail.length; i++){
-                    console.log(response.penjualandetail[i].colly);
-                    add_row_sale();
-                    $('#nama'+i+'').val(response.penjualandetail[i].id_aluminium);
-                    $('#colly'+i+'').val(response.penjualandetail[i].colly);
-                    $('#isi'+i+'').val(response.penjualandetail[i].isi);
-                    $('#qty'+i+'').val(response.penjualandetail[i].qty);
-                    $('#harga'+i+'').val(response.penjualandetail[i].harga);
-                    $('#subtotal'+i+'').val(response.penjualandetail[i].subtotal);
+                for (i=0; i<response.pembelianavdetail.length; i++){
+                    console.log(response.pembelianavdetail[i]);
+                    addPembelianAvalanRow();
+                    $('#item'+i+'').val(response.pembelianavdetail[i].id_avalan);
+                    $('#qty'+i+'').val(response.pembelianavdetail[i].qty);
+                    $('#potongan'+i+'').val(response.pembelianavdetail[i].potongan);
+                    $('#harga'+i+'').val(response.pembelianavdetail[i].harga);
                 }
+                recalcPembelianAvalan();
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

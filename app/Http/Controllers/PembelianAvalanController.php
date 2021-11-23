@@ -102,7 +102,11 @@ class PembelianAvalanController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = array();
+        $data['pembelianav'] = PembelianAvalan::find($id);
+        $data['pembelianavdetail'] = PembelianAvalanDetail::where('id_pembelian_avalan', $id)->with('avalan')->get();
+
+        return response()->json($data);
     }
 
     /**
@@ -125,7 +129,7 @@ class PembelianAvalanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -139,4 +143,10 @@ class PembelianAvalanController extends Controller
         $pembelianav = PembelianAvalan::find($id);
         $pembelianav->delete();
     }
+
+    // public function payment($id)
+    // {
+    //     $dataPayment = PembelianAvalan::find($id)->get();
+    //     return response()->json($dataPayment);
+    // }
 }
