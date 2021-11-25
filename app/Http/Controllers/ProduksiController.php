@@ -151,8 +151,12 @@ class ProduksiController extends Controller
             $produksi->foto = $filename;
         }
         $produksi->save();
+        $proddtl = ProduksiDetail::where('id_laporan_produksi', $id)->get();
+        $count = count($proddtl);
         foreach ($request->addmore as $key => $value) {
-            $produksidetail = ProduksiDetail::find($value['id']);
+            $produksidetail = ProduksiDetail::findOrNew($value['id']);
+            $produksidetail->id_laporan_produksi = $id;
+            $produksidetail->nomor_laporan = $request->nomor;
             $produksidetail->id_aluminium_base = $value['nama'];
             $produksidetail->no_matras = $value['matras'];
             $produksidetail->berat = $value['berat'];
