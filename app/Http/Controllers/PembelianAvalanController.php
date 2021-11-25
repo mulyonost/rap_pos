@@ -60,6 +60,7 @@ class PembelianAvalanController extends Controller
      */
     public function store(Request $request)
     {
+
         $pembelianav = new PembelianAvalan;
         $pembelianav->nomor = $request->nomor;
         $pembelianav->tanggal = $request->tanggal;
@@ -90,6 +91,7 @@ class PembelianAvalanController extends Controller
             $pembelianavdetail->subtotal = $value['subtotal'];
             $pembelianavdetail->save();
         }
+        session(['id_pembelian_avalan' => $id]);
 
         return redirect('pembelian/avalan');
     }
@@ -144,9 +146,22 @@ class PembelianAvalanController extends Controller
         $pembelianav->delete();
     }
 
-    // public function payment($id)
-    // {
-    //     $dataPayment = PembelianAvalan::find($id)->get();
-    //     return response()->json($dataPayment);
-    // }
+    public function payment(Request $request)
+    {
+        $payment = PembelianAvalan::find($request->id_pembelian_avalan);
+        $payment->tanggal_bayar = $request->tanggal_pembayaran;
+        $payment->keterangan_bayar = $request->keterangan_pembayaran;
+        $payment->status = 1;
+        $payment->save();
+
+        return redirect('pembelian/avalan');
+    }
+
+    public function cetak($id)
+    {
+        $pembelianav = PembelianAvalan::where('id', $id)->with('supplier')->get();
+        $pembelianavdetail = PembelianAvalanDetail::where('id_pembelian_avalan', $id)->with('avalan')->get();
+
+        return view ('pembelian.pembelian_avalan_nota', compact ('pembelianav', 'pembelianavdetail'));
+    }
 }

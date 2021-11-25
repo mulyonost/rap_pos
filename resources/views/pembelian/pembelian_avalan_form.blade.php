@@ -119,7 +119,7 @@
                     </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
-                    <button type="button" onclick="addPayment()" class="btn btn-default">Pembayaran</button>
+                    <button type="button" name="payment" id="payment" class="btn btn-default" data-toggle="modal" onclick="addPayment('{{ route('pembelian_avalan.payment') }}')">Pembayaran</button>
                     <a href="" target="_blank" class="btn btn-default">Cetak Nota</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -161,14 +161,6 @@
     $(function() {
         $('#supplier').on("change click", getSupplier);
     });
-
-    function addPayment(){
-        $('#modal-form-payment').modal('show');
-        $('#modal-form-payment .modal-title').text('Pembayaran Avalan');
-        // $('#modal-form form')[0].reset();
-        // $('#modal-form [name=_method]').val('post');
-        // $('#modal-form [name=nomor]').focus();
-    }
     
 
 </script>

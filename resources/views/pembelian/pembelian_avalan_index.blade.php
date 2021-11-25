@@ -150,6 +150,7 @@
     function addForm(url){
         $('#modal-form').modal('show');
         $('#modal-form .modal-title').text('Pembelian Avalan');
+        $('#modal-form [name=payment]').attr("disabled", "");
         $('#modal-form form')[0].reset();
         $('#mainbody').empty();
         $('#modal-form').ready(function() {
@@ -187,6 +188,7 @@
     function editForm(url){
         $('#modal-form').modal('show');
         $('#modal-form .modal-title').text('Edit Pembelian Avalan');
+        $('#modal-form [name=payment]').attr("disabled", false);
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
@@ -201,7 +203,9 @@
                 $('#modal-form [name=supplier]').val(response.pembelianav.id_supplier);
                 $('#modal-form [name=due_date]').val(response.pembelianav.due_date);
                 $('#modal-form [name=status]').val(response.pembelianav.status);
-                $('#modal-form [name=keterangan]').val(response.keterangan);
+                $('#modal-form [name=keterangan]').val(response.pembelianav.keterangan);
+                $('#modal-form-payment [name=id_pembelian_avalan]').val(response.pembelianav.id);
+                // $('#modal-form [name=payment]').attr("onClick", "addPayment()" + response.pembelianav.id);
                 for (i=0; i<response.pembelianavdetail.length; i++){
                     console.log(response.pembelianavdetail[i]);
                     addPembelianAvalanRow();
@@ -233,6 +237,13 @@
             return;
         })
         }
+    }
+
+    function addPayment(url){
+        $('#modal-form-payment').modal('show');
+        $('#modal-form-payment .modal-title').text('Pembayaran Avalan');
+        $('#modal-form-payment form').attr('action', url);
+        $('#modal-form-payment [name=_method]').val('post');
     }
     
 </script>

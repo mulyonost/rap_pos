@@ -12,16 +12,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="form-control" for="tanggal">Tanggal Pembayaran</label>
-                                <input class="form-control" type="date" id="tanggal_pembayaran">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group-row">
+                                    <label class="form-control" for="tanggal">Tanggal Pembayaran</label>
+                                    <input class="form-control" type="date" id="tanggal_pembayaran" name="tanggal_pembayaran" value="<?= date('Y-m-d') ?>">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="form-control" for="tanggal">Keterangan</label>
-                                <input class="form-control" type="text" id="keterangan_pembayaran">
+                            <div class="col">
+                                <div class="form-group-row">
+                                    <label class="form-control" for="tanggal">Keterangan</label>
+                                    <textarea class="form-control" type="text" id="keterangan_pembayaran" name="keterangan_pembayaran"></textarea>
+                                    <input type="hidden" class="form-control" type="text" id="id_pembelian_avalan" name="id_pembelian_avalan">
+                                </div>
                             </div>
                         </div>
                     </div>
