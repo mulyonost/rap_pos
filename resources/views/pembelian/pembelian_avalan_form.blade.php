@@ -117,10 +117,11 @@
                             </div>
                         </div>
                     </div>
+                    {{ session('id_pembelian_avalan') }}
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
                     <button type="button" name="payment" id="payment" class="btn btn-default" data-toggle="modal" onclick="addPayment('{{ route('pembelian_avalan.payment') }}')">Pembayaran</button>
-                    <a href="" target="_blank" class="btn btn-default">Cetak Nota</a>
+                    <a href="{{ route('pembelian_avalan.cetak', session('id_pembelian_avalan')) }}" target="_blank" class="btn btn-default">Cetak Nota</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
