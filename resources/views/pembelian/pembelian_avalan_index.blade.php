@@ -25,6 +25,7 @@
                         <th>Supplier</th>
                         <th>Total Nota</th>
                         <th>Jatuh Tempo</th>
+                        <th>Tgl Pelunasan</th>
                         <th>Status</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
@@ -58,6 +59,7 @@
     $(function () {
         table = $('.table').DataTable({
             dom: 'Bfrtip',
+            pageLength: 25,
             processing: true,
             autowidth: true,
             ajax: {
@@ -70,6 +72,7 @@
                 {data: 'supplier.nama'},
                 {data: 'total_nota', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')},
                 {data: 'due_date'},
+                {data: 'tanggal_bayar'},
                 {data: 'status',
                     render : function (data, type, row) {
                         if (row.status === 0) {

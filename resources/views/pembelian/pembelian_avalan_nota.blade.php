@@ -6,7 +6,7 @@
   {{-- Paper CSS --}}
   <link rel="stylesheet" href="{{ asset('css/paper.css')}}">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
   <!-- Set page size here: A5, A4 or A3 -->
   <!-- Set also "landscape" if you need -->
@@ -59,7 +59,7 @@
                                         <?php $total=0; $subtotal=0  ?>
                                         @foreach ($pembelianavdetail as $key=>$value)
                                         <tr>
-                                            <?php $subtotal=$value->qty*$value->harga ?>
+                                            <?php $subtotal=($value->qty-$value->potongan)*$value->harga ?>
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $value->avalan->nama }}</td>
                                             <td>{{ number_format($value->qty) }}</td>

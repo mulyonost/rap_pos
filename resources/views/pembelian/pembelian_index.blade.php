@@ -109,7 +109,7 @@
             '@endforeach' +
         '</select></td>' +
         '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
-        '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
+        '<td><input class="form-control harga" type="number" step="0.01" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
         '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
         '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
         )
