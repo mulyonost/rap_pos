@@ -1,24 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AluminiumBaseController;
-use App\Http\Controllers\AluminiumController;
+use App\Http\Controllers\KasController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\AvalanController;
-use App\Http\Controllers\CustomersController;
-use App\Http\Controllers\SuppliersController;
-use App\Http\Controllers\AvalanSupplierController;
-use App\Http\Controllers\ProduksiController;
-use App\Http\Controllers\AnodizingController;
 use App\Http\Controllers\PackingController;
-use App\Http\Controllers\PengambilanBahanController;
+use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\AluminiumController;
+use App\Http\Controllers\AnodizingController;
+use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\PembelianController;
-use App\Http\Controllers\PembelianAvalanController;
 use App\Http\Controllers\PenjualanController;
-use App\Http\Controllers\KasController;
-use App\Http\Controllers\LaporanProduksiController;
+use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\AluminiumBaseController;
+use App\Http\Controllers\LaporanAvalanController;
+use App\Http\Controllers\AvalanSupplierController;
 use App\Http\Controllers\LaporanPackingController;
+use App\Http\Controllers\LaporanProduksiController;
+use App\Http\Controllers\PembelianAvalanController;
 use App\Http\Controllers\LaporanAnodizingController;
+use App\Http\Controllers\PengambilanBahanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,11 +82,13 @@ Route::group(['middleware' => 'auth'], function () {
     // All Pembelian Routes
     Route::prefix('pembelian')->name('pembelian_')->group(function () {
         Route::get('/bahan/data', [PembelianController::class, 'data'])->name('bahan.data');
+        Route::post('/bahan/payment/', [PembelianController::class, 'payment'])->name('bahan.payment');
         Route::resource('/bahan', PembelianController::class);
 
         Route::get('/avalan/data', [PembelianAvalanController::class, 'data'])->name('avalan.data');
         Route::post('/avalan/payment/', [PembelianAvalanController::class, 'payment'])->name('avalan.payment');
-        Route::get('/avalan/cetak/{id}', [PembelianAvalanController::class, 'cetak'])->name('avalan.cetak');
+        Route::get('/avalan/cetak/', [PembelianAvalanController::class, 'cetak'])->name('avalan.cetak');
+        Route::get('/avalan/cetakulang/{id?}', [PembelianAvalanController::class, 'cetakulang'])->name('avalan.cetakulang');
         Route::resource('/avalan', PembelianAvalanController::class);
     });
 
@@ -112,5 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/packing', LaporanPackingController::class);
         Route::get('/packing/detail', [LaporanPackingController::class, 'detail'])->name('packing.detail');
+
+        Route::resource('/avalan', LaporanAvalanController::class);
     });
 });

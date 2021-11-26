@@ -89,6 +89,8 @@ class PembelianController extends Controller
             $pembeliandetail->subtotal = $value['subtotal'];
             $pembeliandetail->save();
         }
+
+        return redirect('pembelian/bahan');
     }
 
     /**
@@ -139,5 +141,16 @@ class PembelianController extends Controller
     {
         $pembelian = Pembelian::find($id);
         $pembelian->delete();
+    }
+
+    public function payment(Request $request)
+    {
+        $payment = Pembelian::find($request->id_pembelian);
+        $payment->tanggal_bayar = $request->tanggal_pembayaran;
+        $payment->keterangan_bayar = $request->keterangan_pembayaran;
+        $payment->status = 1;
+        $payment->save();
+
+        return redirect('pembelian/bahan');
     }
 }

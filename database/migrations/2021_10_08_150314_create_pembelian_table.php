@@ -23,6 +23,8 @@ class CreatePembelianTable extends Migration
             $table->string('foto')->nullable();
             $table->integer('total');
             $table->string('keterangan')->nullable();
+            $table->string('tanggal_bayar')->nullable();
+            $table->string('keterangan_bayar')->nullable();
             $table->timestamps();
         });
     }

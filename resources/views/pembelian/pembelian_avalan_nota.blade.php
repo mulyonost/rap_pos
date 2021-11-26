@@ -62,17 +62,17 @@
                                             <?php $subtotal=($value->qty-$value->potongan)*$value->harga ?>
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $value->avalan->nama }}</td>
-                                            <td>{{ number_format($value->qty) }}</td>
-                                            <td>{{ $value->potongan }}</td>
-                                            <td>{{ number_format($value->harga) }}</td>
-                                            <td>{{ number_format($subtotal) }}</td>
+                                            <td>{{ number_format($value->qty) }} Kg</td>
+                                            <td>{{ $value->potongan }} Kg</td>
+                                            <td>Rp. {{ number_format($value->harga) }}</td>
+                                            <td>Rp. {{ number_format($subtotal) }}</td>
                                         </tr>
                                         <?php $total += $subtotal  ?>
                                         @endforeach                                        
                                         <tr>
                                             <td class="text-left border-secondary" colspan="4">Terbilang : {{ ucwords(terbilang($total)) }} Rupiah</td>
-                                            <td class="text-right border-secondary">Total</td>
-                                            <td class="border-secondary">{{ number_format($total) }}</td>
+                                            <td class="text-right border-secondary"><b>Total</b></td>
+                                            <td class="border-secondary"><b>Rp. {{ number_format($total) }} </b></td>
                                         </tr>
                                     </tbody>
                                 </table>

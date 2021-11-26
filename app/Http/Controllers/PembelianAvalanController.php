@@ -157,7 +157,15 @@ class PembelianAvalanController extends Controller
         return redirect('pembelian/avalan');
     }
 
-    public function cetak($id)
+    public function cetak()
+    {
+        $pembelianav = PembelianAvalan::with('supplier')->find(session('id_pembelian_avalan'));
+        $pembelianavdetail = PembelianAvalanDetail::where('id_pembelian_avalan', session('id_pembelian_avalan'))->with('avalan')->get();
+
+        return view('pembelian.pembelian_avalan_nota', compact('pembelianav', 'pembelianavdetail'));
+    }
+
+    public function cetakulang($id)
     {
         $pembelianav = PembelianAvalan::with('supplier')->find($id);
         $pembelianavdetail = PembelianAvalanDetail::where('id_pembelian_avalan', $id)->with('avalan')->get();

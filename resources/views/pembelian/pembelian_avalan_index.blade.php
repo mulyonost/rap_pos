@@ -207,8 +207,11 @@
                 $('#modal-form [name=due_date]').val(response.pembelianav.due_date);
                 $('#modal-form [name=status]').val(response.pembelianav.status);
                 $('#modal-form [name=keterangan]').val(response.pembelianav.keterangan);
+                var url = "{{ route('pembelian_avalan.cetakulang', '')}}" + "/" + response.pembelianav.id;
+                $('#modal-form [id=cetak]').attr("href", url);
                 $('#modal-form-payment [name=id_pembelian_avalan]').val(response.pembelianav.id);
-                // $('#modal-form [name=payment]').attr("onClick", "addPayment()" + response.pembelianav.id);
+                $('#modal-form-payment [name=tanggal]').val(response.pembelianav.tanggal_bayar);
+                $('#modal-form-payment [name=status]').val(response.pembelianav.status);
                 for (i=0; i<response.pembelianavdetail.length; i++){
                     console.log(response.pembelianavdetail[i]);
                     addPembelianAvalanRow();

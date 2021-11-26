@@ -18,7 +18,7 @@ class CreatePembelianDetailTable extends Migration
             $table->foreignID('id_pembelian')->constrained('pembelian')->onDelete('cascade');
             $table->foreignID('id_item')->constrained('items');
             $table->integer('qty');
-            $table->integer('harga');
+            $table->float('harga', 10, 2);
             $table->integer('subtotal');
             $table->timestamps();
         });

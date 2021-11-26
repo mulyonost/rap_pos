@@ -23,7 +23,7 @@
                                 <div class="form-group-row">
                                     <label class="form-control" for="tanggal">Keterangan</label>
                                     <textarea class="form-control" type="text" id="keterangan_pembayaran" name="keterangan_pembayaran"></textarea>
-                                    <input type="hidden" class="form-control" type="text" id="id_pembelian_avalan" name="id_pembelian_avalan">
+                                    <input type="hidden" class="form-control" type="text" id="id_pembelian" name="id_pembelian">
                                 </div>
                             </div>
                         </div>
