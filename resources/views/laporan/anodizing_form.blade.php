@@ -93,7 +93,7 @@ $('#add_new').click(function(){
   addRowAnodizing();
   i++;
   $('.nama').select2({
-    theme: "bootstrap"
+    theme: "bootstrap-5"
   });
 });
 

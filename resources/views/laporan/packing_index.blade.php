@@ -107,7 +107,7 @@ function addForm(url){
         addRowPacking();
         i++;
         $('.nama').select2({
-            theme: "bootstrap"
+            theme: "bootstrap-5"
         });
     });
     $('#modal-form form')[0].reset();

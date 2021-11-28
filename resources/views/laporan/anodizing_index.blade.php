@@ -105,7 +105,7 @@ function addRowAnodizing(){
             addRowAnodizing();
             i++;
             $('.nama').select2({
-                theme: "bootstrap"
+                theme: "bootstrap-5"
             });            
         });
         $('#modal-form form')[0].reset();

@@ -103,7 +103,7 @@ $('#add_new').click(function(){
   addRowPacking();
   i++;
   $('.nama').select2({
-    theme: "bootstrap"
+    theme: "bootstrap-5"
   });
 });
 
