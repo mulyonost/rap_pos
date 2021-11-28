@@ -16,10 +16,10 @@ class CreateAnodizingDetailTable extends Migration
         Schema::create('anodizing_detail', function (Blueprint $table) {
             $table->id();
             $table->foreignID('id_laporan_anodizing')->constrained('anodizing')->onDelete('cascade');
-            $table->string('nomor');
             $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->integer('qty');
-            $table->float('berat');
+            $table->float('berat', 5, 3);
+            $table->integer('subtotal');
             $table->timestamps();
         });
     }

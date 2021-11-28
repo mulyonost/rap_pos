@@ -15,7 +15,6 @@ class CreatePackingDetailTable extends Migration
     {
         Schema::create('packing_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor');
             $table->foreignID('id_laporan_packing')->constrained('packing')->onDelete('cascade');
             $table->foreignID('id_aluminium')->constrained('aluminium');
             $table->integer('qty_colly');

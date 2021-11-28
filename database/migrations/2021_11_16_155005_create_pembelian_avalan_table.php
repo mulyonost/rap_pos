@@ -22,9 +22,9 @@ class CreatePembelianAvalanTable extends Migration
             $table->bigInteger('total_nota');
             $table->string('foto_nota')->nullable();
             $table->boolean('status');
+            $table->string('keterangan')->nullable();
             $table->date('tanggal_bayar')->nullable();
             $table->string('keterangan_bayar')->nullable();
-            $table->string('keterangan')->nullable();
             $table->string('created_by')->nullable();
             $table->timestamps();
         });

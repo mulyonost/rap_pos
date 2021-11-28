@@ -77,7 +77,6 @@ class PackingController extends Controller
         foreach ($request->addmore as $key => $value) {
             $packingdetail = new PackingDetail();
             $packingdetail->id_laporan_packing = $id;
-            $packingdetail->nomor = $request->nomor;
             $packingdetail->id_aluminium = $value['nama'];
             $packingdetail->qty_colly = $value['qty'];
             $packingdetail->qty_isi = $value['berat'];
@@ -144,8 +143,7 @@ class PackingController extends Controller
         $packing->save();
 
         foreach ($request->addmore as $key => $value) {
-            $packingdetail = PackingDetail::find($value['id']);
-            $packingdetail->nomor = $request->nomor;
+            $packingdetail = PackingDetail::findOrNew($value['id']);
             $packingdetail->id_aluminium = $value['nama'];
             $packingdetail->qty_colly = $value['qty'];
             $packingdetail->qty_isi = $value['berat'];

@@ -16,7 +16,6 @@ class CreateProduksiDetailTable extends Migration
         Schema::create('produksi_detail', function (Blueprint $table) {
             $table->id();
             $table->foreignID('id_laporan_produksi')->constrained('produksi')->onDelete('cascade');
-            $table->string('nomor_laporan');
             $table->string('no_matras')->nullable();
             $table->foreignID('id_aluminium_base')->constrained('aluminium_base');
             $table->integer('qty');

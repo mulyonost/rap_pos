@@ -48,7 +48,8 @@ class ProduksiController extends Controller
      */
     public function create()
     {
-        //
+        $produk = AluminiumBase::orderBy("nama")->get();
+        return view('laporan.produksi_form_new', compact('produk'));
     }
 
     /**
@@ -81,7 +82,6 @@ class ProduksiController extends Controller
         foreach ($request->addmore as $key => $value) {
             $produksidetail = new ProduksiDetail();
             $produksidetail->id_laporan_produksi = $id;
-            $produksidetail->nomor_laporan = $request->nomor;
             $produksidetail->no_matras = $value['matras'];
             $produksidetail->id_aluminium_base = $value['nama'];
             $produksidetail->berat = $value['berat'];
@@ -156,7 +156,6 @@ class ProduksiController extends Controller
         foreach ($request->addmore as $key => $value) {
             $produksidetail = ProduksiDetail::findOrNew($value['id']);
             $produksidetail->id_laporan_produksi = $id;
-            $produksidetail->nomor_laporan = $request->nomor;
             $produksidetail->id_aluminium_base = $value['nama'];
             $produksidetail->no_matras = $value['matras'];
             $produksidetail->berat = $value['berat'];

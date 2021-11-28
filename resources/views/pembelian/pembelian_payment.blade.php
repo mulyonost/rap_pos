@@ -34,6 +34,7 @@
                         </div>
                     </div>
                 <div class="modal-footer ">
+                    <a href="" target="_blank" class="btn btn-default" id="hapus">Hapus Pembayaran</a>
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>

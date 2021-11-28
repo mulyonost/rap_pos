@@ -17,7 +17,7 @@ class CreatePengambilanBahanDetailTable extends Migration
             $table->id();
             $table->foreignId('id_pengambilan_bahan')->constrained('pengambilan_bahan', 'id')->onDelete('cascade');
             $table->foreignId('id_item')->constrained('items');
-            $table->float('qty', 7, 2);
+            $table->float('qty', 8, 2);
             $table->timestamps();
         });
     }

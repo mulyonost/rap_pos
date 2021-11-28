@@ -25,7 +25,7 @@ class PembelianController extends Controller
 
     public function data()
     {
-        $pembelian = Pembelian::orderBy('id', 'desc')->with('supplier')->get();
+        $pembelian = Pembelian::orderBy('tanggal', 'desc')->with('supplier')->get();
         return datatables()
             ->of($pembelian)
             ->addIndexColumn()
@@ -151,6 +151,16 @@ class PembelianController extends Controller
         $payment->status = 1;
         $payment->save();
 
+        return redirect('pembelian/bahan');
+    }
+
+    public function paymentDelete($id)
+    {
+        $payment = Pembelian::find($id);
+        $payment->tanggal_bayar = null;
+        $payment->keterangan_bayar = null;
+        $payment->status = 0;
+        $payment->save();
         return redirect('pembelian/bahan');
     }
 }

@@ -19,10 +19,10 @@ class CreateKasDetailTable extends Migration
                 ->constrained('kas')
                 ->onDelete('cascade');
             $table->string('nama');
+            $table->string('kategori');
             $table->integer('qty');
             $table->integer('harga');
             $table->integer('subtotal');
-            $table->string('kategori');
             $table->timestamps();
         });
     }

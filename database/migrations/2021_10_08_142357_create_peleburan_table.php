@@ -18,6 +18,7 @@ class CreatePeleburanTable extends Migration
             $table->dateTime('tanggal');
             $table->integer('total_avalan');
             $table->integer('total_billet');
+            $table->string('keterangan');
             $table->string('foto');
             $table->timestamps();
         });

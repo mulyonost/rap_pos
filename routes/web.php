@@ -19,6 +19,7 @@ use App\Http\Controllers\LaporanPackingController;
 use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\PembelianAvalanController;
 use App\Http\Controllers\LaporanAnodizingController;
+use App\Http\Controllers\LaporanBahanController;
 use App\Http\Controllers\PengambilanBahanController;
 
 /*
@@ -83,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('pembelian')->name('pembelian_')->group(function () {
         Route::get('/bahan/data', [PembelianController::class, 'data'])->name('bahan.data');
         Route::post('/bahan/payment/', [PembelianController::class, 'payment'])->name('bahan.payment');
+        Route::get('/bahan/paymentDelete/{id?}', [PembelianController::class, 'paymentDelete'])->name('bahan.paymentDelete');
         Route::resource('/bahan', PembelianController::class);
 
         Route::get('/avalan/data', [PembelianAvalanController::class, 'data'])->name('avalan.data');
@@ -117,5 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/packing/detail', [LaporanPackingController::class, 'detail'])->name('packing.detail');
 
         Route::resource('/avalan', LaporanAvalanController::class);
+
+        Route::resource('/bahan', LaporanBahanController::class);
     });
 });

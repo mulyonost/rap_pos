@@ -15,7 +15,6 @@ class CreatePenjualanTable extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->id();
-            // $table->foreignID('id_penjualan_po')->constrained('penjualan_po')->nullable();
             $table->string('nomor');
             $table->foreignID('id_customer')->constrained('customers');
             $table->integer('timbangan_mobil')->nullable();

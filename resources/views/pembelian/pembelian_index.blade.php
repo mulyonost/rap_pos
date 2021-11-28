@@ -133,6 +133,8 @@
                 $('#modal-form [name=due_date]').val(response.pembelian.due_date);
                 $('#modal-form [name=status]').val(response.pembelian.status);
                 $('#modal-form [name=keterangan]').val(response.pembelian.keterangan);
+                var url = "{{ route('pembelian_bahan.paymentDelete', '')}}" + "/" + response.pembelian.id;
+                $('#modal-form-payment [id=hapus]').attr("href", url);
                 $('#modal-form-payment [name=id_pembelian]').val(response.pembelian.id);
                 for (i=0; i<response.pembeliandetail.length; i++){
                     addRowPembelian();

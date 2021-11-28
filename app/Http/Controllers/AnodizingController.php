@@ -76,7 +76,6 @@ class AnodizingController extends Controller
         foreach ($request->addmore as $key => $value) {
             $anodizingdetail = new AnodizingDetail();
             $anodizingdetail->id_laporan_anodizing = $id;
-            $anodizingdetail->nomor = $request->nomor;
             $anodizingdetail->id_aluminium = $value['nama'];
             $anodizingdetail->qty = $value['qty'];
             $anodizingdetail->berat = $value['berat'];
@@ -142,7 +141,7 @@ class AnodizingController extends Controller
 
         $id = $anodizing->id;
         foreach ($request->addmore as $key => $value) {
-            $anodizingdetail = AnodizingDetail::find($value['id']);
+            $anodizingdetail = AnodizingDetail::findOrNew($value['id']);
             $anodizingdetail->id_aluminium = $value['nama'];
             $anodizingdetail->qty = $value['qty'];
             $anodizingdetail->berat = $value['berat'];

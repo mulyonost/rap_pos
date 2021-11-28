@@ -236,6 +236,12 @@
                   <p>Laporan Avalan</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('reports_bahan.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Laporan Bahan</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
