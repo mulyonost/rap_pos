@@ -41,6 +41,7 @@
                               <option value="bahan_kimia">Bahan Kimia</option>
                               <option value="bahan_kimia">Packing</option>
                               <option value="spare_part">Spare Part</option>
+                              <option value="matras">Matras</option>
                               <option value="lain_lain">Lain Lain</option>
                           </select>
                           <span class="help-block with-errors"></span>

@@ -210,7 +210,7 @@
         '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
         )
         $('.nama').select2({
-            theme: "bootstrap"
+            theme: "bootstrap-5"
         });
     });
 
@@ -221,7 +221,7 @@
 
     $(document).ready(function () {
         $('.nama').select2({
-        theme: "bootstrap"
+        theme: "bootstrap-5"
         })
     });
 
@@ -230,7 +230,7 @@
     });
 
     $('.nama').select2({
-        theme: "bootstrap"
+        theme: "bootstrap-5"
     });
 
 </script>
