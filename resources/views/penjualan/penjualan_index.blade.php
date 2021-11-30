@@ -179,7 +179,6 @@
                 $('#modal-form [name=status]').val(response.status);
                 $('#modal-form [name=keterangan]').val(response.keterangan);
                 for (i=0; i<response.penjualandetail.length; i++){
-                    console.log(response.penjualandetail[i].colly);
                     add_row_sale();
                     $('#nama'+i+'').val(response.penjualandetail[i].id_aluminium);
                     $('#colly'+i+'').val(response.penjualandetail[i].colly);
