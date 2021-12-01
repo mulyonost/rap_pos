@@ -120,24 +120,25 @@
 
     });
 
-    var date = $('#tanggal').val();
-        var newDate = date.replace(/-/g, "");
-        let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-        var nomor = "RAP-" + newDate + "-" + r;
-
-
-
     function addForm(url){
         $('#modal-form').modal('show');
         $('#modal-form .modal-title').text('Input Penjualan');
         $('#modal-form form')[0].reset();
-        $('#nomor').val(nomor);
+        $('#mainbody').empty();
+        $('#modal-form').ready(function() {
+            getNomorPenjualan();
+            addRowPenjualan();
+            i++;
+            $('.nama').select2({
+                theme: "bootstrap-5"
+            });            
+        });
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=nomor]').focus();
     }
 
-    function add_row_sale(){
+    function addRowPenjualan(){
         $('#mainbody').append('<tr><td>' +
                 '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
                     '<option value="">Pilih Barang</option>' +
@@ -147,14 +148,11 @@
                 '</select></td>' +
                 '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
                 '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
-                '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
+                '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required readonly tabindex=-1></td>' +
                 '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
                 '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
                 '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
             )
-            $('.nama').select2({
-                theme: "bootstrap"
-            });
         }
 
     function editForm(url){
@@ -179,14 +177,18 @@
                 $('#modal-form [name=status]').val(response.status);
                 $('#modal-form [name=keterangan]').val(response.keterangan);
                 for (i=0; i<response.penjualandetail.length; i++){
-                    add_row_sale();
+                    addRowPenjualan();
                     $('#nama'+i+'').val(response.penjualandetail[i].id_aluminium);
                     $('#colly'+i+'').val(response.penjualandetail[i].colly);
                     $('#isi'+i+'').val(response.penjualandetail[i].isi);
                     $('#qty'+i+'').val(response.penjualandetail[i].qty);
                     $('#harga'+i+'').val(response.penjualandetail[i].harga);
                     $('#subtotal'+i+'').val(response.penjualandetail[i].subtotal);
+                    $('.nama').select2({
+                        theme: "bootstrap-5"
+                    });       
                 }
+                recalcPenjualan();
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

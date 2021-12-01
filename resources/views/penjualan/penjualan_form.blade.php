@@ -80,21 +80,8 @@
                                 </tr>
                             </thead>
                             <tbody id="mainbody">
-                                <tr>
-                                    <td><select class="form-control nama" name="addmore[0][nama]" id="nama0" required>
-                                        <option value="">Pilih Barang</option>
-                                        @foreach ($aluminium as $alma)
-                                            <option value="{{$alma->id}}">{{$alma->nama}}</option>
-                                        @endforeach
-                                        </select>                                        
-                                    </td>
-                                    <td><input class="form-control colly" type="number" name="addmore[0][colly]" id="colly0" required></td>
-                                    <td><input class="form-control isi" type="number" name="addmore[0][isi]" id="isi0" required></td>
-                                    <td><input class="form-control qty" type="number" name="addmore[0][qty]" id="qty0" required readonly tabindex="-1"></td>
-                                    <td><input class="form-control harga" type="number" name="addmore[0][harga]" id="harga0" required></td>
-                                    <td><input class="form-control subtotal" type="number" name="addmore[0][subtotal]" id="subtotal0" readonly></td>
-                                    <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>
-                                </tr>
+
+                            </tbody>
                             <tfoot>
                                 <tr>
                                     <td></td>
@@ -124,7 +111,7 @@
                                     <td></td>
                                 </tr>
                             </tfoot>
-                            </tbody>
+                            
                         </table>
                     </div>
                 </div>
@@ -143,95 +130,25 @@
 
 @push('scripts')
 <script>
-    var numRows = 2, ti = 5;
-
-    function isNumber(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    }
-
-    function recalc() {
-        let colly = 0;
-        let isi = 0;
-        let qty = 0;
-        let harga = 0;
-        let subtotal = 0;
-        let totalNota = 0;
-        let diskonPersen = $('#diskon_persen').val();
-        let diskonRupiah = 0;
-        let totalAkhir = 0;
-        $('#table').find('tr').each(function() {
-            let colly = $(this).find('input.colly').val();
-            let isi = $(this).find('input.isi').val();
-            let harga = $(this).find('input.harga').val();
-            let qty = (colly * isi);
-            let subtotal = (qty * harga);
-            $(this).find('input.qty').val(Math.round(qty * 100) / 100);
-            $(this).find('input.subtotal').val(subtotal);
-            totalNota += subtotal ? subtotal : 0;
-        });
-        diskonRupiah = diskonPersen/100 * totalNota;
-        totalAkhir = totalNota - diskonRupiah;
-        $('#total_nota').val(totalNota);
-        $('#diskon_rupiah').val(diskonRupiah);
-        $('#total_akhir').val(totalAkhir);
-    }
-
-    function getdate() {
-        var date = $('#tanggal').val();
-        var newDate = date.replace(/-/g, "");
-        let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-        var nomor = "RAP-" + newDate + "-" + r;
-        $('#nomor').val(nomor);
-    }
 
     $(function() {
-        $('#modal-form').on("keyup change blur", recalc);
+        $('#modal-form').on("keyup change blur", recalcPenjualan);
     });
 
+
     $(function() {
-        $('#tanggal').on("change", getdate);
+        $('#tanggal').on("change", getNomorPenjualan);
     });
 
     var i = 0;
     $('#add_new').click(function() {
         i++;
-        $('#mainbody').append('<tr><td>' +
-        '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
-            '<option value="">Pilih Barang</option>' +
-            '@foreach ($aluminium as $alma)' +
-            '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
-            '@endforeach' +
-        '</select></td>' +
-        '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
-        '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
-        '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
-        '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-        '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
-        '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
-        )
-        $('.nama').select2({
-            theme: "bootstrap-5"
-        });
-    });
-
-    $(document).on('click', '.remove', function(event) {
-        jQuery(this).parent().parent().remove();
-        return false;
-    });
-
-    $(document).ready(function () {
+        addRowPenjualan();
         $('.nama').select2({
         theme: "bootstrap-5"
         })
     });
 
-    $(document).on('select2:open', () => {
-        document.querySelector('.select2-search__field').focus();
-    });
-
-    $('.nama').select2({
-        theme: "bootstrap-5"
-    });
 
 </script>
 @endpush

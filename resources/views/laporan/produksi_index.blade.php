@@ -100,13 +100,13 @@ function addRowProduksi(){
         $('#mainbody').empty();
         $('#modal-form form')[0].reset();
         $('#modal-form').ready(function() {
+            getNomorProduksi();
             addRowProduksi();
             i++;
             $('.nama').select2({
                 theme: "bootstrap"
             });            
         });
-        $('#modal-form').ready(getNomorProduksi);
         $('#modal-form .modal-title').text('Input Data Produksi');
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');

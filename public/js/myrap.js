@@ -151,3 +151,41 @@ function getPembelianAvalanJT() {
   var date = $('#tanggal').val();
   $('#due_date').val(date);
 }
+
+
+// PENJUALAN
+
+function recalcPenjualan() {
+  let colly = 0;
+  let isi = 0;
+  let qty = 0;
+  let harga = 0;
+  let subtotal = 0;
+  let totalNota = 0;
+  let diskonPersen = $('#diskon_persen').val();
+  let diskonRupiah = 0;
+  let totalAkhir = 0;
+  $('#table').find('tr').each(function() {
+      let colly = $(this).find('input.colly').val();
+      let isi = $(this).find('input.isi').val();
+      let harga = $(this).find('input.harga').val();
+      let qty = (colly * isi);
+      let subtotal = (qty * harga);
+      $(this).find('input.qty').val(Math.round(qty * 100) / 100);
+      $(this).find('input.subtotal').val(subtotal);
+      totalNota += subtotal ? subtotal : 0;
+  });
+  diskonRupiah = diskonPersen/100 * totalNota;
+  totalAkhir = (totalNota - diskonRupiah);
+  $('#total_nota').val(totalNota);
+  $('#diskon_rupiah').val(diskonRupiah);
+  $('#total_akhir').val(totalAkhir);
+}
+
+function getNomorPenjualan() {
+  var date = $('#tanggal').val();
+  var newDate = date.replace(/-/g, "");
+  let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
+  var nomor = "RAP-" + newDate + "-" + r;
+  $('#nomor').val(nomor);
+}
