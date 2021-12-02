@@ -52,8 +52,8 @@
                   </div>
                   <div class="col-md-6">
                       <select name="shift" id="shift" class="form-select" size="2" aria-label="size 2" required>
-                        <option value="1">Bohari</option>
-                        <option value="2">Usman</option>
+                        <option value="bohari">Bohari</option>
+                        <option value="saldi">Saldi</option>
                       </select>
                   </div>
               </div>
