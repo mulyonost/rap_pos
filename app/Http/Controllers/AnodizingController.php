@@ -79,6 +79,7 @@ class AnodizingController extends Controller
             $anodizingdetail->id_aluminium = $value['nama'];
             $anodizingdetail->qty = $value['qty'];
             $anodizingdetail->berat = $value['berat'];
+            $anodizingdetail->subtotal = $value['subtotal'];
             $anodizingdetail->save();
         }
 
