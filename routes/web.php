@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
     // All Reports Routes
     Route::prefix('reports')->name('reports_')->group(function () {
         Route::get('/produksi', [LaporanProduksiController::class, 'index'])->name('produksi.index');
+        Route::get('/produksi/search', [LaporanProduksiController::class, 'search'])->name('produksi.search');
         Route::get('/produksi/date', [LaporanProduksiController::class, 'date'])->name('produksi.date');
 
         Route::resource('/anodizing', LaporanAnodizingController::class);
