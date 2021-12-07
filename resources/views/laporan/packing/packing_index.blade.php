@@ -34,7 +34,7 @@
         </div>
     </div>
 </div>
-@includeIf('laporan.packing_form')
+@includeIf('laporan.packing.packing_form')
 @endsection
 
 @push('scripts')

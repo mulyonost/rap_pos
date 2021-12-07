@@ -20,7 +20,7 @@ class ProduksiController extends Controller
     public function index()
     {
         $produk = AluminiumBase::orderBy("nama")->get();
-        return view('laporan.produksi_index', compact('produk'));
+        return view('laporan.produksi.produksi_index', compact('produk'));
     }
 
     public function data()
@@ -49,7 +49,7 @@ class ProduksiController extends Controller
     public function create()
     {
         $produk = AluminiumBase::orderBy("nama")->get();
-        return view('laporan.produksi_form_new', compact('produk'));
+        return view('laporan.produksi.produksi_create', compact('produk'));
     }
 
     /**
@@ -118,7 +118,10 @@ class ProduksiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $produk = AluminiumBase::orderBy("nama")->get();
+        $produksi = Produksi::find($id);
+        $produksidetail = ProduksiDetail::where('id_laporan_produksi', $id)->with('aluminium')->get();
+        return view ('laporan.produksi.produksi_edit', compact('produk', 'produksi', 'produksidetail'));
     }
 
     /**

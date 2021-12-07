@@ -18,7 +18,7 @@ class PackingController extends Controller
     public function index()
     {
         $produk = Aluminium::orderBy('nama')->get();
-        return view('laporan.packing_index', compact('produk'));
+        return view('laporan.packing.packing_index', compact('produk'));
     }
 
     public function data()

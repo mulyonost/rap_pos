@@ -10,6 +10,7 @@
 @endsection
 
 @section('content')
+
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>

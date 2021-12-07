@@ -18,7 +18,7 @@ class AnodizingController extends Controller
     public function index()
     {
         $produk = Aluminium::where('finishing', '!=', 'MF')->orWhereNull("finishing")->orderBy('nama')->get();
-        return view('laporan.anodizing_index', compact('produk'));
+        return view('laporan..anodizing.anodizing_index', compact('produk'));
     }
 
     public function data()

@@ -34,7 +34,7 @@
         </div>
     </div>
 </div>
-@includeIf('laporan.produksi_form')
+@includeIf('laporan.produksi.produksi_form')
 @endsection
 
 @push('scripts')

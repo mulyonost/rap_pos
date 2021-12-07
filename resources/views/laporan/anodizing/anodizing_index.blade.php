@@ -34,7 +34,7 @@
         </div>
     </div>
 </div>
-@includeIf('laporan.anodizing_form')
+@includeIf('laporan.anodizing.anodizing_form')
 @endsection
 
 @push('scripts')
