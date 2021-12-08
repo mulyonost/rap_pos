@@ -93,6 +93,7 @@
                   </div>
                   <div class="col-md-6">
                       <input type="text" class="form-control" name="total" id="total" readonly>
+                      <span name="persentase" id="persentase"></span>
                   </div>
               </div>
           </div>
@@ -152,6 +153,12 @@
 $(function() {
   $('#form-produksi').on("keyup change blur", recalcProduksi);
 });
+
+$(function() {
+  $('#form-produksi').on("keyup change blur", persentase);
+});
+
+
 
 var i=0;
 function addRowProduksi(){

@@ -32,8 +32,9 @@ class ProduksiController extends Controller
             ->addColumn('aksi', function ($produksi) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('laporan_produksi.update', $produksi->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('laporan_produksi.destroy', $produksi->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <a href="/laporan/produksi/' . $produksi->id . '/edit">Edit</a>
+                    <button onclick="editForm(`' . route('laporan_produksi.update', $produksi->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button onclick="deleteData(`' . route('laporan_produksi.destroy', $produksi->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
             })
@@ -121,7 +122,7 @@ class ProduksiController extends Controller
         $produk = AluminiumBase::orderBy("nama")->get();
         $produksi = Produksi::find($id);
         $produksidetail = ProduksiDetail::where('id_laporan_produksi', $id)->with('aluminium')->get();
-        return view ('laporan.produksi.produksi_edit', compact('produk', 'produksi', 'produksidetail'));
+        return view('laporan.produksi.produksi_edit', compact('produk', 'produksi', 'produksidetail'));
     }
 
     /**

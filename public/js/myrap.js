@@ -38,6 +38,21 @@ function getNomorProduksi() {
   $('#nomor').val(newDate + "-" + mesin);
 }
 
+function persentase() {
+  var totalBillet = 0;
+  var totalAvalan = 0;
+  var totalProduksi = 0;
+  var kgBillet = 0;
+  var persen = 0;
+  totalBillet = $('#jumlah_billet').val();
+  totalAvalan = $('#jumlah_avalan').val();
+  totalProduksi = $('#total').val();
+  kgBillet = (totalBillet * 92);
+  persen = Math.round(totalAvalan / totalBillet * 100) / 100 ;
+  $('#persentase').text(persen);
+
+}
+
 
 // FORM ANODIZING
 

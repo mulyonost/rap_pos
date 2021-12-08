@@ -12,9 +12,9 @@
 @section('content')
 
 <div class="container-xxl produksi">
-    <form action="{{ route('laporan_produksi.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-produksi" autocomplete="off" >
+    <form action="{{ route('laporan_produksi.update', $produksi->id) }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-produksi" autocomplete="off" >
         @csrf
-        @method('post')
+        @method('put')
         <div class="row pt-3">
             <div class="col-md-3">
               <div class="row">
@@ -122,19 +122,19 @@
                   </tr>
                 </thead>
                 <tbody id="mainbody">
-                    @foreach ($produksidetail as $pdtl)
+                    @foreach ($produksidetail as $key=>$pdtl)
                     <tr>
-                        <td><input class="form-control" type="hidden" name="addmore[' +i+ '][id]" id="id' +i+ '" value="">
-                            <input class="form-control" type="text" name="addmore['+i+'][matras]" id="matras'+i+'"></td>
-                        <td><select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >
-                            <option disabled="disabled" selected="selected" value="{{ $pdtl->id_aluminium_base }}" >{{ $pdtl->aluminium->nama }}</option>
+                        <td><input class="form-control" type="hidden" name="addmore[{{ $key }}][id]" id="id{{ $key }}" value="{{ $pdtl->id }}">
+                            <input class="form-control" type="text" name="addmore[{{ $key }}][matras]" id="matras{{ $key }}"></td>
+                        <td><select class="form-control nama" name="addmore[{{ $key }}][nama]" id="nama{{ $key }}" required >
+                            <option selected="selected" value="{{ $pdtl->id_aluminium_base }}" >{{ $pdtl->aluminium->nama }}</option>
                             @foreach($produk as $pro)
                             <option value="{{$pro->id}}" data-berat="{{ $pro->berat_maksimal }}">{{$pro->nama}}</option>
                             @endforeach
                         </select></td>
-                        <td><input step=".001" class="form-control berat" type="number" name="addmore['+i+'][berat]" id="berat'+i+'" value="{{ $pdtl->berat }}" required></td>
-                        <td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" value="{{ $pdtl->qty }}" required ></td>
-                        <td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" value="{{ $pdtl->total }}" required readonly></td>
+                        <td><input step=".001" class="form-control berat" type="number" name="addmore[{{ $key }}][berat]" id="berat{{ $key }}" value="{{ $pdtl->berat }}" required></td>
+                        <td><input class="form-control qty" type="number" name="addmore[{{ $key }}][qty]" id="qty{{ $key }}" value="{{ $pdtl->qty }}" required ></td>
+                        <td><input class="form-control subtotal" type="number" name="addmore[{{ $key }}][subtotal]" id="subtotal{{ $key }}" value="{{ $pdtl->total }}" required readonly></td>
                         <td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> -</button></td>
                     </tr>
                     @endforeach
@@ -189,10 +189,9 @@ function addRowProduksi(){
 }
 
 $(document).ready(function(){
-    i++;
     $('.nama').select2({
         theme: "bootstrap-5"
-    });
+    })
 })
 
 $('#add_new').click(function(){
