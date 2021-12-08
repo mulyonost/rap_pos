@@ -29,7 +29,7 @@
   <section class="sheet padding-10mm">
     <div class="row">
         <div class="col text-left">
-            <p1>PT. Rajawali Aluminium Perkasa<br>Jl. Kima 16 Kav DD 7,<br>Makassar, Sulawesi Selatan</p>
+            <p1>PT. Aluminium<br>Jl. Kima 16 Kav DD 7,<br>Makassar, Sulawesi Selatan</p>
         </div>
         <div class="col text-right">
             <p1 class="text-right">{{ $pembelianav->nomor }}<br>{{ $pembelianav->tanggal }}<br>{{ $pembelianav->created_by }}</p>
@@ -44,13 +44,14 @@
                     <div class="row">
                         <div class="col">
                             <div class="table-responsive">
-                                <table class="table table-sm">
+                                <table class="table table-sm tbl-avalan">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Avalan</th>
                                             <th>Qty</th>
                                             <th>Potongan</th>
+                                            <th>Qty Akhir</th>
                                             <th>Harga</th>
                                             <th>Subtotal</th>
                                         </tr>
@@ -64,13 +65,14 @@
                                             <td>{{ $value->avalan->nama }}</td>
                                             <td>{{ number_format($value->qty) }} Kg</td>
                                             <td>{{ $value->potongan }} Kg</td>
+                                            <td>{{ $value->qty_akhir }} Kg</td>
                                             <td>Rp. {{ number_format($value->harga) }}</td>
-                                            <td>Rp. {{ number_format($subtotal) }}</td>
+                                            <td>Rp. {{ number_format($value->subtotal) }}</td>
                                         </tr>
                                         <?php $total += $subtotal  ?>
                                         @endforeach                                        
                                         <tr>
-                                            <td class="text-left border-secondary" colspan="4">Terbilang : {{ ucwords(terbilang($total)) }} Rupiah</td>
+                                            <td class="text-left border-secondary" colspan="5">Terbilang : {{ ucwords(terbilang($total)) }} Rupiah</td>
                                             <td class="text-right border-secondary"><b>Total</b></td>
                                             <td class="border-secondary"><b>Rp. {{ number_format($total) }} </b></td>
                                         </tr>
@@ -82,7 +84,7 @@
                                     <p class="text-center" style="margin-top: 10px;">Penerima</p>
                                 </div>
                                 <div class="col">
-                                    <p class="text-center" style="margin-top: 10px;">PT. Rajawali Aluminium Perkasa</p>
+                                    <p class="text-center" style="margin-top: 10px;">PT. Aluminium</p>
                                 </div>
                                 <div class="col"></div>
                             </div>
