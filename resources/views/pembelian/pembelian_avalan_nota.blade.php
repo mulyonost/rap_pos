@@ -32,7 +32,7 @@
             <p1>PT. Aluminium<br>Jl. Kima 16 Kav DD 7,<br>Makassar, Sulawesi Selatan</p>
         </div>
         <div class="col text-right">
-            <p1 class="text-right">{{ $pembelianav->nomor }}<br>{{ $pembelianav->tanggal }}<br>{{ $pembelianav->created_by }}</p>
+            <p1 class="text-right">{{ $pembelianav->nomor }}<br>{{ \Carbon\Carbon::parse($pembelianav->tanggal)->format('d/m/Y')}}<br>{{ $pembelianav->created_by }}</p>
         </div>
     </div>
     <div class="row">
@@ -75,6 +75,9 @@
                                             <td class="text-left border-secondary" colspan="5">Terbilang : {{ ucwords(terbilang($total)) }} Rupiah</td>
                                             <td class="text-right border-secondary"><b>Total</b></td>
                                             <td class="border-secondary"><b>Rp. {{ number_format($total) }} </b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jatuh Tempo : {{ \Carbon\Carbon::parse($pembelianav->due_date)->format('d/m/Y')}}</td>                                            
                                         </tr>
                                     </tbody>
                                 </table>
