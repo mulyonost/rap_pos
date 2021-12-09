@@ -13,4 +13,9 @@ class Avalan extends Model
     protected $table = 'avalan';
     protected $primaryKey = 'id';
     protected $guarded = [];
+
+    public function detail()
+    {
+        return $this->hasMany(PembelianAvalanDetail::class, 'id_avalan', 'id');
+    }
 }

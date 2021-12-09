@@ -50,7 +50,8 @@ class PembelianAvalanController extends Controller
     public function create()
     {
         $suppliers = Suppliers::where('kategori', 'avalan')->get();
-        $avalan = Avalan::orderBy('nama')->get();
+        $avalan = Avalan::orderBy('nama')->with('detail')->get();
+        dd($avalan);
         return view('pembelian.avalan.pembelian_avalan_create', compact('suppliers', 'avalan'));
     }
 
