@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('pembelian_avalan.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Pembelian Baru</button>
+                <a href="{{ route('pembelian_avalan.create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Pembelian Avalan Baru</a>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">

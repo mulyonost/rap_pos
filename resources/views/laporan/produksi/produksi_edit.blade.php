@@ -52,9 +52,8 @@
                   </div>
                   <div class="col-md-6">
                       <select name="shift" id="shift" class="form-select" size="2" aria-label="size 2" required>
-                        <option selected="selected" value="{{ $produksi->shift }}">{{ $produksi->shift }}</option>
-                        <option value="bohari">Bohari</option>
-                        <option value="saldi">Saldi</option>
+                        <option value="bohari" {{ $produksi->shift == "bohari" ? 'selected' : '' }}>Bohari</option>
+                        <option value="saldi" {{ $produksi->shift == "saldi" ? 'selected' : '' }}>Saldi</option>
                       </select>
                   </div>
               </div>

@@ -49,7 +49,9 @@ class PembelianAvalanController extends Controller
      */
     public function create()
     {
-        //
+        $suppliers = Suppliers::where('kategori', 'avalan')->get();
+        $avalan = Avalan::orderBy('nama')->get();
+        return view('pembelian.avalan.pembelian_avalan_create', compact('suppliers', 'avalan'));
     }
 
     /**
@@ -93,7 +95,12 @@ class PembelianAvalanController extends Controller
         }
         session(['id_pembelian_avalan' => $id]);
 
-        return redirect('pembelian/avalan');
+        return redirect('pembelian/avalan/selesai');
+    }
+
+    public function selesai()
+    {
+        return view('pembelian.avalan.pembelian_avalan_selesai');
     }
 
     /**

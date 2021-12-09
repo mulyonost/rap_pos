@@ -13,6 +13,16 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function makeid(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHJKLMNPQRSTUVYZ23456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() *  charactersLength));
+  }
+  return result;
+}
+
 //FORM PRODUKSI
 
 function recalcProduksi() {
@@ -129,8 +139,8 @@ function recalcPembelian() {
 function getNomorPembelianBahan() {
   var date = $('#tanggal').val();
   var newDate = date.replace(/-/g, "");
-  let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-  var nomor = "PB-" + newDate + "-" + r;
+  // let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
+  var nomor = "PB-" + newDate + "-" + makeid(4);
   $('#nomor').val(nomor);
 }
 
@@ -157,8 +167,7 @@ function recalcPembelianAvalan() {
 function getNomorPembelianAvalan() {
   var date = $('#tanggal').val();
   var newDate = date.replace(/-/g, "");
-  let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-  var nomor = "PA-" + newDate + "-" + r;
+  var nomor = "PA-" + newDate + "-" + makeid(4);
   $('#nomor').val(nomor);
 }
 
@@ -200,7 +209,6 @@ function recalcPenjualan() {
 function getNomorPenjualan() {
   var date = $('#tanggal').val();
   var newDate = date.replace(/-/g, "");
-  let r = (Math.random() + 1).toString(36).substring(7, 11).toUpperCase();
-  var nomor = "RAP-" + newDate + "-" + r;
+  var nomor = "RAP-" + newDate + "-" + makeid(4);
   $('#nomor').val(nomor);
 }

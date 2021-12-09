@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/avalan/data', [PembelianAvalanController::class, 'data'])->name('avalan.data');
         Route::post('/avalan/payment/', [PembelianAvalanController::class, 'payment'])->name('avalan.payment');
+        Route::get('/avalan/selesai', [PembelianAvalanController::class, 'selesai'])->name('avalan.selesai');
         Route::get('/avalan/cetak/', [PembelianAvalanController::class, 'cetak'])->name('avalan.cetak');
         Route::get('/avalan/cetakulang/{id?}', [PembelianAvalanController::class, 'cetakulang'])->name('avalan.cetakulang');
         Route::resource('/avalan', PembelianAvalanController::class);

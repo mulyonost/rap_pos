@@ -29,10 +29,10 @@
   <section class="sheet padding-10mm">
     <div class="row">
         <div class="col text-left">
-            <p1>PT. Aluminium<br>Jl. Kima 16 Kav DD 7,<br>Makassar, Sulawesi Selatan</p>
+            <p1>PT. Aluminium<br>Jl. Kima 16 Kav DD 7<br>Makassar, Sulawesi Selatan</p>
         </div>
         <div class="col text-right">
-            <p1 class="text-right">{{ $pembelianav->nomor }}<br>{{ \Carbon\Carbon::parse($pembelianav->tanggal)->format('d/m/Y')}}<br>{{ $pembelianav->created_by }}</p>
+            <p1 class="text-right">{{ $pembelianav->nomor }}<br>{{ \Carbon\Carbon::parse($pembelianav->tanggal)->format('d-M-Y')}}<br>{{ $pembelianav->created_by }}</p>
         </div>
     </div>
     <div class="row">
@@ -47,13 +47,13 @@
                                 <table class="table table-sm tbl-avalan">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama Avalan</th>
-                                            <th>Qty</th>
-                                            <th>Potongan</th>
-                                            <th>Qty Akhir</th>
-                                            <th>Harga</th>
-                                            <th>Subtotal</th>
+                                            <th width="5%">No</th>
+                                            <th width="25%">Nama Avalan</th>
+                                            <th width="15%">Qty</th>
+                                            <th width="10%">Potongan</th>
+                                            <th width="15%">Qty Akhir</th>
+                                            <th width="15%">Harga</th>
+                                            <th width="15%">Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,19 +65,19 @@
                                             <td>{{ $value->avalan->nama }}</td>
                                             <td>{{ number_format($value->qty) }} Kg</td>
                                             <td>{{ $value->potongan }} Kg</td>
-                                            <td>{{ $value->qty_akhir }} Kg</td>
+                                            <td>{{ number_format($value->qty_akhir) }} Kg</td>
                                             <td>Rp. {{ number_format($value->harga) }}</td>
                                             <td>Rp. {{ number_format($value->subtotal) }}</td>
                                         </tr>
                                         <?php $total += $subtotal  ?>
                                         @endforeach                                        
                                         <tr>
-                                            <td class="text-left border-secondary" colspan="5">Terbilang : {{ ucwords(terbilang($total)) }} Rupiah</td>
+                                            <td class="text-left border-secondary" colspan="5">Terbilang : {{ ucwords(terbilang($pembelianav->total_nota)) }} Rupiah</td>
                                             <td class="text-right border-secondary"><b>Total</b></td>
-                                            <td class="border-secondary"><b>Rp. {{ number_format($total) }} </b></td>
+                                            <td class="border-secondary"><b>Rp. {{ number_format($pembelianav->total_nota) }} </b></td>
                                         </tr>
                                         <tr>
-                                            <td>Jatuh Tempo : {{ \Carbon\Carbon::parse($pembelianav->due_date)->format('d/m/Y')}}</td>                                            
+                                            <td colspan="5">Jatuh Tempo : {{ \Carbon\Carbon::parse($pembelianav->due_date)->format('d-M-Y')}}</td>                                            
                                         </tr>
                                     </tbody>
                                 </table>
