@@ -15,16 +15,16 @@ class LaporanAvalanController extends Controller
      */
     public function index()
     {
-        // $group = PembelianAvalanDetail::selectRaw('pembelian_avalan_detail.id_avalan, sum(qty) as qty, sum(subtotal) as subtotal')
-        //     ->with('avalan')
-        //     ->groupBy('pembelian_avalan_detail.id_avalan')
-        //     ->get()
-        //     ->sortBy(function ($avalan, $key) {
-        //         return $avalan->avalan->nama;
-        //     });
+        $group = PembelianAvalanDetail::selectRaw('pembelian_avalan_detail.id_avalan, sum(qty) as qty, sum(subtotal) as subtotal')
+            ->with('avalan')
+            ->groupBy('pembelian_avalan_detail.id_avalan')
+            ->get()
+            ->sortBy(function ($avalan, $key) {
+                return $avalan->avalan->nama;
+            });
 
         $pav = PembelianAvalanDetail::with('master.supplier')->with('avalan')->get();
-        return view('reports.avalan_index', compact('pav'));
+        return view('reports.avalan_index', compact('pav', 'group'));
 
     }
 

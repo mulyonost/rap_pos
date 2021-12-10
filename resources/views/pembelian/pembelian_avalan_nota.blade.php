@@ -22,6 +22,10 @@
         p1 {font-size: 0.75em; /* 14px/16=0.875em */}
         th {font-size: 0.75em;}
         td {font-size: 0.75em;}
+
+        .number {
+            text-align: right;
+        }
   </style>
 </head>
 
@@ -67,14 +71,14 @@
                                             <td>{{ $value->potongan }} Kg</td>
                                             <td>{{ number_format($value->qty_akhir) }} Kg</td>
                                             <td>Rp. {{ number_format($value->harga) }}</td>
-                                            <td>Rp. {{ number_format($value->subtotal) }}</td>
+                                            <td class="number">Rp. {{ number_format($value->subtotal) }}</td>
                                         </tr>
                                         <?php $total += $subtotal  ?>
                                         @endforeach                                        
                                         <tr>
                                             <td class="text-left border-secondary" colspan="5">Terbilang : {{ ucwords(terbilang($pembelianav->total_nota)) }} Rupiah</td>
                                             <td class="text-right border-secondary"><b>Total</b></td>
-                                            <td class="border-secondary"><b>Rp. {{ number_format($pembelianav->total_nota) }} </b></td>
+                                            <td class="border-secondary number"><b>Rp. {{ number_format($pembelianav->total_nota) }} </b></td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">Jatuh Tempo : {{ \Carbon\Carbon::parse($pembelianav->due_date)->format('d-M-Y')}}</td>                                            

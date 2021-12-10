@@ -26,7 +26,7 @@ class PembelianAvalanController extends Controller
 
     public function data()
     {
-        $pembelianav = PembelianAvalan::orderBy('id', 'desc')->where('status', 0)->with('supplier')->get();
+        $pembelianav = PembelianAvalan::orderBy('id', 'desc')->with('supplier')->get();
         return datatables()
             ->of($pembelianav)
             ->addIndexColumn()
@@ -51,7 +51,6 @@ class PembelianAvalanController extends Controller
     {
         $suppliers = Suppliers::where('kategori', 'avalan')->get();
         $avalan = Avalan::orderBy('nama')->with('detail')->get();
-        dd($avalan);
         return view('pembelian.avalan.pembelian_avalan_create', compact('suppliers', 'avalan'));
     }
 

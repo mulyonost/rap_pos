@@ -90,7 +90,7 @@
             <h5 class="ml-2"> Detail Avalan</h5>
         </div>
         <div class="row fixed-detail border border-secondary">
-            <div class="col-md-9 border-right border-secondary overflow-auto">
+            <div class="col-md-9 border-right border-secondary overflow-auto scrollable">
             <table class="table" id="table-detail">
                   <thead>
                     <tr>
