@@ -155,9 +155,7 @@ class ProduksiController extends Controller
             $produksi->foto = $filename;
         }
         $produksi->save();
-        $proddtl = ProduksiDetail::where('id_laporan_produksi', $id)->get();
-        $count = count($proddtl);
-        foreach ($request->addmore as $key => $value) {
+        foreach ($request->addmore as $value) {
             $produksidetail = ProduksiDetail::findOrNew($value['id']);
             $produksidetail->id_laporan_produksi = $id;
             $produksidetail->id_aluminium_base = $value['nama'];
@@ -167,7 +165,6 @@ class ProduksiController extends Controller
             $produksidetail->total = $value['subtotal'];
             $produksidetail->save();
         }
-
         return redirect('laporan/produksi');
     }
 
