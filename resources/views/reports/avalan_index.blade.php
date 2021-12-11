@@ -12,11 +12,11 @@
 @section('content')
 
 <video width="320" height="240" autoplay controls>
-    <source src="%rtsp://admin:LJOCFW@192.168.0.101:554/H.264%" type="video/mp4">
+    <source src="rtsp://admin:LJOCFW@192.168.0.101:554/H.264" type="video/mp4">
     <object width="320" height="240" type="application/x-shockwave-flash" data="http://releases.flowplayer.org/swf/flowplayer-3.2.5.swf">
         <param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.5.swf" /> 
-        <param name="flashvars" value='config={"clip": {"url": "%rtsp://admin:LJOCFW@192.168.0.101:554/H.264%", "autoPlay":true, "autoBuffering":true}}' /> 
-        <p><a href="%rtsp://admin:LJOCFW@192.168.0.101:554/H.264%">view with external app</a></p> 
+        <param name="flashvars" value='config={"clip": {"url": "rtsp://admin:LJOCFW@192.168.0.101:554/H.264", "autoPlay":true, "autoBuffering":true}}' /> 
+        <p><a href="rtsp://admin:LJOCFW@192.168.0.101:554/H.264">view with external app</a></p> 
     </object>
 </video>
 
