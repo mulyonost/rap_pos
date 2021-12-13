@@ -32,7 +32,7 @@ class ProduksiController extends Controller
             ->addColumn('aksi', function ($produksi) {
                 return '
                 <div class="btn-group">
-                    <a href="/laporan/produksi/' . $produksi->id . '/edit">Edit</a>
+                    <a href="/laporan/produksi/' . $produksi->id . '/edit"><i class="btn btn-xs btn-info btn-flat fa fa-pencil"></i></a>
                     <button onclick="editForm(`' . route('laporan_produksi.update', $produksi->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
                     <button onclick="deleteData(`' . route('laporan_produksi.destroy', $produksi->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
@@ -155,8 +155,11 @@ class ProduksiController extends Controller
             $produksi->foto = $filename;
         }
         $produksi->save();
+
+        ProduksiDetail::where('id_laporan_produksi', $id)->delete();
+
         foreach ($request->addmore as $value) {
-            $produksidetail = ProduksiDetail::findOrNew($value['id']);
+            $produksidetail = new ProduksiDetail;
             $produksidetail->id_laporan_produksi = $id;
             $produksidetail->id_aluminium_base = $value['nama'];
             $produksidetail->no_matras = $value['matras'];

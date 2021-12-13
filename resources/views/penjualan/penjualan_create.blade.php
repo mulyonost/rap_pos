@@ -1,18 +1,18 @@
 @extends('layouts.master')
 
 @section('title')
-    Pembelian Avalan
+    Penjualan Aluminium
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active"><a href="{{ route('pembelian_avalan.index') }}">Pembelian Avalan</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('penjualan_aluminium.index') }}">Penjualan Aluminium</a></li>
 @endsection
 
 @section('content')
 
 <div class="container-xxl avalan">
-    <form action="{{ route('pembelian_avalan.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
+    <form action="{{ route('penjualan_aluminium.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
         @csrf
         @method('post')
         <div class="row pt-3">
@@ -35,13 +35,13 @@
               </div>
               <div class="row mt-3">
                 <div class="col-md-5">
-                    <label>Supplier</label>
+                    <label>Customer</label>
                 </div>
                 <div class="col-md-7">
-                    <select class="form-control supplier" id="supplier" name="supplier">
-                        <option value="" selected="" disabled>Pilih Supplier</option>
-                        @foreach ($suppliers as $supplier)
-                            <option value="{{ $supplier->id }}">{{ $supplier->nama }}</option>
+                    <select class="form-control customer" id="customer" name="customer">
+                        <option value="" selected="" disabled>Pilih Customer</option>
+                        @foreach ($customers as $customer)
+                            <option value="{{ $customer->id }}">{{ $customer->nama }}</option>
                         @endforeach
                     </select>
                     <input class="form-control" type="hidden" name="nama_supp" id="nama_supp">
@@ -59,7 +59,7 @@
               </div>
               <div class="row mt-3">
                   <div class="col-md-4">
-                      <label>Status</label>
+                      <label>Status Pelunasan</label>
                   </div>
                   <div class="col-md-7">
                       <select name="status" id="status" class="form-control" required>
@@ -71,6 +71,14 @@
           </div>
           <div class="col-md-3">
             <div class="row">
+                <div class="col-md-3">
+                    <label>Timbangan</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" name="timbangan" id="timbangan">
+                </div>
+              </div>
+            <div class="row mt-3">
                 <div class="col-md-3">
                     <label>Keterangan</label>
                 </div>
@@ -95,12 +103,12 @@
             <table class="table" id="table-detail">
                   <thead>
                     <tr>
-                      <th width="20%">Nama Barang</th>
-                      <th width="15%">Qty</th>
-                      <th width="15%">Potongan</th>
-                      <th width="15%">Qty Akhir</th>
+                      <th width="30%">Nama Aluminium</th>
+                      <th width="10%">Colly</th>
+                      <th width="10%">Isi</th>
+                      <th width="10%">Qty</th>
                       <th width="15%">Harga</th>
-                      <th width="15%">Subtotal</th>
+                      <th width="20%">Subtotal</th>
                       <th width="5%"><button id="add_new" type="button" name="add_new" class="btn btn-sm btn-success"> +</button></th>
                   </tr>
                 </thead>
@@ -111,12 +119,20 @@
                         <td colspan="5" class="text-right">Total Nota</td>
                         <td><input type="text" class="form-control total_nota" id="total" name="total" readonly></td>
                     </tr>
+                    <tr>
+                        <td colspan="5" class="text-right">Diskon</td>
+                        <td><input type="text" class="form-control total_nota" id="total" name="total" readonly></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-right">Total Akhir</td>
+                        <td><input type="text" class="form-control total_nota" id="total" name="total" readonly></td>
+                    </tr>
                 </tfoot>
               </table>
             </div>
             <div class="col-xl-3 col-foto">
               <div class="row">
-                  <h4>Foto Avalan / Timbangan</h4>
+                  <h4>Foto</h4>
               </div>
               <div class="row">
                 Belum ada foto yang diupload</div>
@@ -137,7 +153,7 @@
 
 @push('scripts')
 <script>
-const avalan = @json($avalan);
+const avalan = @json($aluminium);
 
 $(function() {
         $('#form-avalan').on("keyup change blur mouseenter", recalcPembelianAvalan);
@@ -158,7 +174,7 @@ $(document).ready(function(){
     $('.item').select2({
         theme: "bootstrap-5"
     });
-    $('.supplier').select2({
+    $('.customer').select2({
         theme: "bootstrap-5"
     });
 
@@ -180,7 +196,7 @@ function selectProduct(e)
 }
 
 $(function() {
-        $('#supplier').on("change click", getSupplier);
+        $('#customer').on("change click", getSupplier);
     });
 
 

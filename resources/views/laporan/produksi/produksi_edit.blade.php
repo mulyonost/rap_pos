@@ -108,7 +108,7 @@
             <h5> Detail Barang Produksi</h5>
         </div>
         <div class="row fixed-detail border border-secondary">
-            <div class="col-md-9 border-right border-secondary overflow-auto">
+            <div class="col-md-9 border-right border-secondary overflow-auto detail">
             <table class="table" id="detail_table">
                   <thead>
                     <tr>
@@ -124,7 +124,7 @@
                     @foreach ($produksidetail as $key=>$pdtl)
                     <tr>
                         <td><input class="form-control" type="hidden" name="addmore[{{ $key }}][id]" id="id{{ $key }}" value="{{ $pdtl->id }}">
-                            <input class="form-control" type="text" name="addmore[{{ $key }}][matras]" id="matras{{ $key }}"></td>
+                            <input class="form-control" type="text" name="addmore[{{ $key }}][matras]" id="matras{{ $key }}" value="{{ $pdtl->no_matras }}"></td>
                         <td><select class="form-control nama" name="addmore[{{ $key }}][nama]" id="nama{{ $key }}" required >
                             <option selected="selected" value="{{ $pdtl->id_aluminium_base }}" >{{ $pdtl->aluminium->nama }}</option>
                             @foreach($produk as $pro)
@@ -144,8 +144,9 @@
               <div class="row">
                   <h4>Foto Laporan</h4>
               </div>
-              <div class="row">
-                Ini nanti diisi dengan foto yang sudah diupload</div>
+              <div class="row foto">
+                  <a href="{{ asset('uploads/laporan/produksi/' . $produksi->foto) }}" onClick="MyWindow=window.open('{{ asset('uploads/laporan/produksi/' . $produksi->foto) }}','MyWindow','width=800,height=600'); return false;"><img src="{{ asset('uploads/laporan/produksi/' . $produksi->foto) }}" class="img-fluid" alt="Responsive image"></a>
+              </div>
               </div>
             </div>
         <div class="row mt-3">
@@ -166,10 +167,11 @@
 <script>
 
 $(function() {
-  $('#form-produksi').on("keyup change blur", recalcProduksi);
+  $('#form-produksi').on("keyup mouseenter change blur", recalcProduksi);
 });
 
-var i=0;
+var myarray = @json($produksidetail);
+var i=myarray.length;
 function addRowProduksi(){
     $('#mainbody').append('<tr><td>' +
         '<input class="form-control" type="hidden" name="addmore[' +i+ '][id]" id="id' +i+ '" value="">' +

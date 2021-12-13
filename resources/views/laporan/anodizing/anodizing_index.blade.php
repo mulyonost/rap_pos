@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('laporan_anodizing.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Laporan Anodizing</button>
+                <a href="{{ route('laporan_anodizing.create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Tambah Laporan Anodizing</a>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">
@@ -67,8 +67,8 @@ function addRowAnodizing(){
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'tanggal'},
                 {data: 'total_btg'},
-                {data: 'total_kg'},
-                {data: 'keterangan', render: $.fn.dataTable.render.number('.', ',', 0, '', ' Kg') },
+                {data: 'total_kg', render: $.fn.dataTable.render.number('.', ',', 0, '', ' Kg') },
+                {data: 'keterangan'},
                 {data: 'aksi', searchable:false, sortable:false}
             ]
         });

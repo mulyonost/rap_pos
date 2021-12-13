@@ -47,7 +47,9 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        //
+        $customers = Customers::orderBy('nama')->get();
+        $aluminium = Aluminium::orderBy('nama')->get();
+        return view('penjualan.penjualan_create', compact('customers', 'aluminium'));
     }
 
     /**
