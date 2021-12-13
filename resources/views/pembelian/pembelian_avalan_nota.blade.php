@@ -19,6 +19,10 @@
             min-width: initial !important;
         }
 
+        thead {
+            text-align: center;
+        }
+
         p1 {font-size: 0.75em; /* 14px/16=0.875em */}
         th {font-size: 0.75em;}
         td {font-size: 0.75em;}
@@ -52,12 +56,12 @@
                                     <thead>
                                         <tr>
                                             <th width="5%">No</th>
-                                            <th width="25%">Nama Avalan</th>
+                                            <th width="20%">Nama Avalan</th>
                                             <th width="15%">Qty</th>
                                             <th width="10%">Potongan</th>
                                             <th width="15%">Qty Akhir</th>
                                             <th width="15%">Harga</th>
-                                            <th width="15%">Subtotal</th>
+                                            <th width="20%">Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,11 +70,11 @@
                                         <tr>
                                             <?php $subtotal=($value->qty-$value->potongan)*$value->harga ?>
                                             <td>{{ $key+1 }}</td>
-                                            <td>{{ $value->avalan->nama }}</td>
-                                            <td>{{ number_format($value->qty) }} Kg</td>
-                                            <td>{{ $value->potongan }} Kg</td>
-                                            <td>{{ number_format($value->qty_akhir) }} Kg</td>
-                                            <td>Rp. {{ number_format($value->harga) }}</td>
+                                            <td class="text-center">{{ $value->avalan->nama }}</td>
+                                            <td class="number">{{ number_format($value->qty) }} Kg</td>
+                                            <td class="number">{{ $value->potongan }} Kg</td>
+                                            <td class="number">{{ ($value->qty_akhir) }} Kg</td>
+                                            <td class="number">Rp. {{ number_format($value->harga) }}</td>
                                             <td class="number">Rp. {{ number_format($value->subtotal) }}</td>
                                         </tr>
                                         <?php $total += $subtotal  ?>

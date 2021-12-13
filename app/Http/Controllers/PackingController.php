@@ -30,6 +30,7 @@ class PackingController extends Controller
             ->addColumn('aksi', function ($packing) {
                 return '
                 <div class="btn-group">
+                    <a href="/laporan/packing/' . $packing->id . '/edit"><i class="btn btn-xs btn-info btn-flat fa fa-pencil"></i></a>
                     <button onclick="editForm(`' . route('laporan_packing.update', $packing->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
                     <button onclick="deleteData(`' . route('laporan_packing.destroy', $packing->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
@@ -46,7 +47,8 @@ class PackingController extends Controller
      */
     public function create()
     {
-        //
+        $produk = Aluminium::orderBy('nama')->get();
+        return view('laporan.packing.packing_create', compact('produk'));
     }
 
     /**
@@ -78,8 +80,8 @@ class PackingController extends Controller
             $packingdetail = new PackingDetail();
             $packingdetail->id_laporan_packing = $id;
             $packingdetail->id_aluminium = $value['nama'];
-            $packingdetail->qty_colly = $value['qty'];
-            $packingdetail->qty_isi = $value['berat'];
+            $packingdetail->qty_colly = $value['colly'];
+            $packingdetail->qty_isi = $value['isi'];
             $packingdetail->qty_subtotal = $value['subtotal'];
             $packingdetail->save();
         }
@@ -110,7 +112,10 @@ class PackingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $produk = Aluminium::orderBy('nama')->get();
+        $packing = Packing::find($id);
+        $packingdetail = PackingDetail::where('id_laporan_packing', $id)->get();
+        return view('laporan.packing.packing_edit', compact('produk', 'packing', 'packingdetail'));
     }
 
     /**
@@ -142,11 +147,14 @@ class PackingController extends Controller
         $packing->keterangan = $request->keterangan;
         $packing->save();
 
-        foreach ($request->addmore as $key => $value) {
-            $packingdetail = PackingDetail::findOrNew($value['id']);
+        PackingDetail::where('id_laporan_packing', $id)->delete();
+
+        foreach ($request->addmore as $value) {
+            $packingdetail = new PackingDetail;
+            $packingdetail->id_laporan_packing = $id;
             $packingdetail->id_aluminium = $value['nama'];
-            $packingdetail->qty_colly = $value['qty'];
-            $packingdetail->qty_isi = $value['berat'];
+            $packingdetail->qty_colly = $value['colly'];
+            $packingdetail->qty_isi = $value['isi'];
             $packingdetail->qty_subtotal = $value['subtotal'];
             $packingdetail->save();
         }

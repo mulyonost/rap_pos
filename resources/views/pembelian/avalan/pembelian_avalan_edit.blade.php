@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Pembelian Avalan
+   Edit Pembelian Avalan
 @endsection
 
 @section('breadcrumb')
@@ -12,9 +12,9 @@
 @section('content')
 
 <div class="container-xxl avalan">
-    <form action="{{ route('pembelian_avalan.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
+    <form action="{{ route('pembelian_avalan.update', $pav->id) }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
         @csrf
-        @method('post')
+        @method('put')
         <div class="row pt-3">
             <div class="col-md-3">
               <div class="row">
@@ -22,7 +22,7 @@
                       <label>Nomor Transaksi</label>
                   </div>
                   <div class="col-md-7">
-                      <input type="text" class="form-control" name="nomor" id="nomor" required readonly>
+                      <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $pav->nomor }}" required>
                   </div>
               </div>
               <div class="row mt-3">
@@ -30,7 +30,7 @@
                       <label>Tanggal Transaksi</label>
                   </div>
                   <div class="col-md-7">
-                      <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= date('Y-m-d') ?>" required>
+                      <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ $pav->tanggal }}" required>
                   </div>
               </div>
               <div class="row mt-3">
@@ -41,10 +41,9 @@
                     <select class="form-control supplier" id="supplier" name="supplier">
                         <option value="" selected="" disabled>Pilih Supplier</option>
                         @foreach ($suppliers as $supplier)
-                            <option value="{{ $supplier->id }}">{{ $supplier->nama }}</option>
+                            <option value="{{ $supplier->id }}" {{ $supplier->id == $pav->id_supplier ? 'selected' : '' }}>{{ $supplier->nama }}</option>
                         @endforeach
                     </select>
-                    <input class="form-control" type="hidden" name="nama_supp" id="nama_supp">
                 </div>
               </div>
           </div>
@@ -54,7 +53,7 @@
                     <label>Jatuh Tempo</label>
                 </div>
                 <div class="col-md-7">
-                    <input type="date" class="form-control" name="due_date" id="due_date" value="<?= date('Y-m-d') ?>" required>
+                    <input type="date" class="form-control" name="due_date" id="due_date" value="{{ $pav->due_date }}" required>
                 </div>
               </div>
               <div class="row mt-3">
@@ -75,7 +74,7 @@
                     <label>Keterangan</label>
                 </div>
                 <div class="col-md-9">
-                    <textarea class="form-control" name="keterangan" id="keterangan" rows="4"></textarea>
+                    <textarea class="form-control" name="keterangan" id="keterangan" rows="4">{{ $pav->keterangan }}</textarea>
                 </div>
             </div>
           </div>
@@ -109,7 +108,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="5" class="text-right">Total Nota</td>
-                        <td><input type="text" class="form-control total_nota" id="total" name="total" readonly></td>
+                        <td><input type="text" class="form-control total_nota" id="total" name="total" value="{{ $pav->total_nota }}" readonly></td>
                     </tr>
                 </tfoot>
               </table>
@@ -119,7 +118,8 @@
                   <h4>Foto Avalan / Timbangan</h4>
               </div>
               <div class="row">
-                Belum ada foto yang diupload</div>
+                <a href="{{ asset('uploads/pembelian/avalan/' . $pav->foto_nota) }}" onClick="MyWindow=window.open('{{ asset('uploads/pembelian/avalan/' . $pav->foto_nota) }}','MyWindow','width=800,height=600'); return false;"><img src="{{ asset('uploads/pembelian/avalan/' . $pav->foto_nota) }}" class="img-fluid" alt="Responsive image"></a>  
+              </div>
               </div>
             </div>
         <div class="row mt-3">
@@ -138,6 +138,7 @@
 @push('scripts')
 <script>
 const avalan = @json($avalan);
+const pavd = @json($pavd)
 
 $(function() {
         $('#form-avalan').on("keyup change blur mouseenter", recalcPembelianAvalan);
@@ -151,9 +152,17 @@ $(function() {
 var i = 0;
 
 $(document).ready(function(){
-    getNomorPembelianAvalan();
-    addPembelianAvalanRow();
-    populateSelectAvalan();
+    for (i=0; i<pavd.length; i++){
+        addPembelianAvalanRow();
+        populateSelectAvalan();
+        $('#item'+i+'').val(pavd[i].id_avalan);
+        $('#qty'+i+'').val(pavd[i].qty);
+        $('#potongan'+i+'').val(pavd[i].potongan);
+        $('#qty_akhir'+i+'').val(pavd[i].qty_akhir);
+        $('#harga'+i+'').val(pavd[i].harga);
+        $('#subtotal'+i+'').val(pavd[i].subtotal);
+    }
+    
     i++;
     $('.item').select2({
         theme: "bootstrap-5"
@@ -178,10 +187,6 @@ function selectProduct(e)
     let harga = $(e).find('option:selected').data('harga');
     $(e).parent().parent().find('input.harga').val(harga).text();            
 }
-
-$(function() {
-        $('#supplier').on("change click", getSupplier);
-    });
 
 
 </script>

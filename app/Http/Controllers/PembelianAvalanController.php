@@ -9,6 +9,7 @@ use App\Models\AvalanSupplier;
 use App\Models\PembelianAvalan;
 use App\Models\PembelianAvalanDetail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class PembelianAvalanController extends Controller
 {
@@ -33,6 +34,7 @@ class PembelianAvalanController extends Controller
             ->addColumn('aksi', function ($pembelianav) {
                 return '
                 <div class="btn-group">
+                    <a href="/pembelian/avalan/' . $pembelianav->id . '/edit"><i class="btn btn-xs btn-info btn-flat fa fa-pencil"></i></a>
                     <button onclick="editForm(`' . route('pembelian_avalan.update', $pembelianav->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
                     <button onclick="deleteData(`' . route('pembelian_avalan.destroy', $pembelianav->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
@@ -126,7 +128,12 @@ class PembelianAvalanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $suppliers = Suppliers::where('kategori', 'avalan')->get();
+        $avalan = Avalan::orderBy('nama')->with('detail')->get();
+        $pav = PembelianAvalan::find($id);
+        $pavd = PembelianAvalanDetail::where('id_pembelian_avalan', $id)->get();
+
+        return view('pembelian.avalan.pembelian_avalan_edit', compact('suppliers', 'avalan', 'pav', 'pavd'));
     }
 
     /**
@@ -138,7 +145,43 @@ class PembelianAvalanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        $pembelianav = PembelianAvalan::find($id);
+        $pembelianav->nomor = $request->nomor;
+        $pembelianav->tanggal = $request->tanggal;
+        $pembelianav->due_date = $request->due_date;
+        $pembelianav->id_supplier = $request->supplier;
+        $pembelianav->total_nota = $request->total;
+        if ($request->hasFile('foto')) {
+            $image = public_path("uploads/pembelian/avalan/{$pembelianav->foto}");
+            if (File::exists($image)) {
+                File::delete($image);
+            };
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::slug($request->nama_supp) . '-' . $request->tanggal . '-' . date('YmdHms') . '.' . $extension;
+            $file->move('uploads/pembelian/avalan', $filename);
+            $pembelianav->foto_nota = $filename;
+        }
+        $pembelianav->status = $request->status;
+        $pembelianav->keterangan = $request->keterangan;
+        $pembelianav->created_by = auth()->user()->name;
+        $pembelianav->save();
+
+        PembelianAvalanDetail::where('id_pembelian_avalan', $id)->delete();
+
+        foreach ($request->addmore as $value) {
+            $pembelianavdetail = new PembelianAvalanDetail;
+            $pembelianavdetail->id_pembelian_avalan = $id;
+            $pembelianavdetail->id_avalan = $value['item'];
+            $pembelianavdetail->qty = $value['qty'];
+            $pembelianavdetail->potongan = $value['potongan'];
+            $pembelianavdetail->qty_akhir = $value['qty_akhir'];
+            $pembelianavdetail->harga = $value['harga'];
+            $pembelianavdetail->subtotal = $value['subtotal'];
+            $pembelianavdetail->save();
+        }
+
+        return redirect('pembelian/avalan');
     }
 
     /**

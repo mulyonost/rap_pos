@@ -30,6 +30,7 @@ class AnodizingController extends Controller
             ->addColumn('aksi', function ($anodizing) {
                 return '
                 <div class="btn-group">
+                    <a href="/laporan/anodizing/' . $anodizing->id . '/edit"><i class="btn btn-xs btn-info btn-flat fa fa-pencil"></i></a>
                     <button onclick="editForm(`' . route('laporan_anodizing.update', $anodizing->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
                     <button onclick="deleteData(`' . route('laporan_anodizing.destroy', $anodizing->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
@@ -46,7 +47,8 @@ class AnodizingController extends Controller
      */
     public function create()
     {
-        //
+        $produk = Aluminium::orderBy("nama")->get();
+        return view('laporan.anodizing.anodizing_create', compact('produk'));
     }
 
     /**
@@ -109,7 +111,10 @@ class AnodizingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $produk = Aluminium::orderBy("nama")->get();
+        $anodizing = Anodizing::find($id);
+        $anodizingdetail = AnodizingDetail::where('id_laporan_anodizing', $id)->with('aluminium')->get();
+        return view('laporan.anodizing.anodizing_edit', compact('produk', 'anodizing', 'anodizingdetail'));
     }
 
     /**
@@ -140,12 +145,15 @@ class AnodizingController extends Controller
         }
         $anodizing->save();
 
-        $id = $anodizing->id;
-        foreach ($request->addmore as $key => $value) {
-            $anodizingdetail = AnodizingDetail::findOrNew($value['id']);
+        AnodizingDetail::where('id_laporan_anodizing', $id)->delete();
+
+        foreach ($request->addmore as $value) {
+            $anodizingdetail = new AnodizingDetail;
+            $anodizingdetail->id_laporan_anodizing = $id;
             $anodizingdetail->id_aluminium = $value['nama'];
             $anodizingdetail->qty = $value['qty'];
             $anodizingdetail->berat = $value['berat'];
+            $anodizingdetail->subtotal = $value['subtotal'];
             $anodizingdetail->save();
         }
 
