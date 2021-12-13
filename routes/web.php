@@ -98,8 +98,12 @@ Route::group(['middleware' => 'auth'], function () {
     // All Penjualan Routes
     Route::prefix('penjualan')->name('penjualan_')->group(function () {
         Route::get('/aluminium/data', [PenjualanController::class, 'data'])->name('aluminium.data');
+        Route::get('/aluminium/selesai', [PenjualanController::class, 'selesai'])->name('aluminium.selesai');
+        Route::post('/aluminium/payment', [PenjualanController::class, 'payment'])->name('aluminium.payment');
         Route::get('/aluminium/cetaksj', [PenjualanController::class, 'cetaksj'])->name('aluminium.cetaksj');
-        Route::get('/aluminium/cetakulangsj/{id}', [PenjualanController::class, 'cetakulangsj'])->name('aluminium.cetakulangsj');
+        Route::get('/aluminium/cetaknota', [PenjualanController::class, 'cetaknota'])->name('aluminium.cetaknota');
+        Route::get('/aluminium/cetakulangsj/{id?}', [PenjualanController::class, 'cetakulangsj'])->name('aluminium.cetakulangsj');
+        Route::get('/aluminium/cetakulangnota/{id?}', [PenjualanController::class, 'cetakulangnota'])->name('aluminium.cetakulangnota');
         Route::resource('/aluminium', PenjualanController::class);
     });
 
