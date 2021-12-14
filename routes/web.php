@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\AvalanController;
@@ -22,6 +24,11 @@ use App\Http\Controllers\LaporanAnodizingController;
 use App\Http\Controllers\LaporanBahanController;
 use App\Http\Controllers\PengambilanBahanController;
 
+use App\Models\PembelianAvalan;
+use App\Models\Pembelian;
+use App\Models\Penjualan;
+Use Carbon\Carbon;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +43,14 @@ use App\Http\Controllers\PengambilanBahanController;
 Route::get('/', fn () => redirect()->route('login'));
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('home');
+    $pav = PembelianAvalan::where('due_date', '<', Carbon::now()->addDays(3))->where('status', 0)->with('supplier')->orderBy('due_date')->get();
+    $pb = Pembelian::where('due_date', '<', Carbon::now()->addDays(3))->where('status', 0)->with('supplier')->get();
+    $tpav = PembelianAvalan::sum('total_nota');
+    $tpb = Pembelian::sum('total');
+    $tj = Penjualan::sum('total_akhir');
+    $utangavalan = PembelianAvalan::where('status', 0)->sum('total_nota');
+    $utangbahan = Pembelian::where('status', 0)->sum('total');
+    return view('home', compact('pav', 'pb', 'tpb', 'tpav', 'tj', 'utangavalan', 'utangbahan'));
 })->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
