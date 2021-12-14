@@ -11,6 +11,35 @@
 
 @section('content')
 <div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">Input Laporan</h5>
+        <div class="card-body">
+          <a href="{{ route('laporan_produksi.create') }}" class="btn btn-primary">Laporan Produksi</a>
+          <a href="{{ route('laporan_anodizing.create') }}" class="btn btn-primary">Laporan Anodizing</a>
+          <a href="{{ route('laporan_packing.create') }}" class="btn btn-primary">Laporan Packing</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">Input Pembelian</h5>
+        <div class="card-body">
+          <a href="{{ route('pembelian_bahan.create') }}" class="btn btn-primary">Bahan</a>
+          <a href="{{ route('pembelian_avalan.create') }}" class="btn btn-primary">Avalan</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">Input Penjualan</h5>
+        <div class="card-body">
+          <a href="{{ route('penjualan_aluminium.create') }}" class="btn btn-primary">Penjualan Aluminium</a>
+        </div>
+      </div>
+    </div>
+  </div>
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-lg-3 col-6">

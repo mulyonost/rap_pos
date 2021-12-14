@@ -242,6 +242,19 @@ function getSupplier() {
 
 
 // PENJUALAN
+function addRowPenjualan(){
+  $('#mainbody').append('<tr><td>' +
+          '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" onchange="selectProduct(this)" required>' +
+              '<option value="">Pilih Barang</option>' +
+          '</select></td>' +
+          '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
+          '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
+          '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required readonly tabindex=-1></td>' +
+          '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
+          '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
+          '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
+      )
+  }
 
 function recalcPenjualan() {
   let colly = 0;
@@ -253,7 +266,7 @@ function recalcPenjualan() {
   let diskonPersen = $('#diskon_persen').val();
   let diskonRupiah = 0;
   let totalAkhir = 0;
-  $('#table').find('tr').each(function() {
+  $('#table-detail').find('tr').each(function() {
       let colly = $(this).find('input.colly').val();
       let isi = $(this).find('input.isi').val();
       let harga = $(this).find('input.harga').val();
@@ -275,4 +288,10 @@ function getNomorPenjualan() {
   var newDate = date.replace(/-/g, "");
   var nomor = "RAP-" + newDate + "-" + makeid(4);
   $('#nomor').val(nomor);
+}
+
+function populateSelectPenjualan(){
+  for (e = 0; e < aluminium.length; e++){ 
+      $('#nama' + i + '').append( '<option value="'+ aluminium[e].id +'" data-harga="'+ aluminium[e].harga_jual +'">'+ aluminium[e].nama +'</option>' );
+  }
 }

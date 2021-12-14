@@ -1,76 +1,125 @@
-<div class="container">
-    <div class="row">
-        <div class="col text-left">
-            <p>PT. Rajawali Aluminium Perkasa<br>Jl. Kima 16 Kav DD 7,<br>Makassar, Sulawesi Selatan</p>
-        </div>
-        <div class="col">
-            <p class="text-right">PA-20211119-AVCD<br>19-11-2021<br>Admin</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h2 class="text-center">Nota Penjualan</h2>
-            <div class="row">
-                <div class="col">
-                    <p class="lead">Nama Pembeli : Jaya Aluminium<br>Jl. Maccini Gusung</p>
-                    <div class="row">
-                        <div class="col">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Barang</th>
-                                            <th>Total Btg/Item</th>
-                                            <th>Harga</th>
-                                            <th>Subtotal</th>
+<head>
+
+    <meta charset="utf-8">
+    <title>Cetak Nota</title>
+  
+    {{-- Paper CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/paper.css')}}">
+  
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+  
+    <!-- Set page size here: A5, A4 or A3 -->
+    <!-- Set also "landscape" if you need -->
+    <style>
+          @page {
+              size: A4 portrait;
+              margin: 0;
+          }
+          body {
+              min-width: initial !important;
+          }
+  
+          thead {
+              text-align: center;
+          }
+  
+          p1 {font-size: 0.75em; /* 14px/16=0.875em */}
+          th {font-size: 0.75em;}
+          td {font-size: 0.75em;}
+  
+          .number {
+              text-align: right;
+          }
+    </style>
+  </head>
+  
+  <body class="A4 portrait">
+    <section class="sheet padding-10mm">
+      <div class="row">
+          <div class="col text-left">
+              <p1>PT. Aluminium<br>Jl. Kima 16 Kav DD 7<br>Makassar, Sulawesi Selatan</p>
+          </div>
+          <div class="col text-right">
+              <p1 class="text-right">{{ $penjualan->nomor }}<br>{{ \Carbon\Carbon::parse($penjualan->tanggal)->format('d-M-Y')}}<br>{{ $penjualan->created_by }}</p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <h5 class="text-center">Nota Penjualan</h5>
+              <div class="row">
+                  <div class="col">
+                      <p1>Nama Customer : {{ $penjualan->customer->nama }}<br>{{ $penjualan->customer->alamat }}</p>
+                      <div class="row">
+                          <div class="col">
+                              <div class="table-responsive">
+                                  <table class="table table-sm tbl-avalan">
+                                      <thead>
+                                          <tr>
+                                              <th width="5%">No</th>
+                                              <th width="45%" style="text-align: left;">Nama Barang</th>
+                                              <th width="15%" style="text-align: right;">Qty</th>
+                                              <th width="15%" style="text-align: right;">Harga</th>
+                                              <th width="20%" style="text-align: right;">Subtotal</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <?php $total=0; $subtotal=0  ?>
+                                          @foreach ($penjualandetail as $key=>$value)
+                                          <tr>
+                                              <?php $subtotal=($value->qty-$value->potongan)*$value->harga ?>
+                                              <td>{{ $key+1 }}</td>
+                                              <td class="">{{ $value->aluminium->nama }}</td>
+                                              <td class="number">{{ number_format($value->qty) }} Btg</td>
+                                              <td class="number">Rp. {{ number_format($value->harga) }}</td>
+                                              <td class="number">Rp. {{ number_format($value->subtotal) }}</td>
+                                          </tr>
+                                          <?php $total += $subtotal  ?>
+                                          @endforeach                                        
+                                          <tr>
+                                              <td class="text-left border-secondary" colspan="3">Terbilang : {{ ucwords(terbilang($penjualan->total_nota)) }} Rupiah</td>
+                                              <td class="text-right border-secondary"><b>Total</b></td>
+                                              <td class="border-secondary number"><b>Rp. {{ number_format($penjualan->total_nota) }} </b></td>
+                                          </tr>
+                                          <tr>
+                                              <td colspan="3">Jatuh Tempo : {{ \Carbon\Carbon::parse($penjualan->due_date)->format('d-M-Y')}}</td>
+                                              <td class="text-right"><b>Diskon</b></td>
+                                              <td class="number"><b>Rp. {{ number_format($penjualan->diskon) }} </b></td>                                          
+                                          </tr>
+                                          <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-right"><b>Total Transfer</b></td>
+                                            <td class="number"><b>Rp. {{ number_format($penjualan->total_akhir) }} </b></td>                                          
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Hollow 22 x 22 Kotak CA</td>
-                                            <td>1050</td>
-                                            <td>0</td>
-                                            <td>5000000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Kawat</td>
-                                            <td>500</td>
-                                            <td>10</td>
-                                            <td>5121210</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-left border-secondary" colspan="3">Terbilang : Seratus Juta Rupiah</td>
-                                            <td class="text-right border-secondary">Total</td>
-                                            <td class="border-secondary">100000000</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-center" style="margin-top: 40px;">Penerima</p>
-                                </div>
-                                <div class="col">
-                                    <p class="text-center" style="margin-top: 40px;">PT. Rajawali Aluminium Perkasa</p>
-                                </div>
-                                <div class="col"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-center" style="margin-top: 40px;">(_________________)</p>
-                                </div>
-                                <div class="col">
-                                    <p class="text-center" style="margin-top: 40px;">(_________________)</p>
-                                </div>
-                                <div class="col"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <div class="row">
+                                  <div class="col">
+                                      <p class="text-center" style="margin-top: 10px;">Penerima</p>
+                                  </div>
+                                  <div class="col">
+                                      <p class="text-center" style="margin-top: 10px;">PT. Aluminium</p>
+                                  </div>
+                                  <div class="col"></div>
+                              </div>
+                              <div class="row">
+                                  <div class="col">
+                                      <p class="text-center" style="margin-top: 40px;">(_________________)</p>
+                                  </div>
+                                  <div class="col">
+                                      <p class="text-center" style="margin-top: 40px;">(_________________)</p>
+                                  </div>
+                                  <div class="col"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+    </section>
+  
+  </body>
+  
+  </html>

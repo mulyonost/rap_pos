@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Aluminium;
 use App\Models\Customers;
 use App\Models\Penjualan;
+use Illuminate\Http\Request;
+use App\Models\PenjualanPaid;
 use App\Models\PenjualanDetail;
 
 class PenjualanController extends Controller
@@ -32,6 +33,7 @@ class PenjualanController extends Controller
             ->addColumn('aksi', function ($penjualan) {
                 return '
                 <div class="btn-group">
+                    <a href="/penjualan/aluminium/' . $penjualan->id . '/edit"><i class="btn btn-xs btn-info btn-flat fa fa-pencil"></i></a>
                     <button onclick="editForm(`' . route('penjualan_aluminium.update', $penjualan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
                     <button onclick="deleteData(`' . route('penjualan_aluminium.destroy', $penjualan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
@@ -73,6 +75,7 @@ class PenjualanController extends Controller
         $penjualan->total_nota = $request->total_nota;
         $penjualan->diskon = $request->diskon_rupiah;
         $penjualan->total_akhir = $request->total_akhir;
+        $penjualan->created_by = auth()->user()->name;
         $penjualan->save();
 
         $id = $penjualan->id;
@@ -90,7 +93,50 @@ class PenjualanController extends Controller
             $penjualandetail->subtotal = $value['subtotal'];
             $penjualandetail->save();
         }
+
+        return redirect('penjualan/aluminium/selesai');
     }
+
+    public function selesai()
+    {
+        return view('penjualan.penjualan_selesai');
+    }
+
+    public function cetaksj()
+    {
+        $id_penjualan = session('id_penjualan');
+        $penjualan = Penjualan::with('customer')->find($id_penjualan);
+        $penjualandetail = PenjualanDetail::where('id_penjualan', $id_penjualan)->with('aluminium')->get();
+
+        return view('penjualan.penjualan_sj', compact('penjualan', 'penjualandetail'));
+    }
+
+
+    public function cetaknota()
+    {
+        $id_penjualan = session('id_penjualan');
+        $penjualan = Penjualan::with('customer')->find($id_penjualan);
+        $penjualandetail = PenjualanDetail::where('id_penjualan', $id_penjualan)->with('aluminium')->get();
+
+        return view('penjualan.penjualan_nota', compact('penjualan', 'penjualandetail'));
+    }
+
+    public function cetakulangsj($id)
+    {
+        $penjualan = Penjualan::with('customer')->find($id);
+        $penjualandetail = PenjualanDetail::where('id_penjualan', $id)->with('aluminium')->get();
+
+        return view('penjualan.penjualan_sj', compact('penjualan', 'penjualandetail'));
+    }
+
+    public function cetakulangnota($id)
+    {
+        $penjualan = Penjualan::with('customer')->find($id);
+        $penjualandetail = PenjualanDetail::where('id_penjualan', $id)->with('aluminium')->get();
+
+        return view('penjualan.penjualan_nota', compact('penjualan', 'penjualandetail'));
+    }
+
 
     /**
      * Display the specified resource.
@@ -113,9 +159,16 @@ class PenjualanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function edit($id)
     {
-        //
+
+        $customers = Customers::orderBy('nama')->get();
+        $aluminium = Aluminium::orderBy('nama')->get();
+        $penjualan = Penjualan::find($id);
+        $penjualandetail = PenjualanDetail::where('id_penjualan', $id)->get();
+        return view('penjualan.penjualan_edit', compact('customers', 'aluminium', 'penjualan', 'penjualandetail'));
     }
 
     /**
@@ -127,7 +180,53 @@ class PenjualanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $penjualan = Penjualan::find($id);
+        $penjualan->nomor = $request->nomor;
+        $penjualan->id_customer = $request->customer;
+        $penjualan->timbangan_mobil = $request->timbangan;
+        $penjualan->tanggal = $request->tanggal;
+        $penjualan->due_date = $request->due_date;
+        $penjualan->status = $request->status;
+        $penjualan->keterangan = $request->keterangan;
+        $penjualan->total_nota = $request->total_nota;
+        $penjualan->diskon = $request->diskon_rupiah;
+        $penjualan->total_akhir = $request->total_akhir;
+        $penjualan->created_by = auth()->user()->name;
+        $penjualan->save();
+
+        PenjualanDetail::where('id_penjualan', $id)->delete();
+
+        foreach ($request->addmore as $key => $value) {
+            $penjualandetail = new PenjualanDetail();
+            $penjualandetail->id_penjualan = $id;
+            $penjualandetail->id_aluminium = $value['nama'];
+            $penjualandetail->colly = $value['colly'];
+            $penjualandetail->isi = $value['isi'];
+            $penjualandetail->qty = $value['qty'];
+            $penjualandetail->unit = "btg";
+            $penjualandetail->harga = $value['harga'];
+            $penjualandetail->subtotal = $value['subtotal'];
+            $penjualandetail->save();
+        }
+
+        return redirect('penjualan/aluminium');
+    }
+
+    public function payment(Request $request)
+    {
+        $payment = new PenjualanPaid;
+        $pdtl = Penjualan::find($request->id_penjualan);
+        $payment->id_penjualan = $request->id_penjualan;
+        $payment->bank = $request->bank;
+        $payment->tanggal = $request->tanggal;
+        $payment->jumlah = $request->jumlah;
+        $payment->keterangan = $request->keterangan;
+        if ($request->sisa == 0) {
+            $pdtl->status = 1;
+        }
+        $payment->save();
+
+        return redirect('penjualan/aluminium');
     }
 
     /**
@@ -141,22 +240,5 @@ class PenjualanController extends Controller
         $penjualan = Penjualan::find($id);
         $penjualan->delete();
         return response()->json('Data berhasil dihapus', 200);
-    }
-
-    public function cetaksj()
-    {
-        $id_penjualan = session('id_penjualan');
-        $penjualan = Penjualan::with('customer')->find($id_penjualan);
-        $penjualandetail = PenjualanDetail::where('id_penjualan', $id_penjualan)->with('aluminium')->get();
-
-        return view('penjualan.penjualan_sj', compact('penjualan', 'penjualandetail'));
-    }
-
-    public function cetakulangsj($id)
-    {
-        $penjualan = Penjualan::with('customer')->find($id);
-        $penjualandetail = PenjualanDetail::where('id_penjualan', $id)->with('aluminium')->get();
-
-        return view('penjualan.penjualan_sj', compact('penjualan', 'penjualandetail'));
     }
 }

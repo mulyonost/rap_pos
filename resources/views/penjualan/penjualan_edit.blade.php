@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
 @section('title')
-    Penjualan Aluminium
+    Edit Penjualan Aluminium
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active"><a href="{{ route('penjualan_aluminium.index') }}">Penjualan Aluminium</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('penjualan_aluminium.index') }}">Edit Penjualan Aluminium</a></li>
 @endsection
 
 @section('content')
 
 
 <div class="container-xxl avalan">
-    <form action="{{ route('penjualan_aluminium.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
+    <form action="{{ route('penjualan_aluminium.update', $penjualan->id) }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
         @csrf
-        @method('post')
+        @method('put')
         <div class="row pt-3">
             <div class="col-md-3">
               <div class="row">
@@ -23,7 +23,7 @@
                       <label>Nomor Transaksi</label>
                   </div>
                   <div class="col-md-7">
-                      <input type="text" class="form-control" name="nomor" id="nomor" required readonly>
+                      <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $penjualan->nomor }}" required>
                   </div>
               </div>
               <div class="row mt-3">
@@ -31,7 +31,7 @@
                       <label>Tanggal Transaksi</label>
                   </div>
                   <div class="col-md-7">
-                      <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= date('Y-m-d') ?>" required>
+                      <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ $penjualan->tanggal }}" required>
                   </div>
               </div>
               <div class="row mt-3">
@@ -42,7 +42,7 @@
                     <select class="form-control customer" id="customer" name="customer">
                         <option value="" selected="" disabled>Pilih Customer</option>
                         @foreach ($customers as $customer)
-                            <option value="{{ $customer->id }}">{{ $customer->nama }}</option>
+                            <option value="{{ $customer->id }}" {{ $customer->id == $penjualan->id_customer ? 'selected' : '' }}>{{ $customer->nama }}</option>
                         @endforeach
                     </select>
                     <input class="form-control" type="hidden" name="nama_supp" id="nama_supp">
@@ -55,7 +55,7 @@
                     <label>Jatuh Tempo</label>
                 </div>
                 <div class="col-md-7">
-                    <input type="date" class="form-control" name="due_date" id="due_date" value="<?= date('Y-m-d') ?>" required>
+                    <input type="date" class="form-control" name="due_date" id="due_date" value="{{ $penjualan->due_date }}" required>
                 </div>
               </div>
               <div class="row mt-3">
@@ -76,7 +76,7 @@
                     <label>Timbangan</label>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" name="timbangan" id="timbangan">
+                    <input type="text" class="form-control" name="timbangan" id="timbangan" value="{{ $penjualan->timbangan_mobil }}">
                 </div>
               </div>
             <div class="row mt-3">
@@ -84,7 +84,7 @@
                     <label>Keterangan</label>
                 </div>
                 <div class="col-md-9">
-                    <textarea class="form-control" name="keterangan" id="keterangan" rows="4"></textarea>
+                    <textarea class="form-control" name="keterangan" id="keterangan" rows="4">{{ $penjualan->keterangan }}</textarea>
                 </div>
             </div>
           </div>
@@ -123,7 +123,7 @@
                     <tr>
                         <td colspan="4" class="text-right">Diskon</td>
                         <td><input type="text" class="form-control diskon_persen" id="diskon_persen" name="diskon_persen"></td>
-                        <td><input type="text" class="form-control diskon_rupiah" id="diskon_rupiah" name="diskon_rupiah"></td>
+                        <td><input type="text" class="form-control diskon_rupiah" id="diskon_rupiah" name="diskon_rupiah" value="{{ $penjualan->diskon }}"></td>
                     </tr>
                     <tr>
                         <td colspan="5" class="text-right">Total Akhir</td>
@@ -145,18 +145,24 @@
 
             </div>  
         <div class="col-md-6">
-        <button type="submit" class="btn btn-primary float-right">Simpan</button>
+            <button type="submit" class="btn btn-primary float-right ml-4">Simpan</button>
+            <button type="button" name="payment" id="payment" class="btn btn-default" data-toggle="modal" onclick="addPayment('{{ route('penjualan_aluminium.payment') }}')">Pembayaran</button>
+            <a target="_blank" href="{{ route('penjualan_aluminium.cetakulangsj', $penjualan->id)}}" class="btn btn-secondary float-right ml-2">Cetak Ulang SJ</a>
+            <a target="_blank" href="{{ route('penjualan_aluminium.cetakulangnota', $penjualan->id)}}" class="btn btn-secondary float-right">Cetak Ulang Nota</a>
         </div>
         </div>
     </form>
   </div>
 
+@includeif('penjualan.penjualan_payment');
 @endsection
 
 @push('scripts')
 <script>
 const aluminium = @json($aluminium);
-console.log(aluminium[0].harga_jual);
+const penjualan = @json($penjualan);
+const pdetail = @json($penjualandetail);
+console.log(pdetail);
 
 $(function() {
         $('#form-avalan').on("keyup change blur mouseenter", recalcPenjualan);
@@ -169,9 +175,17 @@ $(function() {
 var i = 0;
 
 $(document).ready(function(){
-    getNomorPenjualan();
-    addRowPenjualan();
-    populateSelectPenjualan();
+    for (i=0; i<pdetail.length; i++){
+        addRowPenjualan();
+        populateSelectPenjualan();
+        $('#nama'+i+'').val(pdetail[i].id_aluminium);
+        $('#colly'+i+'').val(pdetail[i].colly);
+        $('#isi'+i+'').val(pdetail[i].isi);
+        $('#qty'+i+'').val(pdetail[i].qty);
+        $('#harga'+i+'').val(pdetail[i].harga);
+        $('#subtotal'+i+'').val(pdetail[i].subtotal);
+    }
+
     i++;
     $('.nama').select2({
         theme: "bootstrap-5"
@@ -201,6 +215,14 @@ $(function() {
         $('#customer').on("change click", getSupplier);
     });
 
+function addPayment(url){
+    $('#modal-form-payment').modal('show');
+    $('#modal-form-payment .modal-title').text('Pembayaran Penjualan Aluminium');
+    $('#modal-form-payment form').attr('action', url);
+    $('#modal-form-payment [name=_method]').val('post');
+    $('#modal-form-payment [name=sisa]').val(penjualan.total_akhir);
+}
+    
 
 </script>
 @endpush
