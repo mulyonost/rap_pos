@@ -51,6 +51,7 @@
             <thead>
               <tr>
                 <th>Tanggal Pembelian</th>
+                <th>Nomor</th>
                 <th>Nama Supplier</th>
                 <th>Total Nota</th>
                 <th>Jatuh Tempo</th>
@@ -60,6 +61,7 @@
               @foreach ($pav as $p)
                 <tr>
                   <td>{{ $p->tanggal }}</td>
+                  <td>{{ $p->nomor }}</td>
                   <td>{{ $p->supplier->nama }}</td>
                   <td>{{ number_format($p->total_nota) }}</td>
                   <td>{{ $p->due_date }}</td>
@@ -80,6 +82,7 @@
             <thead>
               <tr>
                 <th>Tanggal Pembelian</th>
+                <th>Nomor</th>
                 <th>Nama Supplier</th>
                 <th>Total Nota</th>
                 <th>Jatuh Tempo</th>
@@ -89,6 +92,7 @@
             @foreach ($pb as $p)
                 <tr>
                   <td>{{ $p->tanggal }}</td>
+                  <td>{{ $p->nomor }}</td>
                   <td>{{ $p->supplier->nama }}</td>
                   <td>{{ number_format($p->total) }}</td>
                   <td>{{ $p->due_date }}</td>

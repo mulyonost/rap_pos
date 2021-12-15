@@ -19,7 +19,7 @@ class PembelianController extends Controller
     public function index()
     {
         $item = Items::orderBy('nama')->get();
-        $supplier = Suppliers::where('kategori', 'umum')->orderBy('nama')->get();
+        $supplier = Suppliers::where('kategori', 'avalan')->where('kategori', 'avalan')->orderBy('nama')->get();
         return view('pembelian.pembelian_index', compact('item', 'supplier'));
     }
 

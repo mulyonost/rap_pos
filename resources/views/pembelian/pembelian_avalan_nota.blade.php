@@ -12,7 +12,7 @@
   <!-- Set also "landscape" if you need -->
   <style>
         @page {
-            size: A5 landscape;
+            size: A4 portrait;
             margin: 0;
         }
         body {
@@ -33,7 +33,7 @@
   </style>
 </head>
 
-<body class="A5 landscape">
+<body class="A4 portrait">
   <section class="sheet padding-10mm">
     <div class="row">
         <div class="col text-left">

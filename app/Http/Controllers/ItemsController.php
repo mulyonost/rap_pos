@@ -21,7 +21,7 @@ class ItemsController extends Controller
 
     public function data()
     {
-        $item = Items::orderBy('id', 'desc')->get();
+        $item = Items::orderBy('nama', 'desc')->get();
         return datatables()
             ->of($item)
             ->addIndexColumn()

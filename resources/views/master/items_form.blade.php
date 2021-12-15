@@ -27,7 +27,9 @@
                               <option value="kg">Kg</option>
                               <option value="liter">Liter</option>
                               <option value="pcs">Pcs</option>
-                              <option value="cm">Cm</option>
+                              <option value="cm">CM</option>
+                              <option value="tabung">Tabung</option>
+                              <option value="jrg">Jerigen</option>
                           </select>
                           <span class="help-block with-errors"></span>
                       </div>
@@ -42,6 +44,8 @@
                               <option value="bahan_kimia">Packing</option>
                               <option value="spare_part">Spare Part</option>
                               <option value="matras">Matras</option>
+                              <option value="perbaikan_pabrik">Perbaikan Pabrik</option>
+                              <option value="ongkir">Ongkos Kirim</option>
                               <option value="lain_lain">Lain Lain</option>
                           </select>
                           <span class="help-block with-errors"></span>
