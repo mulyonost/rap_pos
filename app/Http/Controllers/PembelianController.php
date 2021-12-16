@@ -48,7 +48,9 @@ class PembelianController extends Controller
      */
     public function create()
     {
-        //
+        $suppliers = Suppliers::orderBy('nama')->get();
+        $items = Items::orderBy('nama')->get();
+        return view('pembelian.bahan.pembelian_bahan_create', compact('suppliers', 'items'));
     }
 
     /**

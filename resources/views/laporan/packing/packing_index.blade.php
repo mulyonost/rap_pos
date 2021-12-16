@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <button onclick="addForm('{{ route('laporan_packing.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i>Tambah Laporan Packing</button>
+                <a href="{{ route('laporan_packing.create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Tambah Laporan Packing</a>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%">

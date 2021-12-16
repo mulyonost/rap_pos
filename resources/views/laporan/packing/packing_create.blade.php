@@ -118,40 +118,42 @@
 @push('scripts')
 
 <script>
+const produk = @json($produk);
 
 $(function() {
   $('#form-packing').on("keyup change blur mouseenter", recalcPacking);
 });
 
-const produk = @json($produk);
 
 var i = 0;
 $(document).ready(function(){
     getNomorPacking();
     addRowPacking();
+    populateSelectAluminium();
     i++;
     $('.nama').select2({
         theme: "bootstrap-5"
     });
-    for (e = 0; e < produk.length; e++){ 
-        $('.nama').append( '<option value="'+ produk[e].id +'" data-berat="'+ produk[e].berat_maksimal +'">'+ produk[e].nama +'</option>' );
-    }
 })
 
 $('#add_new').click(function(){
   addRowPacking();
+  populateSelectAluminium();
   i++;
   $('.nama').select2({
     theme: "bootstrap-5"
   });
-  for (e = 0; e < produk.length; e++){ 
-    $('.nama').append( '<option value="'+ produk[e].id +'" data-berat="'+ produk[e].berat_maksimal +'">'+ produk[e].nama +'</option>' );
-    }
 });
 
 $(function(){
   $('#tanggal').on("change", getNomorPacking);
 });
+
+function selectProduct(e)
+{
+    let isi = $(e).find('option:selected').data('isi');
+    $(e).parent().parent().find('input.isi').val(isi).text();            
+}
 
 </script>
 @endpush

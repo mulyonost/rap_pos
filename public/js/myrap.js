@@ -122,7 +122,7 @@ function getNomorAnodizing() {
 function addRowPacking(){
   $('#mainbody').append('<tr><td>' +
       '<input class="form-control" type="hidden" name="addmore[' +i+ '][id]" id="id' +i+ '" value="">' +
-      '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required >' +
+      '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" onchange="selectProduct(this)" required >' +
       '<option disabled="disabled" selected="selected" value="" >Select Produk</option>' +
       '</select></td>' +
       '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required ></td>' +
@@ -132,6 +132,11 @@ function addRowPacking(){
   )
 }
 
+function populateSelectAluminium(){
+  for (e = 0; e < produk.length; e++){ 
+    $('.nama').append( '<option value="'+ produk[e].id +'" data-isi="'+ produk[e].packing +'">'+ produk[e].nama +'</option>' );
+    }
+}
 function recalcPacking() {
   var grandtotal = 0;
   var grandtotalbtg = 0;
@@ -157,12 +162,30 @@ function getNomorPacking() {
 
 // FORM PEMBELIAN BAHAN
 
+function addRowPembelian(){
+  $('#mainbody').append('<tr><td>' +
+  '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" onchange="selectProduct(this)" required>' +
+      '<option value="">Pilih Barang</option>' +
+  '</select></td>' +
+  '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
+  '<td><input class="form-control harga" type="number" step="0.01" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
+  '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
+  '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
+  )
+}
+
+function populateSelectPembelian(){
+  for (e = 0; e < items.length; e++){ 
+      $('#nama' + i + '').append( '<option value="'+ items[e].id +'" data-harga="'+ items[e].harga +'">'+ items[e].nama +'</option>' );
+  }
+}
+
 function recalcPembelian() {
   let qty = 0;
   let harga = 0;
   let subtotal = 0;
   let totalNota = 0;
-  $('#table').find('tr').each(function() {
+  $('#table-detail').find('tr').each(function() {
       let qty = $(this).find('input.qty').val();
       let harga = $(this).find('input.harga').val();
       let subtotal = (qty * harga);
@@ -292,6 +315,6 @@ function getNomorPenjualan() {
 
 function populateSelectPenjualan(){
   for (e = 0; e < aluminium.length; e++){ 
-      $('#nama' + i + '').append( '<option value="'+ aluminium[e].id +'" data-harga="'+ aluminium[e].harga_jual +'">'+ aluminium[e].nama +'</option>' );
+      $('#nama' + i + '').append( '<option value="'+ aluminium[e].id +'" data-harga="'+ aluminium[e].harga_jual +'" data-isi="' + aluminium[e].packing + '">'+ aluminium[e].nama +'</option>' );
   }
 }

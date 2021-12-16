@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="row">
-<div class=col-md-5>
+<div class=col-md-4>
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
@@ -45,7 +45,7 @@
     </tbody>
 </table>
 </div>
-<div class="col-md-5">
+<div class="col-md-4">
     <table class="table table-bordered table-responsive">
         <thead>
             <tr>
@@ -69,6 +69,40 @@
                 <td></td>
             </tr>
         </tbody>
+    </table>
+</div>
+
+<div class="col-md-4">
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Nama Barang</th>
+                <th>Stock</th>
+                <th>Harga</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($stock as $s)
+            <?php $subtotal=$s->quantity * $s->harga_jual ?>
+            <tr>
+                <td>{{ $s->nama }}</td>
+                <td>{{ number_format($s->quantity) }}</td>
+                <td>{{ number_format($s->harga_jual) }}</td>
+                <td>{{ number_format($subtotal) }}</td>
+            </tr>
+            <?php $grandtotal += $subtotal ?>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ number_format($grandtotal) }}</td>
+            </tr>
+        </tfoot>
+
     </table>
 </div>
 </div>

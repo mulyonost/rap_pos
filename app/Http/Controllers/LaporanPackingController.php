@@ -7,6 +7,7 @@ use App\Models\Aluminium;
 use Illuminate\Http\Request;
 use App\Models\PackingDetail;
 use App\Models\PenjualanDetail;
+use Illuminate\Support\Facades\DB;
 
 class LaporanPackingController extends Controller
 {
@@ -29,7 +30,12 @@ class LaporanPackingController extends Controller
             ->sortBy(function ($aluminium, $key) {
                 return $aluminium->aluminium->nama;
             });
-        return view('reports.packing_index', compact('packing_detail', 'packing', 'group', 'groupout'));
+
+        $stockq = 'SELECT aluminium.id, aluminium.nama, aluminium.harga_jual, ((SELECT IFNULL (SUM(qty_subtotal), 0) FROM packing_detail WHERE id_aluminium = aluminium.id) - (SELECT IFNULL (SUM(qty), 0) FROM penjualan_detail WHERE id_aluminium = aluminium.id)) AS quantity FROM aluminium ORDER BY aluminium.nama';
+
+        $stock = DB::select(DB::raw($stockq));
+
+        return view('reports.packing_index', compact('packing_detail', 'packing', 'group', 'groupout', 'stock'));
     }
 
     public function show($id)

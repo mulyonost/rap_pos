@@ -1,19 +1,19 @@
 @extends('layouts.master')
 
 @section('title')
-    Penjualan Aluminium
+    Pembelian Bahan
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active"><a href="{{ route('penjualan_aluminium.index') }}">Penjualan Aluminium</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('pembelian_bahan.index') }}">Pembelian Bahan</a></li>
 @endsection
 
 @section('content')
 
 
 <div class="container-xxl avalan">
-    <form action="{{ route('penjualan_aluminium.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
+    <form action="{{ route('pembelian_bahan.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-avalan" autocomplete="off" >
         @csrf
         @method('post')
         <div class="row pt-3">
@@ -36,13 +36,13 @@
               </div>
               <div class="row mt-3">
                 <div class="col-md-5">
-                    <label>Customer</label>
+                    <label>Supplier</label>
                 </div>
                 <div class="col-md-7">
-                    <select class="form-control customer" id="customer" name="customer">
-                        <option value="" selected="" disabled>Pilih Customer</option>
-                        @foreach ($customers as $customer)
-                            <option value="{{ $customer->id }}">{{ $customer->nama }}</option>
+                    <select class="form-control supplier" id="supplier" name="supplier">
+                        <option value="" selected="" disabled>Pilih Supplier</option>
+                        @foreach ($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}">{{ $supplier->nama }}</option>
                         @endforeach
                     </select>
                     <input class="form-control" type="hidden" name="nama_supp" id="nama_supp">
@@ -73,14 +73,6 @@
           <div class="col-md-3">
             <div class="row">
                 <div class="col-md-3">
-                    <label>Timbangan</label>
-                </div>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" name="timbangan" id="timbangan">
-                </div>
-              </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
                     <label>Keterangan</label>
                 </div>
                 <div class="col-md-9">
@@ -97,18 +89,16 @@
           </div>
         </div>
         <div class="row mt-3 mb-2">
-            <h5 class="ml-2"> Detail Avalan</h5>
+            <h5 class="ml-2"> Detail Pembelian</h5>
         </div>
         <div class="row fixed-detail border border-secondary">
             <div class="col-md-9 border-right border-secondary overflow-auto scrollable">
             <table class="table" id="table-detail">
                   <thead>
                     <tr>
-                      <th width="30%">Nama Aluminium</th>
-                      <th width="10%">Colly</th>
-                      <th width="10%">Isi</th>
-                      <th width="10%">Qty</th>
-                      <th width="15%">Harga</th>
+                      <th width="35%">Nama Barang</th>
+                      <th width="20%">Qty</th>
+                      <th width="20%">Harga</th>
                       <th width="20%">Subtotal</th>
                       <th width="5%"><button id="add_new" type="button" name="add_new" class="btn btn-sm btn-success"> +</button></th>
                   </tr>
@@ -117,17 +107,8 @@
                 </tbody>
                 <tfoot class="table-sm table-borderless">
                     <tr>
-                        <td colspan="5" class="text-right">Total Nota</td>
+                        <td colspan="3" class="text-right">Total Nota</td>
                         <td><input type="text" class="form-control total_nota" id="total_nota" name="total_nota" readonly></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="text-right">Diskon</td>
-                        <td><input type="text" class="form-control diskon_persen" id="diskon_persen" name="diskon_persen"></td>
-                        <td><input type="text" class="form-control diskon_rupiah" id="diskon_rupiah" name="diskon_rupiah"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" class="text-right">Total Akhir</td>
-                        <td><input type="text" class="form-control total_akhir" id="total_akhir" name="total_akhir" readonly></td>
                     </tr>
                 </tfoot>
               </table>
@@ -155,35 +136,35 @@
 
 @push('scripts')
 <script>
-const aluminium = @json($aluminium);
+const items = @json($items);
 
 $(function() {
-        $('#form-avalan').on("keyup change blur mouseenter", recalcPenjualan);
+        $('#form-avalan').on("keyup change blur mouseenter", recalcPembelian);
     });
 
 $(function() {
-        $('#tanggal').on("change", getNomorPenjualan);
+        $('#tanggal').on("change", getNomorPembelianBahan);
     });
 
 var i = 0;
 
 $(document).ready(function(){
-    getNomorPenjualan();
-    addRowPenjualan();
-    populateSelectPenjualan();
+    getNomorPembelianBahan();
+    addRowPembelian();
+    populateSelectPembelian();
     i++;
     $('.nama').select2({
         theme: "bootstrap-5"
     });
-    $('.customer').select2({
+    $('.supplier').select2({
         theme: "bootstrap-5"
     });
 
 })
 
 $('#add_new').click(function(){
-    addRowPenjualan();
-    populateSelectPenjualan();
+    addRowPembelian();
+    populateSelectPembelian();
     i++;
     $('.nama').select2({
         theme: "bootstrap-5"
@@ -193,9 +174,7 @@ $('#add_new').click(function(){
 function selectProduct(e)
 {
     let harga = $(e).find('option:selected').data('harga');
-    let isi = $(e).find('option:selected').data('isi');
-    $(e).parent().parent().find('input.harga').val(harga).text();
-    $(e).parent().parent().find('input.isi').val(isi).text();            
+    $(e).parent().parent().find('input.harga').val(harga).text();            
 }
 
 $(function() {
