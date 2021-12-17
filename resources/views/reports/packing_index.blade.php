@@ -45,7 +45,7 @@
     </tbody>
 </table>
 </div>
-<div class="col-md-4">
+<div class="col-md-3">
     <table class="table table-bordered table-responsive">
         <thead>
             <tr>
@@ -63,22 +63,18 @@
                 <td>{{ number_format($produksi->qty) }}</td> 
             </tr>
             @endforeach
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
         </tbody>
     </table>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-5">
     <table class="table table-bordered table-responsive">
         <thead>
             <tr>
                 <th>Nama Barang</th>
                 <th>Stock</th>
                 <th>Harga</th>
+                <th>Colly</th>
                 <th>Subtotal</th>
             </tr>
         </thead>
@@ -89,6 +85,7 @@
                 <td>{{ $s->nama }}</td>
                 <td>{{ number_format($s->quantity) }}</td>
                 <td>{{ number_format($s->harga_jual) }}</td>
+                <td>{{ number_format($s->quantity / $s->packing) }}</td>
                 <td>{{ number_format($subtotal) }}</td>
             </tr>
             <?php $grandtotal += $subtotal ?>

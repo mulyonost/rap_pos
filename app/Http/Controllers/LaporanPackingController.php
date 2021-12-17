@@ -31,8 +31,7 @@ class LaporanPackingController extends Controller
                 return $aluminium->aluminium->nama;
             });
 
-        $stockq = 'SELECT aluminium.id, aluminium.nama, aluminium.harga_jual, ((SELECT IFNULL (SUM(qty_subtotal), 0) FROM packing_detail WHERE id_aluminium = aluminium.id) - (SELECT IFNULL (SUM(qty), 0) FROM penjualan_detail WHERE id_aluminium = aluminium.id)) AS quantity FROM aluminium ORDER BY aluminium.nama';
-
+        $stockq = 'SELECT aluminium.id, aluminium.nama, aluminium.harga_jual, aluminium.packing, ((SELECT IFNULL (SUM(qty_subtotal), 0) FROM packing_detail WHERE id_aluminium = aluminium.id) - (SELECT IFNULL (SUM(qty), 0) FROM penjualan_detail WHERE id_aluminium = aluminium.id)) AS quantity FROM aluminium ORDER BY aluminium.nama';
         $stock = DB::select(DB::raw($stockq));
 
         return view('reports.packing_index', compact('packing_detail', 'packing', 'group', 'groupout', 'stock'));
