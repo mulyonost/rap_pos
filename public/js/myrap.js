@@ -185,7 +185,7 @@ function recalcPembelian() {
   let harga = 0;
   let subtotal = 0;
   let totalNota = 0;
-  $('#table-detail').find('tr').each(function() {
+  $('#table').find('tr').each(function() {
       let qty = $(this).find('input.qty').val();
       let harga = $(this).find('input.harga').val();
       let subtotal = (qty * harga);

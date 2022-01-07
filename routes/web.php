@@ -27,7 +27,7 @@ use App\Http\Controllers\PengambilanBahanController;
 use App\Models\PembelianAvalan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
-Use Carbon\Carbon;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +97,8 @@ Route::group(['middleware' => 'auth'], function () {
     // All Pembelian Routes
     Route::prefix('pembelian')->name('pembelian_')->group(function () {
         Route::get('/bahan/data', [PembelianController::class, 'data'])->name('bahan.data');
+        Route::get('/bahan/pelunasan', [PembelianController::class, 'index_pelunasan'])->name('bahan.pelunasan');
+        Route::get('/bahan/pelunasan/data', [PembelianController::class, 'pelunasan'])->name('bahan.pelunasan.data');
         Route::post('/bahan/payment/', [PembelianController::class, 'payment'])->name('bahan.payment');
         Route::get('/bahan/paymentDelete/{id?}', [PembelianController::class, 'paymentDelete'])->name('bahan.paymentDelete');
         Route::resource('/bahan', PembelianController::class);

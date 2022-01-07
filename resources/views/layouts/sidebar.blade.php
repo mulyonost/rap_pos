@@ -149,18 +149,32 @@
                   <p>Input PO Pembelian</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ route('pembelian_bahan.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Pembelian Bahan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('pembelian_avalan.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Pembelian Avalan</p>
-                </a>
-              </li>
+              <li class="nav-header ml-2"><h5>Bahan</h5></li>
+                <li class="nav-item">
+                  <a href="{{ route('pembelian_bahan.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pembelian Bahan</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('pembelian_bahan.pelunasan') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pelunasan Bahan</p>
+                  </a>
+                </li>
+              <li class="nav-header ml-2"><h5>Avalan</h5></li>
+                <li class="nav-item">
+                  <a href="{{ route('pembelian_avalan.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pembelian Avalan</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('pembelian_avalan.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pelunasan Avalan</p>
+                  </a>
+                </li>
             </ul>
           </li>
           <li class="nav-item">

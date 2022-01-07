@@ -77,7 +77,7 @@
                                     <td></td>
                                 </td>
                                 <td>Total Nota</td>
-                                <td colspan="2"><input type="number" step="any" class="form-control" name="total_nota" id="total_nota" readonly>
+                                <td colspan="2"><input type="number" class="form-control" name="total_nota" id="total_nota" readonly>
                                 <td></td>
                                 </tr>
                             </tfoot>
