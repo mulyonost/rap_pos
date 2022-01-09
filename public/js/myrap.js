@@ -174,6 +174,15 @@ function addRowPembelian(){
   )
 }
 
+function addRowPembelianView(){
+  $('#mainbody').append('<tr><td>' +
+  '<p id="nama'+i+'"></p></td>' +
+  '<td><p id="qty'+i+'"></p></td>' +
+  '<td><p id="harga'+i+'"></p></td>' +
+  '<td><p id="subtotal'+i+'"></p></td>'
+  )
+}
+
 function populateSelectPembelian(){
   for (e = 0; e < items.length; e++){ 
       $('#nama' + i + '').append( '<option value="'+ items[e].id +'" data-harga="'+ items[e].harga +'">'+ items[e].nama +'</option>' );

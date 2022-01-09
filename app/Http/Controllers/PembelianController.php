@@ -131,7 +131,7 @@ class PembelianController extends Controller
     public function show($id)
     {
         $data = array();
-        $data['pembelian'] = Pembelian::find($id);
+        $data['pembelian'] = Pembelian::with('supplier')->find($id);
         $data['pembeliandetail'] = PembelianDetail::where('id_pembelian', $id)->with('items')->get();
 
         return response()->json($data);

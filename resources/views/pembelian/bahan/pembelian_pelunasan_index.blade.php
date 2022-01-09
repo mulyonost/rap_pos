@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-@includeIf('pembelian.pembelian_form')
+@includeIf('pembelian.bahan.pembelian_bahan_detail')
 @endsection
 
 @push('scripts')
@@ -173,7 +173,6 @@
 
     function editForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Pembelian Bahan');
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
@@ -181,23 +180,24 @@
 
         $.get(url)
             .done((response) => {
+                console.log(response);
                 $('#mainbody').empty();
                 $('#modal-form [name=nomor]').val(response.pembelian.nomor);
                 $('#modal-form [name=tanggal]').val(response.pembelian.tanggal);
-                $('#modal-form [name=supplier]').val(response.pembelian.id_supplier);
+                $('#modal-form [name=supplier]').val(response.pembelian.supplier.nama);
                 $('#modal-form [name=due_date]').val(response.pembelian.due_date);
                 $('#modal-form [name=status]').val(response.pembelian.status);
                 $('#modal-form [name=keterangan]').val(response.pembelian.keterangan);
-                $('#modal-form [name=total_nota]').val(response.pembelian.total);
+                $('#modal-form [name=total]').val(response.pembelian.total.toLocaleString());
                 var url = "{{ route('pembelian_bahan.paymentDelete', '')}}" + "/" + response.pembelian.id;
                 $('#modal-form-payment [id=hapus]').attr("href", url);
                 $('#modal-form-payment [name=id_pembelian]').val(response.pembelian.id);
                 for (i=0; i<response.pembeliandetail.length; i++){
-                    addRowPembelian();
-                    $('#nama'+i+'').val(response.pembeliandetail[i].id_item);
-                    $('#qty'+i+'').val(response.pembeliandetail[i].qty);
-                    $('#harga'+i+'').val(response.pembeliandetail[i].harga);
-                    $('#subtotal'+i+'').val(response.pembeliandetail[i].subtotal);
+                    addRowPembelianView();
+                    $('#nama'+i+'').text(response.pembeliandetail[i].items.nama);
+                    $('#qty'+i+'').text(response.pembeliandetail[i].qty.toLocaleString());
+                    $('#harga'+i+'').text(response.pembeliandetail[i].harga.toLocaleString());
+                    $('#subtotal'+i+'').text(response.pembeliandetail[i].subtotal.toLocaleString());
                 }
                 recalcPembelian();
             })
