@@ -1,3 +1,11 @@
+<style>
+tr {
+   line-height: 15px;
+   min-height: 15px;
+   height: 15px;
+}
+</style>
+
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog modal-xl">
         <form action="" method="post" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
@@ -36,7 +44,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Status Pelunasan</label>
-                                <input type="text" class="form-control" value="Belum Lunas" readonly>
+                                <input type="text" class="form-control" name="status" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="">Keterangan</label>
@@ -46,7 +54,9 @@
                         </div>
                         <div class="col-md-4">
                             <label>Foto</label>
-                            <div class="border" style="height:150px"></div>
+                            <div class="border" style="max-height:150px">
+                                <a href="" name="link" id="link" target="_blank" onclick="return !window.open(this.href, 'somesite', 'width=700,height=700')"><img src="" name="showfoto" id="showfoto" class="img-thumbnail" style="height:140px"></a>
+                            </div>
                         </div>
                     </div>
 
@@ -76,6 +86,7 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
+                    <a href="" target="_blank" class="btn btn-danger" id="hapus" onclick="return confirm('Are you sure you want to delete this item?');">Hapus Pembayaran</a>
                     <button type="button" name="payment" id="payment" class="btn btn-success" data-toggle="modal" onclick="addPayment('{{ route('pembelian_bahan.payment') }}')">Pembayaran</button>
                 </div>
             </div>
@@ -90,29 +101,5 @@
 
 @push('scripts')
 <script>
-
-    $(function() {
-        $('#modal-form').on("keyup change blur", recalcPembelian);
-    });
-
-    $(function() {
-        $('#tanggal').on("change", getNomorPembelianBahan);
-    });
-
-    var i = 0;
-    $('#add_new').click(function() {
-        i++;
-        addRowPembelian();
-    });
-
-    function getSupplier() {
-        let supplier = $('#supplier option:selected').text();
-        $('#nama_supp').val(supplier);
-    }
-
-    $(function() {
-        $('#supplier').on("change click", getSupplier);
-    });
-
 </script>
 @endpush

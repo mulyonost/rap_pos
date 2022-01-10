@@ -14,7 +14,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-body table-responsive">
-                <table class="table table-striped table-bordered" width="99.8%">
+                <table class="table table-striped table-bordered" width="99.8%" id="dataTable">
                     <thead>
                         <th width="5%">No</th>
                         <th>Nomor</th>
@@ -53,7 +53,7 @@
     let table;
 
     $(function () {
-        table = $('.table').DataTable({
+        table = $('#dataTable').DataTable({
             buttons: [
                 {
                 extend : 'copyHtml5',
@@ -144,33 +144,6 @@
 
     });
 
-    function addForm(url){
-        $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Input Pembelian');
-        $('#modal-form form')[0].reset();
-        $('#mainbody').empty();
-        addRowPembelian();
-        getNomorPembelianBahan();
-        $('#modal-form form').attr('action', url);
-        $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=nomor]').focus();
-    }
-
-    function addRowPembelian(){
-        $('#mainbody').append('<tr><td>' +
-        '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
-            '<option value="">Pilih Barang</option>' +
-            '@foreach ($item as $alma)' +
-            '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
-            '@endforeach' +
-        '</select></td>' +
-        '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required></td>' +
-        '<td><input class="form-control harga" type="number" step="0.01" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-        '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
-        '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
-        )
-    }
-
     function editForm(url){
         $('#modal-form').modal('show');
         $('#modal-form form')[0].reset();
@@ -179,19 +152,28 @@
         $('#modal-form [name=nama]').focus();
 
         $.get(url)
-            .done((response) => {
-                console.log(response);
-                $('#mainbody').empty();
+        .done((response) => {
+                $('#mainbody').empty();              
                 $('#modal-form [name=nomor]').val(response.pembelian.nomor);
                 $('#modal-form [name=tanggal]').val(response.pembelian.tanggal);
                 $('#modal-form [name=supplier]').val(response.pembelian.supplier.nama);
                 $('#modal-form [name=due_date]').val(response.pembelian.due_date);
-                $('#modal-form [name=status]').val(response.pembelian.status);
+                if (response.pembelian.status == 0){
+                    var status = "Belum Lunas";
+                    $('#modal-form [name=status]').val(status);
+                } else {
+                    var status = "Lunas";
+                    $('#modal-form [name=status]').val(status);
+                }                
+                $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/pembelian/bahan') }}' + '/' + response.pembelian.foto);
+                $('#modal-form [name=link]').attr("href", '{{ asset('uploads/pembelian/bahan') }}' + '/' + response.pembelian.foto);
                 $('#modal-form [name=keterangan]').val(response.pembelian.keterangan);
                 $('#modal-form [name=total]').val(response.pembelian.total.toLocaleString());
-                var url = "{{ route('pembelian_bahan.paymentDelete', '')}}" + "/" + response.pembelian.id;
-                $('#modal-form-payment [id=hapus]').attr("href", url);
+                $('#modal-form-payment [id=nomor]').val(response.pembelian.nomor);
+                $('#modal-form-payment [id=total]').val(response.pembelian.total.toLocaleString());
                 $('#modal-form-payment [name=id_pembelian]').val(response.pembelian.id);
+                var url = "{{ route('pembelian_bahan.paymentDelete', '')}}" + "/" + response.pembelian.id;
+                $('#modal-form [id=hapus]').hide();
                 for (i=0; i<response.pembeliandetail.length; i++){
                     addRowPembelianView();
                     $('#nama'+i+'').text(response.pembeliandetail[i].items.nama);
@@ -205,7 +187,6 @@
                 alert('Tidak dapat menampilkan data');
                 return;
             });
-
     }
 
     function deleteData(url){
