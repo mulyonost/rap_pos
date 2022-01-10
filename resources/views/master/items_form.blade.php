@@ -30,6 +30,8 @@
                               <option value="cm">CM</option>
                               <option value="tabung">Tabung</option>
                               <option value="jrg">Jerigen</option>
+                              <option value="btg">Batang</option>
+                              <option value="lbr">Lembar</option>
                           </select>
                           <span class="help-block with-errors"></span>
                       </div>
