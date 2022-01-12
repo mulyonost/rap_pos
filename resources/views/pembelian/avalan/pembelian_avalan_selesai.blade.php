@@ -19,7 +19,7 @@
                     Data berhasil disimpan
                 </div>
                 <div class="">
-                    <a target="_blank" href="{{ route('pembelian_avalan.cetak') }}" class="btn btn-warning" >Cetak Nota</a>
+                    <a target="_blank" href="{{ route('pembelian_avalan.cetak') }}" class="btn btn-warning" onclick="return !window.open(this.href, 'somesite', 'width=900,height=700')" >Cetak Nota</a>
                     <a href="{{ url("pembelian/avalan") }}" class="btn btn-primary">Kembali ke index</a>
                 </div>
             </div>

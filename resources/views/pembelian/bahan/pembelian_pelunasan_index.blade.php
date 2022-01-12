@@ -173,7 +173,7 @@
                 $('#modal-form-payment [id=total]').val(response.pembelian.total.toLocaleString());
                 $('#modal-form-payment [name=id_pembelian]').val(response.pembelian.id);
                 var url = "{{ route('pembelian_bahan.paymentDelete', '')}}" + "/" + response.pembelian.id;
-                $('#modal-form [id=hapus]').hide();
+                $('#modal-form-payment [id=hapus]').hide();
                 for (i=0; i<response.pembeliandetail.length; i++){
                     addRowPembelianView();
                     $('#nama'+i+'').text(response.pembeliandetail[i].items.nama);

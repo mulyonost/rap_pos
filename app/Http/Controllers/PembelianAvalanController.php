@@ -22,20 +22,46 @@ class PembelianAvalanController extends Controller
     {
         $supplier = Suppliers::where('kategori', 'avalan')->orderBy('nama')->get();
         $avalan = Avalan::orderBy('nama')->get();
-        return view('pembelian.pembelian_avalan_index', compact('supplier', 'avalan'));
+        return view('pembelian.avalan.pembelian_avalan_index', compact('supplier', 'avalan'));
+    }
+
+    public function index_pelunasan()
+    {
+        $supplier = Suppliers::where('kategori', 'avalan')->orderBy('nama')->get();
+        $avalan = Avalan::orderBy('nama')->get();
+        return view('pembelian.avalan.pembelian_avalan_pelunasan_index', compact('supplier', 'avalan'));
     }
 
     public function data()
     {
-        $pembelianav = PembelianAvalan::orderBy('id', 'desc')->with('supplier')->get();
+        $pembelianav = PembelianAvalan::orderBy('tanggal', 'desc')->with('supplier')->take(50)->get();
         return datatables()
             ->of($pembelianav)
             ->addIndexColumn()
             ->addColumn('aksi', function ($pembelianav) {
                 return '
                 <div class="btn-group">
-                    <a href="/pembelian/avalan/' . $pembelianav->id . '/edit"><i class="btn btn-xs btn-info btn-flat fa fa-pencil"></i></a>
-                    <button onclick="editForm(`' . route('pembelian_avalan.update', $pembelianav->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
+                    <button onclick="editForm(`' . route('pembelian_avalan.update', $pembelianav->id) . '`)" class="btn btn-xs btn-primary btn-flat" id="edit"><i class="far fa-eye"></i></button>
+                    <a href="/pembelian/avalan/' . $pembelianav->id . '/edit"class="btn btn-xs btn-warning btn-flat"> <i class="far fa-edit"></i></a>
+                    <button onclick="deleteData(`' . route('pembelian_avalan.destroy', $pembelianav->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                </div>
+                ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
+
+    public function pelunasan()
+    {
+        $pembelianav = PembelianAvalan::orderBy('tanggal', 'desc')->where('status', 0)->with('supplier')->get();
+        return datatables()
+            ->of($pembelianav)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($pembelianav) {
+                return '
+                <div class="btn-group">
+                    <button onclick="editForm(`' . route('pembelian_avalan.update', $pembelianav->id) . '`)" class="btn btn-xs btn-primary btn-flat" id="edit"><i class="far fa-eye"></i></button>
+                    <a href="/pembelian/avalan/' . $pembelianav->id . '/edit"class="btn btn-xs btn-warning btn-flat"> <i class="far fa-edit"></i></a>
                     <button onclick="deleteData(`' . route('pembelian_avalan.destroy', $pembelianav->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
                 </div>
                 ';
@@ -81,7 +107,6 @@ class PembelianAvalanController extends Controller
         $pembelianav->status = $request->status;
         $pembelianav->keterangan = $request->keterangan;
         $pembelianav->created_by = auth()->user()->name;
-        $pembelianav->save();
 
         $id = $pembelianav->id;
         foreach ($request->addmore as $key => $value) {
@@ -95,6 +120,7 @@ class PembelianAvalanController extends Controller
             $pembelianavdetail->subtotal = $value['subtotal'];
             $pembelianavdetail->save();
         }
+        $pembelianav->save();
         session(['id_pembelian_avalan' => $id]);
 
         return redirect('pembelian/avalan/selesai');
@@ -114,7 +140,7 @@ class PembelianAvalanController extends Controller
     public function show($id)
     {
         $data = array();
-        $data['pembelianav'] = PembelianAvalan::find($id);
+        $data['pembelianav'] = PembelianAvalan::with('supplier')->find($id);
         $data['pembelianavdetail'] = PembelianAvalanDetail::where('id_pembelian_avalan', $id)->with('avalan')->get();
 
         return response()->json($data);
@@ -198,7 +224,7 @@ class PembelianAvalanController extends Controller
 
     public function payment(Request $request)
     {
-        $payment = PembelianAvalan::find($request->id_pembelian_avalan);
+        $payment = PembelianAvalan::find($request->id_pembelian);
         $payment->tanggal_bayar = $request->tanggal_pembayaran;
         $payment->keterangan_bayar = $request->keterangan_pembayaran;
         $payment->status = 1;
@@ -221,5 +247,15 @@ class PembelianAvalanController extends Controller
         $pembelianavdetail = PembelianAvalanDetail::where('id_pembelian_avalan', $id)->with('avalan')->get();
 
         return view('pembelian.pembelian_avalan_nota', compact('pembelianav', 'pembelianavdetail'));
+    }
+
+    public function paymentDelete($id)
+    {
+        $payment = PembelianAvalan::find($id);
+        $payment->tanggal_bayar = null;
+        $payment->keterangan_bayar = null;
+        $payment->status = 0;
+        $payment->save();
+        return redirect('pembelian/avalan');
     }
 }

@@ -47,48 +47,10 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        {{-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <label for="">Nomor Nota</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control" id="nomor" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <label for="">Total Nota</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control" id="total" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="form-group-row">
-                                    <label class="form-control" for="tanggal">Tanggal Pembayaran</label>
-                                    <input class="form-control" type="date" id="tanggal_pembayaran" name="tanggal_pembayaran" value="<?= date('Y-m-d') ?>">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group-row">
-                                    <label class="form-control" for="tanggal">Keterangan</label>
-                                    <textarea class="form-control" type="text" id="keterangan_pembayaran" name="keterangan_pembayaran"></textarea>
-                                    <input type="hidden" class="form-control" type="text" id="id_pembelian" name="id_pembelian">
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
+                    <a href="" target="_blank" class="btn btn-danger" id="hapus" onclick="return confirm('Are you sure you want to delete this item?');">Hapus Pembayaran</a>
                     <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
                 </div>
             </div>

@@ -231,6 +231,18 @@ function addPembelianAvalanRow(){
     )
 }
 
+function addRowPembelianAvalanView(){
+  $('#mainbody').append('<tr><td>' +
+  '<p id="no'+i+'"></p></td>' +
+  '<td><p id="item'+i+'"></p></td>' +
+  '<td><p id="qty'+i+'"></p></td>' +
+  '<td><p id="potongan'+i+'"></p></td>' +
+  '<td><p id="qty_akhir'+i+'"></p></td>' +
+  '<td><p id="harga'+i+'"></p></td>' +
+  '<td><p id="subtotal'+i+'"></p></td>'
+  )
+}
+
 function populateSelectAvalan(){
   for (e = 0; e < avalan.length; e++){ 
       $('#item' + i + '').append( '<option value="'+ avalan[e].id +'" data-harga="'+ avalan[e].harga +'">'+ avalan[e].nama +'</option>' );

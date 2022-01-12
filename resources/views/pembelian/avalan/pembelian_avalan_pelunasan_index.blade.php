@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Pembelian Bahan Baku
+    Pembelian Avalan
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Pembelian Bahan Baku</li>
+    <li class="breadcrumb-item active">Pembelian Avalan</li>
 @endsection
 
 @section('content')
@@ -14,17 +14,18 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border mb-2">
-                <a href="{{ route('pembelian_bahan.create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Pembelian Baru</a>
+                <a href="{{ route('pembelian_avalan.index') }}" class="btn btn-primary"><i class="fas fa-file-alt"></i> Index Avalan</a>
             </div>
             <div class="box-body table-responsive">
-                <table class="table table-striped table-bordered" width="99.8%" id="dataTable">
+                <table class="table table-striped table-bordered" width="99.8%" id="tableData">
                     <thead>
                         <th width="5%">No</th>
                         <th>Nomor</th>
                         <th>Tanggal</th>
-                        <th>Nama Supplier</th>
+                        <th>Supplier</th>
                         <th>Total Nota</th>
                         <th>Jatuh Tempo</th>
+                        <th>Tgl Pelunasan</th>
                         <th>Status</th>
                         <th widht="5%"><i class="fa fa-cog"></i>Aksi</th>
                     </thead>
@@ -48,7 +49,7 @@
         </div>
     </div>
 </div>
-@includeIf('pembelian.bahan.pembelian_bahan_detail')
+@includeIf('pembelian.avalan.pembelian_avalan_detail')
 @endsection
 
 @push('scripts')
@@ -56,26 +57,22 @@
     let table;
 
     $(function () {
-        table = $('#dataTable').DataTable({
-            buttons: [
-                {
-                extend : 'copyHtml5',
-                exportOptions : {orthogonal : 'export'}
-                }
-            ],
-            processing: true,
+        table = $('#tableData').DataTable({
             dom: 'Bfrtip',
+            pageLength: 25,
+            processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('pembelian_bahan.data') }}',
+                url: '{{ route('pembelian_avalan.pelunasan.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'nomor'},
                 {data: 'tanggal'},
                 {data: 'supplier.nama'},
-                {data: 'total', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
+                {data: 'total_nota', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')},
                 {data: 'due_date'},
+                {data: 'tanggal_bayar'},
                 {data: 'status',
                     render : function (data, type, row) {
                         if (row.status === 0) {
@@ -87,6 +84,12 @@
                     }
                 },
                 {data: 'aksi', searchable:false, sortable:false}
+            ],
+            buttons: [
+                {
+                extend : 'copyHtml5',
+                exportOptions : {orthogonal : 'export'}
+                }
             ],
             footerCallback: function( tfoot, data, start, end, display ) {
                 var api = this.api(), data;
@@ -148,55 +151,56 @@
     });
 
     function editForm(url){
-  $('#modal-form').modal('show');
-  $('#modal-form form')[0].reset();
-  $('#modal-form form').attr('action', url);
-  $('#modal-form [name=_method]').val('put');
-  $('#modal-form [name=nama]').focus();
+        $('#modal-form').modal('show');
+        $('#modal-form .modal-title').text('Edit Pembelian Avalan');
+        $('#modal-form [name=payment]').attr("disabled", false);
+        $('#modal-form form')[0].reset();
+        $('#modal-form form').attr('action', url);
+        $('#modal-form [name=_method]').val('put');
+        $('#modal-form [name=nama]').focus();
 
-  $.get(url)
-  .done((response) => {
-          $('#mainbody').empty();    
-          $('#modal-form [name=nomor]').val(response.pembelian.nomor);
-          $('#modal-form [name=tanggal]').val(response.pembelian.tanggal);
-          $('#modal-form [name=supplier]').val(response.pembelian.supplier.nama);
-          $('#modal-form [name=due_date]').val(response.pembelian.due_date);
-          if (response.pembelian.status == 0){
-              var status = "Belum Lunas";
-              $('#modal-form [name=status]').val(status);
-          } else {
-              var status = "Lunas";
-              $('#modal-form [name=status]').val(status);
-          }
-          $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/pembelian/bahan') }}' + '/' + response.pembelian.foto);
-          $('#modal-form [name=link]').attr("href", '{{ asset('uploads/pembelian/bahan') }}' + '/' + response.pembelian.foto);
-          $('#modal-form [name=keterangan]').val(response.pembelian.keterangan);
-          $('#modal-form [name=total]').val('Rp. ' + response.pembelian.total.toLocaleString());
-          $('#modal-form-payment [id=nomor]').val(response.pembelian.nomor);
-          $('#modal-form-payment [id=total]').val(response.pembelian.total.toLocaleString());
-          $('#modal-form-payment [id=tanggal_pembayaran]').val(response.pembelian.tanggal_bayar);
-          $('#modal-form-payment [id=keterangan_pembayaran]').val(response.pembelian.keterangan_bayar);
-          $('#modal-form-payment [id=keterangan_pembayaran]').attr('readonly', true);
-          $('#modal-form-payment [id=tanggal_pembayaran]').attr('readonly', true)
-          $('#modal-form-payment [id=simpan]').attr('disabled', true)
-          var url = "{{ route('pembelian_bahan.paymentDelete', '')}}" + "/" + response.pembelian.id;
-          $('#modal-form-payment [id=hapus]').attr("href", url);
-          $('#modal-form-payment [name=id_pembelian]').val(response.pembelian.id);
-          for (i=0; i<response.pembeliandetail.length; i++){
-              addRowPembelianView();
-              $('#nama'+i+'').text(response.pembeliandetail[i].items.nama);
-              $('#qty'+i+'').text(response.pembeliandetail[i].qty.toLocaleString() + ' ' + response.pembeliandetail[i].items.unit);
-              $('#harga'+i+'').text('Rp. ' + response.pembeliandetail[i].harga.toLocaleString());
-              $('#subtotal'+i+'').text('Rp. ' + response.pembeliandetail[i].subtotal.toLocaleString());
-          }
-          recalcPembelian();
-      })
-      .fail((errors) => {
-          alert('Tidak dapat menampilkan data');
-          return;
-      });
-}
-
+        $.get(url)
+        .done((response) => {
+                $('#mainbody').empty();
+                $('#modal-form [name=showfoto]').attr("src", '{{ asset('uploads/pembelian/avalan') }}' + '/' + response.pembelianav.foto_nota);
+                $('#modal-form [name=link]').attr("href", '{{ asset('uploads/pembelian/avalan') }}' + '/' + response.pembelianav.foto_nota);
+                $('#modal-form [name=nomor]').val(response.pembelianav.nomor);
+                $('#modal-form [name=tanggal]').val(response.pembelianav.tanggal);
+                $('#modal-form [name=supplier]').val(response.pembelianav.supplier.nama);
+                $('#modal-form [name=due_date]').val(response.pembelianav.due_date);
+                $('#modal-form [name=total]').val('Rp. ' + response.pembelianav.total_nota.toLocaleString());
+                if (response.pembelianav.status == 0){
+                    var status = "Belum Lunas";
+                    $('#modal-form [name=status]').val(status);
+                } else {
+                    var status = "Lunas";
+                    $('#modal-form [name=status]').val(status);
+                }
+                $('#modal-form [name=keterangan]').val(response.pembelianav.keterangan);
+                var url = "{{ route('pembelian_avalan.cetakulang', '')}}" + "/" + response.pembelianav.id;
+                $('#modal-form [id=cetak]').attr("href", url);
+                $('#modal-form-payment [id=id_pembelian]').val(response.pembelianav.id);
+                $('#modal-form-payment [id=nomor]').val(response.pembelianav.nomor);
+                $('#modal-form-payment [id=total]').val('Rp. ' + response.pembelianav.total_nota.toLocaleString());
+                $('#modal-form-payment [id=tanggal_pembayaran]').val(new Date().toISOString().slice(0, 10));
+                $('#modal-form-payment [id=keterangan_pembayaran]').val(response.pembelianav.keterangan_bayar);
+                $('#modal-form-payment [id=hapus]').hide();
+                for (i=0; i<response.pembelianavdetail.length; i++){
+                    addRowPembelianAvalanView();
+                    $('#no'+i+'').text(i+1 + '.');
+                    $('#item'+i+'').text(response.pembelianavdetail[i].avalan.nama);
+                    $('#qty'+i+'').text(response.pembelianavdetail[i].qty.toLocaleString() + ' Kg');
+                    $('#potongan'+i+'').text(response.pembelianavdetail[i].potongan.toLocaleString() + ' Kg');
+                    $('#qty_akhir'+i+'').text(response.pembelianavdetail[i].qty_akhir.toLocaleString() + ' Kg');
+                    $('#harga'+i+'').text('Rp. ' + response.pembelianavdetail[i].harga.toLocaleString());
+                    $('#subtotal'+i+'').text('Rp. ' + response.pembelianavdetail[i].subtotal.toLocaleString());
+                }
+            })
+            .fail((errors) => {
+                alert('Tidak dapat menampilkan data');
+                return;
+            });
+    }
 
     function deleteData(url){
         if (confirm('Yakin akan menghapus data ?')) {
@@ -213,12 +217,13 @@
         })
         }
     }
-    
+
     function addPayment(url){
         $('#modal-form-payment').modal('show');
-        $('#modal-form-payment .modal-title').text('Pembayaran Bahan');
+        $('#modal-form-payment .modal-title').text('Pembayaran Avalan');
         $('#modal-form-payment form').attr('action', url);
         $('#modal-form-payment [name=_method]').val('post');
     }
+    
 </script>
 @endpush

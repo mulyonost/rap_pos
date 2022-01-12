@@ -86,7 +86,6 @@ tr {
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
-                    <a href="" target="_blank" class="btn btn-danger" id="hapus" onclick="return confirm('Are you sure you want to delete this item?');">Hapus Pembayaran</a>
                     <button type="button" name="payment" id="payment" class="btn btn-success" data-toggle="modal" onclick="addPayment('{{ route('pembelian_bahan.payment') }}')">Pembayaran</button>
                 </div>
             </div>
@@ -97,7 +96,7 @@ tr {
 </div>
 <!-- /.modal -->
 
-@includeIf('pembelian.pembelian_payment')
+@includeIf('pembelian.bahan.pembelian_payment')
 
 @push('scripts')
 <script>

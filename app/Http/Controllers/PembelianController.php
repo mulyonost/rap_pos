@@ -40,7 +40,7 @@ class PembelianController extends Controller
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">
-                <button onclick="editForm(`' . route('pembelian_bahan.update', $pembelian->id) . '`)" class="btn btn-xs btn-primary btn-flat"><i class="far fa-eye"></i></button>
+                    <button onclick="editForm(`' . route('pembelian_bahan.update', $pembelian->id) . '`)" class="btn btn-xs btn-primary btn-flat" id="edit"><i class="far fa-eye"></i></button>
                     <a href="/pembelian/bahan/' . $pembelian->id . '/edit" class="btn btn-xs btn-warning btn-flat"><i class="far fa-edit"></i></a>
                     <button onclick="deleteData(`' . route('pembelian_bahan.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
@@ -52,14 +52,14 @@ class PembelianController extends Controller
 
     public function pelunasan()
     {
-        $pembelian = Pembelian::orderBy('tanggal', 'desc')->where('status', 0)->with('supplier')->take(50)->get();
+        $pembelian = Pembelian::orderBy('tanggal', 'desc')->where('status', 0)->with('supplier')->get();
         return datatables()
             ->of($pembelian)
             ->addIndexColumn()
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">
-                <button onclick="editForm(`' . route('pembelian_bahan.update', $pembelian->id) . '`)" class="btn btn-xs btn-primary btn-flat"><i class="far fa-eye"></i></button>
+                    <button onclick="editForm(`' . route('pembelian_bahan.update', $pembelian->id) . '`)" class="btn btn-xs btn-primary btn-flat"><i class="far fa-eye"></i></button>
                     <a href="/pembelian/bahan/' . $pembelian->id . '/edit" class="btn btn-xs btn-warning btn-flat"><i class="far fa-edit"></i></a>
                     <button onclick="deleteData(`' . route('pembelian_bahan.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
