@@ -107,11 +107,10 @@ class PembelianAvalanController extends Controller
         $pembelianav->status = $request->status;
         $pembelianav->keterangan = $request->keterangan;
         $pembelianav->created_by = auth()->user()->name;
-
-        $id = $pembelianav->id;
+        
         foreach ($request->addmore as $key => $value) {
             $pembelianavdetail = new PembelianAvalanDetail;
-            $pembelianavdetail->id_pembelian_avalan = $id;
+            $pembelianavdetail->id_pembelian_avalan = $pembelianav->id;
             $pembelianavdetail->id_avalan = $value['item'];
             $pembelianavdetail->qty = $value['qty'];
             $pembelianavdetail->potongan = $value['potongan'];

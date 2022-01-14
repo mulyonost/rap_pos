@@ -72,7 +72,7 @@
                 {data: 'tanggal'},
                 {data: 'customer.nama'},
                 {data: 'total_akhir', render: $.fn.dataTable.render.number('.', ',', 0, 'Rp') },
-                {data: 'timbangan_mobil'},
+                {data: null, render: function(data,type,row) {return (data['total_akhir'] / data['timbangan_mobil'])}},
                 {data: 'due_date'},
                 {data: 'status'},
                 {data: 'aksi', searchable:false, sortable:false}
