@@ -17,7 +17,7 @@
                 <a href="{{ route('penjualan_aluminium.create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Penjualan Baru</a>
             </div>
             <div class="box-body table-responsive">
-                <table class="table table-striped table-bordered" width="99.8%">
+                <table class="table table-striped table-bordered" width="99.8%" id="dataTable">
                     <thead>
                         <th width="5%">No</th>
                         <th>Nomor</th>
@@ -50,7 +50,7 @@
         </div>
     </div>
 </div>
-@includeIf('penjualan.penjualan_form')
+@includeIf('penjualan.penjualan_detail')
 @endsection
 
 @push('scripts')
@@ -59,7 +59,7 @@
     // let numFormat = render: $.fn.dataTable.render.number('.', ',', 0, 'Rp').display;
 
     $(function () {
-        table = $('.table').DataTable({
+        table = $('#dataTable').DataTable({
             dom: 'Bfrtip',
             processing: true,
             autowidth: true,
@@ -120,41 +120,6 @@
 
     });
 
-    function addForm(url){
-        $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Input Penjualan');
-        $('#modal-form form')[0].reset();
-        $('#mainbody').empty();
-        $('#modal-form').ready(function() {
-            getNomorPenjualan();
-            addRowPenjualan();
-            i++;
-            $('.nama').select2({
-                theme: "bootstrap-5"
-            });            
-        });
-        $('#modal-form form').attr('action', url);
-        $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=nomor]').focus();
-    }
-
-    function addRowPenjualan(){
-        $('#mainbody').append('<tr><td>' +
-                '<select class="form-control nama" name="addmore['+i+'][nama]" id="nama'+i+'" required>' +
-                    '<option value="">Pilih Barang</option>' +
-                    '@foreach ($aluminium as $alma)' +
-                    '<option value="{{$alma->id}}">{{$alma->nama}}</option>' +
-                    '@endforeach' +
-                '</select></td>' +
-                '<td><input class="form-control colly" type="number" name="addmore['+i+'][colly]" id="colly'+i+'" required></td>' +
-                '<td><input class="form-control isi" type="number" name="addmore['+i+'][isi]" id="isi'+i+'" required></td>' +
-                '<td><input class="form-control qty" type="number" name="addmore['+i+'][qty]" id="qty'+i+'" required readonly tabindex=-1></td>' +
-                '<td><input class="form-control harga" type="number" name="addmore['+i+'][harga]" id="harga'+i+'" required></td>' +
-                '<td><input class="form-control subtotal" type="number" name="addmore['+i+'][subtotal]" id="subtotal'+i+'" readonly></td>' +
-                '<td><button id="remove_row" type="button" name="remove_row" class="btn btn-sm btn-danger remove"> - </button></td>'
-            )
-        }
-
     function editForm(url){
         $('#modal-form').modal('show');
         $('#modal-form .modal-title').text('Edit Penjualan');
@@ -166,29 +131,39 @@
 
         $.get(url)
             .done((response) => {
+                console.log(response);
                 $('#mainbody').empty();
                 $('#modal-form [name=nomor]').val(response.penjualan.nomor);
                 $('#modal-form [name=tanggal]').val(response.penjualan.tanggal);
-                $('#modal-form [name=customer]').val(response.penjualan.id_customer);
+                $('#modal-form [name=customer]').val(response.penjualan.customer.nama);
                 $('#modal-form [name=due_date]').val(response.penjualan.due_date);
                 $('#modal-form [name=foto_mobil]').val(response.foto_mobil);
                 $('#modal-form [name=foto_barang]').val(response.foto_barang);
                 $('#modal-form [name=timbangan]').val(response.penjualan.timbangan_mobil);
-                $('#modal-form [name=status]').val(response.status);
+                $('#modal-form [name=total_nota]').val('Rp. ' + response.penjualan.total_nota.toLocaleString());
+                $('#modal-form [name=diskon_rupiah]').val('Rp. ' + response.penjualan.diskon.toLocaleString());
+                $('#modal-form [name=total_akhir]').val('Rp. ' + response.penjualan.total_akhir.toLocaleString());
+                if (response.penjualan.status == 0){
+                    var status = "Belum Lunas";
+                    $('#modal-form [name=status]').val(status);
+                } else {
+                    var status = "Lunas";
+                    $('#modal-form [name=status]').val(status);
+                }
                 $('#modal-form [name=keterangan]').val(response.keterangan);
                 for (i=0; i<response.penjualandetail.length; i++){
-                    addRowPenjualan();
-                    $('#nama'+i+'').val(response.penjualandetail[i].id_aluminium);
-                    $('#colly'+i+'').val(response.penjualandetail[i].colly);
-                    $('#isi'+i+'').val(response.penjualandetail[i].isi);
-                    $('#qty'+i+'').val(response.penjualandetail[i].qty);
-                    $('#harga'+i+'').val(response.penjualandetail[i].harga);
-                    $('#subtotal'+i+'').val(response.penjualandetail[i].subtotal);
-                    $('.nama').select2({
-                        theme: "bootstrap-5"
-                    });       
+                    addRowPenjualanDetail();
+                    $('#no'+i+'').text(i+1);
+                    $('#nama'+i+'').text(response.penjualandetail[i].aluminium.nama);
+                    $('#colly'+i+'').text(response.penjualandetail[i].colly);
+                    $('#isi'+i+'').text(response.penjualandetail[i].isi);
+                    $('#qty'+i+'').text(response.penjualandetail[i].qty.toLocaleString());
+                    $('#harga'+i+'').text('Rp. ' + response.penjualandetail[i].harga.toLocaleString());
+                    $('#subtotal'+i+'').text('Rp. ' + response.penjualandetail[i].subtotal.toLocaleString());   
                 }
-                recalcPenjualan();
+
+                $('#modal-form-payment [name=sisa]').val(response.penjualan.total_akhir);
+                $('#modal-form-payment [name=id_penjualan]').val(response.penjualan.id);
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');
@@ -211,6 +186,15 @@
             return;
         })
         }
+    }
+
+    function addPayment(url){
+        $('#mainbody-payment').empty();
+        addRowPayment();
+        $('#modal-form-payment').modal('show');
+        $('#modal-form-payment .modal-title').text('Pelunasan Penjualan Aluminium');
+        $('#modal-form-payment form').attr('action', url);
+        $('#modal-form-payment [name=_method]').val('post');
     }
     
 </script>

@@ -12,9 +12,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <input type="text" name="id_penjualan" id="id_penjualan" value="{{ $penjualan->id }}">
                         <div class="row">
-                            <table class="table responsive">
+                            <input type="hidden" name="id_penjualan">
+                            <table class="table responsive" id="table-detail-payment">
                                 <thead>
                                     <tr>
                                         <th>Bank</th>
@@ -23,21 +23,15 @@
                                         <th>Keterangan</th>
                                         <th width="5%"><button id="add_new" type="button" name="add_new" class="btn btn-sm btn-success"> +</button></th>
                                     </tr>
-                                <thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" class="form-control" name="bank" id="bank"></td>
-                                        <td><input type="date" class="form-control" name="tanggal" id="tanggal"></td>
-                                        <td><input type="text" class="form-control" name="jumlah" id="jumlah"></td>
-                                        <td><input type="text" class="form-control" name="keterangan" id="keterangan"></td>
-                                        <td></td>
-                                    </tr>
+                                </thead>
+                                <tbody id="mainbody-payment">
+
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td></td>
                                         <td></td>
-                                        <td><input type="text" class="form-control" name="sisa" id="sisa"></td>
+                                        <td><input type="text" class="form-control" name="sisa" id="sisa" readonly></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -62,21 +56,29 @@
 @push('scripts')
 <script>
 
-function sisa(){
-    let awal = 0;
-    let total = 0;
-    let jumlah = 0;
-    let sisa = 0
-    awal = $('#sisa').val();
-    total = $('#sisa').val();
-    jumlah = $('#jumlah').val()
-    sisa = total - jumlah;
-    $('#sisa').val(sisa);    
+function hitungSisa(){
+    let payment = 0;
+    let sisa = $('#sisa').val();
+    let sisa_awal = $('#sisa').val();
+    $('#table-detail-payment').find('tr').each(function() {
+        let payment = $(this).find('input.jumlah').val()
+        let sisa_akhir = (sisa_awal - payment);
+        $('#sisa').val(sisa_akhir);
+        console.log(sisa_awal);
+    });
 }
 
-// $(function() {
-//         $('#modal-form-payment').on("keyup change blur mouseenter", sisa);
-//     });
+$(function() {
+    $('#modal-form-payment').on("keyup change blur", hitungSisa);
+});
+
+
+
+var x = 0;
+$('#add_new').click(function() {
+    x++;
+    addRowPayment();
+});
 
 </script>
 @endpush

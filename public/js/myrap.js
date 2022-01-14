@@ -300,6 +300,19 @@ function addRowPenjualan(){
       )
   }
 
+  
+function addRowPenjualanDetail(){
+  $('#mainbody').append('<tr><td>' +
+  '<p id="no'+i+'"></p></td>' +
+  '<td><p id="nama'+i+'"></p></td>' +
+  '<td><p id="colly'+i+'"></p></td>' +
+  '<td><p id="isi'+i+'"></p></td>' +
+  '<td><p id="qty'+i+'"></p></td>' +
+  '<td><p id="harga'+i+'"></p></td>' +
+  '<td><p id="subtotal'+i+'"></p></td>'
+  )
+}
+
 function recalcPenjualan() {
   let colly = 0;
   let isi = 0;
@@ -339,3 +352,12 @@ function populateSelectPenjualan(){
       $('#nama' + i + '').append( '<option value="'+ aluminium[e].id +'" data-harga="'+ aluminium[e].harga_jual +'" data-isi="' + aluminium[e].packing + '">'+ aluminium[e].nama +'</option>' );
   }
 }
+
+function addRowPayment(){
+  $('#mainbody-payment').append('<tr><td>' +
+          '<input class="form-control bank" type="text" name="addmore['+x+'][bank]" id="bank'+x+'" required></td>' +
+          '<td><input class="form-control tanggal" type="date" name="addmore['+x+'][tanggal]" id="tanggal'+x+'" required></td>' +
+          '<td><input class="form-control jumlah" type="number" name="addmore['+x+'][jumlah]" id="jumlah'+x+'" required></td>' +
+          '<td><input class="form-control keterangan" type="text" name="addmore['+x+'][keterangan]" id="keterangan'+x+'"></td>'
+      )
+  }

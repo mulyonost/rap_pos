@@ -33,9 +33,9 @@ class PenjualanController extends Controller
             ->addColumn('aksi', function ($penjualan) {
                 return '
                 <div class="btn-group">
-                    <a href="/penjualan/aluminium/' . $penjualan->id . '/edit"><i class="btn btn-xs btn-info btn-flat fa fa-pencil"></i></a>
-                    <button onclick="editForm(`' . route('penjualan_aluminium.update', $penjualan->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></buttom>
-                    <button onclick="deleteData(`' . route('penjualan_aluminium.destroy', $penjualan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></buttom>
+                    <button onclick="editForm(`' . route('penjualan_aluminium.update', $penjualan->id) . '`)" class="btn btn-xs btn-primary btn-flat"><i class="far fa-eye"></i></button>
+                    <a href="/penjualan/aluminium/' . $penjualan->id . '/edit" class="btn btn-xs btn-warning btn-flat"><i class="far fa-edit"></i></a>
+                    <button onclick="deleteData(`' . route('penjualan_aluminium.destroy', $penjualan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
             })
@@ -147,7 +147,7 @@ class PenjualanController extends Controller
     public function show($id)
     {
         $data = array();
-        $data['penjualan'] = Penjualan::find($id);
+        $data['penjualan'] = Penjualan::with('customer')->find($id);
         $data['penjualandetail'] = PenjualanDetail::where('id_penjualan', $id)->with('aluminium')->get();
 
         return response()->json($data);
@@ -214,17 +214,21 @@ class PenjualanController extends Controller
 
     public function payment(Request $request)
     {
-        $payment = new PenjualanPaid;
         $pdtl = Penjualan::find($request->id_penjualan);
-        $payment->id_penjualan = $request->id_penjualan;
-        $payment->bank = $request->bank;
-        $payment->tanggal = $request->tanggal;
-        $payment->jumlah = $request->jumlah;
-        $payment->keterangan = $request->keterangan;
-        if ($request->sisa == 0) {
-            $pdtl->status = 1;
+        foreach ($request->addmore as $key => $value) {
+            $payment = new PenjualanPaid;
+            $payment->id_penjualan = $request->id_penjualan;
+            $payment->bank = $value['bank'];
+            $payment->tanggal = $value['tanggal'];
+            $payment->jumlah = $value['jumlah'];
+            $payment->keterangan = $value['keterangan'];
+            $payment->save();
         }
-        $payment->save();
+        $pdtl->status = 1;
+        // if ($request->sisa == 0) {
+        //     $pdtl->status = 1;
+        // }
+        $pdtl->save();
 
         return redirect('penjualan/aluminium');
     }
