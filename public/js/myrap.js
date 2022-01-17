@@ -361,3 +361,16 @@ function addRowPayment(){
           '<td><input class="form-control keterangan" type="text" name="addmore['+x+'][keterangan]" id="keterangan'+x+'"></td>'
       )
   }
+
+  function hitungSisa(){
+    var payment = 0;
+    var totalPayment = 0;
+    var sisa_akhir = 0;
+    var sisa_awal = $('#sisa_awal').val();
+    $('#table-detail-payment').find('tr').each(function() {
+        var payment = $(this).find('input.jumlah').val() * 1;
+        totalPayment += payment ? payment : 0;
+    });
+    sisa_akhir = (sisa_awal - totalPayment)
+    $('#sisa').val(sisa_akhir);
+}

@@ -17,7 +17,7 @@ class CreatePenjualanPaidTable extends Migration
             $table->id();
             $table->foreignId('id_penjualan')->constrained('penjualan')->onDelete('cascade');
             $table->string('bank');
-            $table->dateTime('tanggal');
+            $table->date('tanggal');
             $table->bigInteger('jumlah');
             $table->string('keterangan');
             $table->timestamps();

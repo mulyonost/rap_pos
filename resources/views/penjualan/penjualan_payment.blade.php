@@ -32,6 +32,7 @@
                                         <td></td>
                                         <td></td>
                                         <td><input type="text" class="form-control" name="sisa" id="sisa" readonly></td>
+                                        <input type="hidden" id="sisa_awal">
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -56,28 +57,15 @@
 @push('scripts')
 <script>
 
-function hitungSisa(){
-    let payment = 0;
-    let sisa = $('#sisa').val();
-    let sisa_awal = $('#sisa').val();
-    $('#table-detail-payment').find('tr').each(function() {
-        let payment = $(this).find('input.jumlah').val()
-        let sisa_akhir = (sisa_awal - payment);
-        $('#sisa').val(sisa_akhir);
-        console.log(sisa_awal);
-    });
-}
-
-$(function() {
-    $('#modal-form-payment').on("keyup change blur", hitungSisa);
-});
-
-
-
 var x = 0;
 $('#add_new').click(function() {
     x++;
     addRowPayment();
+});
+
+
+$(function() {
+    $('#modal-form-payment').on("keyup change blur onmouseover", hitungSisa);    
 });
 
 </script>

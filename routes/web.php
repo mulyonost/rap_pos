@@ -123,6 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/aluminium/cetaknota', [PenjualanController::class, 'cetaknota'])->name('aluminium.cetaknota');
         Route::get('/aluminium/cetakulangsj/{id?}', [PenjualanController::class, 'cetakulangsj'])->name('aluminium.cetakulangsj');
         Route::get('/aluminium/cetakulangnota/{id?}', [PenjualanController::class, 'cetakulangnota'])->name('aluminium.cetakulangnota');
+        Route::get('/aluminium/payment/{id}', [PenjualanController::class, 'showpayment'])->name('aluminium.showpayment');
         Route::resource('/aluminium', PenjualanController::class);
     });
 

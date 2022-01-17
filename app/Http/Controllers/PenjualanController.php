@@ -149,6 +149,15 @@ class PenjualanController extends Controller
         $data = array();
         $data['penjualan'] = Penjualan::with('customer')->find($id);
         $data['penjualandetail'] = PenjualanDetail::where('id_penjualan', $id)->with('aluminium')->get();
+        $data['payment'] = PenjualanPaid::where('id_penjualan', $id)->get();
+
+        return response()->json($data);
+    }
+
+    public function showpayment($id)
+    {
+        $data = array();
+        $data['payment'] = PenjualanPaid::where('id_penjualan', $id)->get();
 
         return response()->json($data);
     }
@@ -224,10 +233,9 @@ class PenjualanController extends Controller
             $payment->keterangan = $value['keterangan'];
             $payment->save();
         }
-        $pdtl->status = 1;
-        // if ($request->sisa == 0) {
-        //     $pdtl->status = 1;
-        // }
+        if ($request->sisa == 0) {
+            $pdtl->status = 1;
+        }
         $pdtl->save();
 
         return redirect('penjualan/aluminium');

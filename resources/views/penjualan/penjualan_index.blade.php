@@ -131,7 +131,6 @@
 
         $.get(url)
             .done((response) => {
-                console.log(response);
                 $('#mainbody').empty();
                 $('#modal-form [name=nomor]').val(response.penjualan.nomor);
                 $('#modal-form [name=tanggal]').val(response.penjualan.tanggal);
@@ -143,6 +142,7 @@
                 $('#modal-form [name=total_nota]').val('Rp. ' + response.penjualan.total_nota.toLocaleString());
                 $('#modal-form [name=diskon_rupiah]').val('Rp. ' + response.penjualan.diskon.toLocaleString());
                 $('#modal-form [name=total_akhir]').val('Rp. ' + response.penjualan.total_akhir.toLocaleString());
+                $('#modal-form [name=payment]').attr("onClick", 'addPayment (' + '\'' + '{{ route('penjualan_aluminium.payment') }}' + '/' + response.penjualan.id + '\')');
                 if (response.penjualan.status == 0){
                     var status = "Belum Lunas";
                     $('#modal-form [name=status]').val(status);
@@ -163,6 +163,7 @@
                 }
 
                 $('#modal-form-payment [name=sisa]').val(response.penjualan.total_akhir);
+                $('#modal-form-payment [id=sisa_awal]').val(response.penjualan.total_akhir);
                 $('#modal-form-payment [name=id_penjualan]').val(response.penjualan.id);
             })
             .fail((errors) => {
@@ -189,12 +190,23 @@
     }
 
     function addPayment(url){
-        $('#mainbody-payment').empty();
-        addRowPayment();
+        $('#mainbody-payment').empty();      
+        $('#jumlah0').val($('#sisa_awal').val());
         $('#modal-form-payment').modal('show');
         $('#modal-form-payment .modal-title').text('Pelunasan Penjualan Aluminium');
         $('#modal-form-payment form').attr('action', url);
         $('#modal-form-payment [name=_method]').val('post');
+        $.get(url)
+            .done((response) => {
+                for(x=0; x<response.payment.length; x++){
+                    addRowPayment();
+                    $('#bank'+x+'').val(response.payment[x].bank);
+                    $('#tanggal'+x+'').val(response.payment[x].tanggal);
+                    $('#jumlah'+x+'').val(response.payment[x].jumlah);
+                    $('#keterangan'+x+'').val(response.payment[x].keterangan);
+                }
+            });
+        hitungSisa();
     }
     
 </script>
