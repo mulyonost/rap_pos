@@ -44,7 +44,8 @@
                     </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="" class="btn btn-danger" id="hapus" onclick="return confirm('Are you sure you want to delete this item?');">Hapus Pembayaran</a>
+                    <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
                 </div>
             </div>
             <!-- /.modal-content -->

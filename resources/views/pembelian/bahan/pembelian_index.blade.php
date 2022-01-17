@@ -83,7 +83,7 @@
                         }
                         else {
                             return '<p class= "text-success"> Lunas </p>';
-                    }
+                        }
                     }
                 },
                 {data: 'aksi', searchable:false, sortable:false}

@@ -118,12 +118,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('penjualan')->name('penjualan_')->group(function () {
         Route::get('/aluminium/data', [PenjualanController::class, 'data'])->name('aluminium.data');
         Route::get('/aluminium/selesai', [PenjualanController::class, 'selesai'])->name('aluminium.selesai');
-        Route::post('/aluminium/payment', [PenjualanController::class, 'payment'])->name('aluminium.payment');
         Route::get('/aluminium/cetaksj', [PenjualanController::class, 'cetaksj'])->name('aluminium.cetaksj');
         Route::get('/aluminium/cetaknota', [PenjualanController::class, 'cetaknota'])->name('aluminium.cetaknota');
         Route::get('/aluminium/cetakulangsj/{id?}', [PenjualanController::class, 'cetakulangsj'])->name('aluminium.cetakulangsj');
         Route::get('/aluminium/cetakulangnota/{id?}', [PenjualanController::class, 'cetakulangnota'])->name('aluminium.cetakulangnota');
+
+        Route::get('/aluminium/pelunasan', [PenjualanController::class, 'index_pelunasan'])->name('aluminium.pelunasan');
+        Route::get('/aluminium/pelunasan/data', [PenjualanController::class, 'pelunasan'])->name('aluminium.pelunasan.data');
+        Route::post('/aluminium/payment', [PenjualanController::class, 'payment'])->name('aluminium.payment');
         Route::get('/aluminium/payment/{id}', [PenjualanController::class, 'showpayment'])->name('aluminium.showpayment');
+        Route::get('/aluminium/paymentDelete/{id?}', [PenjualanController::class, 'paymentDelete'])->name('aluminium.paymentDelete');
         Route::resource('/aluminium', PenjualanController::class);
     });
 

@@ -55,16 +55,16 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-sm table-bordered" width="99%" id="table">
+                        <table class="table table-sm table-bordered" id="tableDetail">
                             <thead class="thead-light">
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th width="35%">Nama Aluminium</th>
+                                    <th width="30%">Nama Aluminium</th>
                                     <th width="10%">Colly</th>
                                     <th width="10%">Isi</th>
                                     <th width="10%">Qty</th>
                                     <th width="10%">Harga</th>
-                                    <th>Subtotal</th>
+                                    <th width="15%">Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody id="mainbody">

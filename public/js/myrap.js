@@ -355,11 +355,13 @@ function populateSelectPenjualan(){
 
 function addRowPayment(){
   $('#mainbody-payment').append('<tr><td>' +
-          '<input class="form-control bank" type="text" name="addmore['+x+'][bank]" id="bank'+x+'" required></td>' +
+          '<input class="form-control bank" type="text" name="addmore['+x+'][bank]" id="bank'+x+'" value="BCA" required></td>' +
           '<td><input class="form-control tanggal" type="date" name="addmore['+x+'][tanggal]" id="tanggal'+x+'" required></td>' +
           '<td><input class="form-control jumlah" type="number" name="addmore['+x+'][jumlah]" id="jumlah'+x+'" required></td>' +
           '<td><input class="form-control keterangan" type="text" name="addmore['+x+'][keterangan]" id="keterangan'+x+'"></td>'
       )
+      var today = new Date().toISOString().split('T')[0];
+      $('.tanggal').val(today);
   }
 
   function hitungSisa(){

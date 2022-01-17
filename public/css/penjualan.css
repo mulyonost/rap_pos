@@ -1,0 +1,9 @@
+#tableDetail {
+    display: block;
+    height: 400px;
+    overflow: auto;
+}
+
+p {
+    margin: 0;
+}

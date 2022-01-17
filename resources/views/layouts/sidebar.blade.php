@@ -199,7 +199,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('penjualan_aluminium.pelunasan')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pelunasan Penjualan</p>
                 </a>

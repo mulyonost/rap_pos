@@ -23,6 +23,10 @@ class PenjualanController extends Controller
         return view('penjualan.penjualan_index', compact('aluminium', 'customer'));
     }
 
+    public function index_pelunasan()
+    {
+        return view('penjualan.penjualan_pelunasan_index');
+    }
 
     public function data()
     {
@@ -42,6 +46,27 @@ class PenjualanController extends Controller
             ->rawColumns(['aksi'])
             ->make(true);
     }
+
+    public function pelunasan()
+    {
+        $penjualan = Penjualan::orderBy('tanggal', 'desc')->with('customer')->where('status', 0)->get();
+        return datatables()
+            ->of($penjualan)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($penjualan) {
+                return '
+                <div class="btn-group">
+                    <button onclick="editForm(`' . route('penjualan_aluminium.update', $penjualan->id) . '`)" class="btn btn-xs btn-primary btn-flat"><i class="far fa-eye"></i></button>
+                    <a href="/penjualan/aluminium/' . $penjualan->id . '/edit" class="btn btn-xs btn-warning btn-flat"><i class="far fa-edit"></i></a>
+                    <button onclick="deleteData(`' . route('penjualan_aluminium.destroy', $penjualan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                </div>
+                ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -237,6 +262,17 @@ class PenjualanController extends Controller
             $pdtl->status = 1;
         }
         $pdtl->save();
+
+        return redirect('penjualan/aluminium/pelunasan');
+    }
+
+    public function paymentDelete($id)
+    {
+        $payment = PenjualanPaid::where('id_penjualan', $id);
+        $penjualan = Penjualan::find($id);
+        $penjualan->status = 0;
+        $penjualan->update();
+        $payment->delete();
 
         return redirect('penjualan/aluminium');
     }

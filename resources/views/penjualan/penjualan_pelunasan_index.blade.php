@@ -15,9 +15,6 @@ Penjualan Aluminium
 <div class="row">
     <div class="col-md-12">
         <div class="box">
-            <div class="box-header with-border mb-2">
-                <a href="{{ route('penjualan_aluminium.create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Penjualan Baru</a>
-            </div>
             <div class="box-body table-responsive">
                 <table class="table table-striped table-bordered" width="99.8%" id="dataTable">
                     <thead>
@@ -65,7 +62,7 @@ Penjualan Aluminium
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('penjualan_aluminium.data') }}',
+                url: '{{ route('penjualan_aluminium.pelunasan.data') }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
@@ -175,9 +172,7 @@ Penjualan Aluminium
                 $('#modal-form-payment [name=sisa]').val(response.penjualan.total_akhir);
                 $('#modal-form-payment [id=sisa_awal]').val(response.penjualan.total_akhir);
                 $('#modal-form-payment [name=id_penjualan]').val(response.penjualan.id);
-                var url = "{{ route('penjualan_aluminium.paymentDelete', '')}}" + "/" + response.penjualan.id;
-                $('#modal-form-payment [id=hapus]').attr("href", url);
-                $('#modal-form-payment [id=simpan]').hide();
+                $('#modal-form-payment [id=hapus]').hide();
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');
@@ -207,17 +202,21 @@ Penjualan Aluminium
         $('#jumlah0').val($('#sisa_awal').val());
         $('#modal-form-payment').modal('show');
         $('#modal-form-payment .modal-title').text('Pelunasan Penjualan Aluminium');
-        $('#modal-form-payment form').attr('action', url);
-        $('#modal-form-payment [name=_method]').val('post');
+        $('#modal-form-payment form').attr('action', '{{ route('penjualan_aluminium.payment') }}');
+        $('#modal-form-payment [name=_method]').val('post');        
         $.get(url)
             .done((response) => {
                 if (response.payment.length > 0){
                     for(x=0; x<response.payment.length; x++){
                         addRowPayment();
                         $('#bank'+x+'').val(response.payment[x].bank);
+                        $('#bank'+x+'').prop('disabled', true);
                         $('#tanggal'+x+'').val(response.payment[x].tanggal);
+                        $('#tanggal'+x+'').prop('disabled', true);
                         $('#jumlah'+x+'').val(response.payment[x].jumlah);
+                        $('#jumlah'+x+'').prop('disabled', true);
                         $('#keterangan'+x+'').val(response.payment[x].keterangan);
+                        $('#keterangan'+x+'').prop('disabled', true);
                         hitungSisa();
                     }
                 }
