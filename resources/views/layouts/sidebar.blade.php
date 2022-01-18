@@ -262,6 +262,12 @@
                   <p>Laporan Bahan</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('reports_penjualan.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Laporan Penjualan</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>

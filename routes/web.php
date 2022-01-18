@@ -22,6 +22,7 @@ use App\Http\Controllers\LaporanProduksiController;
 use App\Http\Controllers\PembelianAvalanController;
 use App\Http\Controllers\LaporanAnodizingController;
 use App\Http\Controllers\LaporanBahanController;
+use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\PengambilanBahanController;
 
 use App\Models\PembelianAvalan;
@@ -151,5 +152,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/avalan', LaporanAvalanController::class);
 
         Route::resource('/bahan', LaporanBahanController::class);
+
+        Route::get('/penjualan', [LaporanPenjualanController::class, 'index'])->name('penjualan.index');
+        Route::get('penjualan/search', [LaporanPenjualanController::class, 'search'])->name('penjualan.search');
     });
 });

@@ -361,7 +361,7 @@ function addRowPayment(){
           '<td><input class="form-control keterangan" type="text" name="addmore['+x+'][keterangan]" id="keterangan'+x+'"></td>'
       )
       var today = new Date().toISOString().split('T')[0];
-      $('.tanggal').val(today);
+      $('#tanggal' + x ).val(today);
   }
 
   function hitungSisa(){
