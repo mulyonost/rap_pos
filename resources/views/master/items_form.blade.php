@@ -28,10 +28,13 @@
                               <option value="liter">Liter</option>
                               <option value="pcs">Pcs</option>
                               <option value="cm">CM</option>
+                              <option value="m">M</option>
                               <option value="tabung">Tabung</option>
                               <option value="jrg">Jerigen</option>
+                              <option value="drum">Drum</option>
                               <option value="btg">Batang</option>
                               <option value="lbr">Lembar</option>
+                              <option value="set">Set</option>
                           </select>
                           <span class="help-block with-errors"></span>
                       </div>
