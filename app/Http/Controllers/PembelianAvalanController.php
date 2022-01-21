@@ -107,6 +107,7 @@ class PembelianAvalanController extends Controller
         $pembelianav->status = $request->status;
         $pembelianav->keterangan = $request->keterangan;
         $pembelianav->created_by = auth()->user()->name;
+        $pembelianav->save();
         
         foreach ($request->addmore as $key => $value) {
             $pembelianavdetail = new PembelianAvalanDetail;
@@ -119,7 +120,6 @@ class PembelianAvalanController extends Controller
             $pembelianavdetail->subtotal = $value['subtotal'];
             $pembelianavdetail->save();
         }
-        $pembelianav->save();
         session(['id_pembelian_avalan' => $id]);
 
         return redirect('pembelian/avalan/selesai');
