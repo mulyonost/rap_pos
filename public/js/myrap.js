@@ -320,8 +320,7 @@ function recalcPenjualan() {
   let harga = 0;
   let subtotal = 0;
   let totalNota = 0;
-  let diskonPersen = $('#diskon_persen').val();
-  let diskonRupiah = 0;
+  let diskonRupiah = $('#diskon_rupiah').val();
   let totalAkhir = 0;
   $('#table-detail').find('tr').each(function() {
       let colly = $(this).find('input.colly').val();
@@ -333,11 +332,17 @@ function recalcPenjualan() {
       $(this).find('input.subtotal').val(subtotal);
       totalNota += subtotal ? subtotal : 0;
   });
-  diskonRupiah = diskonPersen/100 * totalNota;
   totalAkhir = (totalNota - diskonRupiah);
   $('#total_nota').val(totalNota);
-  $('#diskon_rupiah').val(diskonRupiah);
   $('#total_akhir').val(totalAkhir);
+}
+
+function recalcDiskon(){
+  let diskonPersen = $('#diskon_persen').val();
+  let diskonRupiah = 0;
+  let totalNota = $('#total_nota').val();
+  diskonRupiah = diskonPersen/100 * totalNota;
+  $('#diskon_rupiah').val(diskonRupiah);
 }
 
 function getNomorPenjualan() {

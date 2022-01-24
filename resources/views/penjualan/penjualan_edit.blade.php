@@ -162,15 +162,18 @@
 const aluminium = @json($aluminium);
 const penjualan = @json($penjualan);
 const pdetail = @json($penjualandetail);
-console.log(pdetail);
 
 $(function() {
-        $('#form-avalan').on("keyup change blur mouseenter", recalcPenjualan);
+    $('#form-avalan').on("keyup change blur mouseenter", recalcPenjualan);
     });
 
 $(function() {
-        $('#tanggal').on("change", getNomorPenjualan);
-    });
+    $('#diskon_persen').on("change", recalcDiskon);
+});
+
+$(function() {
+    $('#tanggal').on("change", getNomorPenjualan);
+});
 
 var i = 0;
 
@@ -184,6 +187,7 @@ $(document).ready(function(){
         $('#qty'+i+'').val(pdetail[i].qty);
         $('#harga'+i+'').val(pdetail[i].harga);
         $('#subtotal'+i+'').val(pdetail[i].subtotal);
+        recalcPenjualan();
     }
 
     i++;

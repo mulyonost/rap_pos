@@ -155,5 +155,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/penjualan', [LaporanPenjualanController::class, 'index'])->name('penjualan.index');
         Route::get('penjualan/search', [LaporanPenjualanController::class, 'search'])->name('penjualan.search');
+        Route::get('/penjualan/data/', [LaporanPenjualanController::class, 'data'])->name('penjualan.data');
     });
 });

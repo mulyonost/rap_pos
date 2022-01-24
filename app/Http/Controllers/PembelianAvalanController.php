@@ -108,7 +108,7 @@ class PembelianAvalanController extends Controller
         $pembelianav->keterangan = $request->keterangan;
         $pembelianav->created_by = auth()->user()->name;
         $pembelianav->save();
-        
+
         foreach ($request->addmore as $key => $value) {
             $pembelianavdetail = new PembelianAvalanDetail;
             $pembelianavdetail->id_pembelian_avalan = $pembelianav->id;
@@ -120,7 +120,7 @@ class PembelianAvalanController extends Controller
             $pembelianavdetail->subtotal = $value['subtotal'];
             $pembelianavdetail->save();
         }
-        session(['id_pembelian_avalan' => $id]);
+        session(['id_pembelian_avalan' => $pembelianav->id]);
 
         return redirect('pembelian/avalan/selesai');
     }
