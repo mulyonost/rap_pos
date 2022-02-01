@@ -28,7 +28,9 @@
                 <div class="form-group mx-sm-3 mb-2">
                     <input type="date" class="form-control" id="tanggal-akhir" name="tanggal-akhir" value="<?=  date("Y-m-d")  ?>">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Cari</button>
+                <button type="submit" class="btn btn-primary mb-2" value="item" name="type">Items</button>
+                <button type="submit" class="btn btn-primary mb-2 ml-2" value="customer" name="type">Group Customer</button>
+                <button type="submit" class="btn btn-primary mb-2 ml-2" value="items" name="type">Group Items</button>
             </form>
             </div>
             <div class="box-body table-responsive">
@@ -79,7 +81,7 @@ let table;
             processing: true,
             autowidth: true,
             ajax: {
-                url: '{{ route('reports_penjualan.data') }}',
+                url: '{{ route('reports_penjualan.data_items') }}',
             },
             columns: [
                 {data: 'master.customer.nama'},

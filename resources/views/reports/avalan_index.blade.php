@@ -11,17 +11,26 @@
 
 @section('content')
 
-<video width="320" height="240" autoplay controls>
-    <source src="rtsp://admin:LJOCFW@192.168.0.101:554/H.264" type="video/mp4">
-    <object width="320" height="240" type="application/x-shockwave-flash" data="http://releases.flowplayer.org/swf/flowplayer-3.2.5.swf">
-        <param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.5.swf" /> 
-        <param name="flashvars" value='config={"clip": {"url": "rtsp://admin:LJOCFW@192.168.0.101:554/H.264", "autoPlay":true, "autoBuffering":true}}' /> 
-        <p><a href="rtsp://admin:LJOCFW@192.168.0.101:554/H.264">view with external app</a></p> 
-    </object>
-</video>
-
-
 <div class="row">
+    <div class="row">
+        <form class="form-inline" action="{{ route('reports_avalan.search') }}" >
+            <div class="form-group mb-2">
+                <label>Tanggal Awal</label>
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="date" class="form-control" id="tanggal-awal" name="tanggal-awal" value="<?=  date("Y-m-01")  ?>">
+            </div>
+            <div class="form-group mb-2">
+                <label>Tanggal Akhir</label>
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="date" class="form-control" id="tanggal-akhir" name="tanggal-akhir" value="<?=  date("Y-m-d")  ?>">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" value="avalan" name="type">Avalan</button>
+            <button type="submit" class="btn btn-primary mb-2 ml-2" value="supplier" name="type">Group Supplier</button>
+            <button type="submit" class="btn btn-primary mb-2 ml-2" value="avalan_group" name="type">Group Avalan</button>
+        </form>
+        </div>
 <div class="col-md-7">
 <table class="table table-responsive table-striped">
     <thead>

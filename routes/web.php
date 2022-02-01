@@ -149,12 +149,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/packing', LaporanPackingController::class);
         Route::get('/packing/detail', [LaporanPackingController::class, 'detail'])->name('packing.detail');
 
-        Route::resource('/avalan', LaporanAvalanController::class);
+        Route::get('/avalan', [LaporanAvalanController::class, 'index'])->name('avalan.index');
+        Route::get('avalan/search', [LaporanAvalanController::class, 'search'])->name('avalan.search');
+        Route::get('/avalan/data_avalan', [LaporanAvalanController::class, 'data_avalan'])->name('penjualan.data_avalan');
+        Route::get('/avalan/data_supplier', [LaporanAvalanController::class, 'data_supplier'])->name('penjualan.data_supplier');
+        Route::get('/avalan/data_avalan_group', [LaporanAvalanController::class, 'data_avalan_group'])->name('penjualan.data_avalan_group');
 
         Route::resource('/bahan', LaporanBahanController::class);
 
         Route::get('/penjualan', [LaporanPenjualanController::class, 'index'])->name('penjualan.index');
+        Route::get('/penjualan/customer', [LaporanPenjualanController::class, 'customer'])->name('penjualan.customer');
+        Route::get('/penjualan/items', [LaporanPenjualanController::class, 'items'])->name('penjualan.items');
+
         Route::get('penjualan/search', [LaporanPenjualanController::class, 'search'])->name('penjualan.search');
-        Route::get('/penjualan/data/', [LaporanPenjualanController::class, 'data'])->name('penjualan.data');
+        Route::get('/penjualan/data_items', [LaporanPenjualanController::class, 'data_items'])->name('penjualan.data_items');
+        Route::get('/penjualan/data_customer', [LaporanPenjualanController::class, 'data_customer'])->name('penjualan.data_customer');
+        Route::get('/penjualan/data_items_group', [LaporanPenjualanController::class, 'data_items_group'])->name('penjualan.data_items_group');
     });
 });

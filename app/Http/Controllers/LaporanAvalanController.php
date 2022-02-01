@@ -25,72 +25,55 @@ class LaporanAvalanController extends Controller
 
         $pav = PembelianAvalanDetail::with('master.supplier')->with('avalan')->get();
         return view('reports.avalan_index', compact('pav', 'group'));
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function search(Request $request)
     {
-        //
+        switch ($request->input('type')) {
+            case 'avalan':
+                return view('reports.avalan.avalan_item_detail');
+
+            case 'supplier':
+                return view('reports.avalan.avalan_group_supplier');
+
+            case 'avalan_group':
+                return view('reports.avalan.avalan_group_avalan');
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function data_avalan(Request $request)
     {
-        //
+        $avalan = PembelianAvalanDetail::with('master.supplier')->with('avalan')->get();
+
+        return datatables()
+            ->of($avalan)
+            ->make(true);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function data_supplier()
     {
-        //
+        $avalan = PembelianAvalan::selectRaw('sum(total_nota) as total, id_supplier')
+            ->with('supplier')
+            ->groupBy('id_supplier')
+            ->get();
+
+        return datatables()
+            ->of($avalan)
+            ->make(true);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function data_avalan_group()
     {
-        //
-    }
+        $avalan = PembelianAvalanDetail::selectRaw('pembelian_avalan_detail.id_avalan, sum(qty) as qty, sum(subtotal) as subtotal')
+            ->with('avalan')
+            ->groupBy('pembelian_avalan_detail.id_avalan')
+            ->get()
+            ->sortBy(function ($avalan, $key) {
+                return $avalan->avalan->nama;
+            });
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return datatables()
+            ->of($avalan)
+            ->make(true);
     }
 }
