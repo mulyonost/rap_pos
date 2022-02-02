@@ -245,6 +245,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ route('reports_anodizing.index_group') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Laporan Anodizing Group</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ route('reports_packing.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Laporan Packing</p>

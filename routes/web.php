@@ -144,7 +144,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/produksi/search', [LaporanProduksiController::class, 'search'])->name('produksi.search');
         Route::get('/produksi/date', [LaporanProduksiController::class, 'date'])->name('produksi.date');
 
-        Route::resource('/anodizing', LaporanAnodizingController::class);
+        Route::get('/anodizing', [LaporanAnodizingController::class, 'index'])->name('anodizing.index');
+        Route::get('/anodizing/items', [LaporanAnodizingController::class, 'index_group'])->name('anodizing.index_group');
+        Route::get('/anodizing/data', [LaporanAnodizingController::class, 'data'])->name('anodizing.data');
 
         Route::resource('/packing', LaporanPackingController::class);
         Route::get('/packing/detail', [LaporanPackingController::class, 'detail'])->name('packing.detail');

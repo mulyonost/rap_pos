@@ -20,4 +20,9 @@ class AnodizingDetail extends Model
     {
         return $this->belongsTo(Aluminium::class, 'id_aluminium', 'id');
     }
+
+    public function master()
+    {
+        return $this->belongsTo(Anodizing::class, 'id_laporan_anodizing', 'id');
+    }
 }
