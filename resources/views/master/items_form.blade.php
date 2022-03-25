@@ -29,6 +29,7 @@
                               <option value="pcs">Pcs</option>
                               <option value="cm">CM</option>
                               <option value="m">M</option>
+                              <option value="lusin">Lusin</option>
                               <option value="tabung">Tabung</option>
                               <option value="jrg">Jerigen</option>
                               <option value="drum">Drum</option>
@@ -46,10 +47,10 @@
                               <option value="" disabled selected>Pilih Kategori</option>
                               <option value="matras">Matras</option>
                               <option value="peleburan">Peleburan</option>
-                              <option value="bahan_kimia">Packing</option>
+                              <option value="packing">Packing</option>
                               <option value="bahan_kimia">Bahan Kimia</option>
                               <option value="spare_part">Spare Part</option>
-                              <option value="perbaikan_pabrik">Tools/Mesin</option>
+                              <option value="tools">Tools/Mesin</option>
                               <option value="perbaikan_pabrik">Perbaikan Pabrik</option>
                               <option value="ongkir">Ongkos Kirim</option>
                               <option value="lain_lain">Lain Lain</option>
