@@ -44,11 +44,12 @@
                       <div class="col-md-5">
                           <select name="kategori" id="kategori" class="form-control">
                               <option value="" disabled selected>Pilih Kategori</option>
-                              <option value="peleburan">Peleburan</option>
-                              <option value="bahan_kimia">Bahan Kimia</option>
-                              <option value="bahan_kimia">Packing</option>
-                              <option value="spare_part">Spare Part</option>
                               <option value="matras">Matras</option>
+                              <option value="peleburan">Peleburan</option>
+                              <option value="bahan_kimia">Packing</option>
+                              <option value="bahan_kimia">Bahan Kimia</option>
+                              <option value="spare_part">Spare Part</option>
+                              <option value="perbaikan_pabrik">Tools/Mesin</option>
                               <option value="perbaikan_pabrik">Perbaikan Pabrik</option>
                               <option value="ongkir">Ongkos Kirim</option>
                               <option value="lain_lain">Lain Lain</option>
