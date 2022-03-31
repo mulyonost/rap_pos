@@ -19,8 +19,8 @@
                     Data berhasil disimpan
                 </div>
                 <div class="">
-                    <a target="_blank" href="{{ route('penjualan_aluminium.cetaksj') }}" class="btn btn-warning" >Cetak Surat Jalan</a>
-                    <a target="_blank" href="{{ route('penjualan_aluminium.cetaknota') }}" class="btn btn-warning" >Cetak Nota</a>
+                    <a target="_blank" href="{{ route('penjualan_aluminium.cetaksj') }}" class="btn btn-warning" onclick="return !window.open(this.href, 'somesite', 'width=900,height=700')" >Cetak Surat Jalan</a>
+                    <a target="_blank" href="{{ route('penjualan_aluminium.cetaknota') }}" class="btn btn-warning" onclick="return !window.open(this.href, 'somesite', 'width=900,height=700')" >Cetak Nota</a>
                     <a href="{{ url("penjualan/aluminium") }}" class="btn btn-primary">Kembali ke index</a>
                 </div>
             </div>

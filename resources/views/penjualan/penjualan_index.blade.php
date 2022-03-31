@@ -161,6 +161,10 @@ Penjualan Aluminium
                     $('#modal-form [name=status]').val(status);
                 }
                 $('#modal-form [name=keterangan]').val(response.keterangan);
+                var urlnota = "{{ route('penjualan_aluminium.cetakulangnota', '')}}" + "/" + response.penjualan.id;
+                var urlsj = "{{ route('penjualan_aluminium.cetakulangsj', '')}}" + "/" + response.penjualan.id;
+                $('#modal-form [id=cetaknota]').attr("href", urlnota);
+                $('#modal-form [id=cetaksj]').attr("href", urlsj);
                 for (i=0; i<response.penjualandetail.length; i++){
                     addRowPenjualanDetail();
                     $('#no'+i+'').text(i+1);
@@ -174,6 +178,7 @@ Penjualan Aluminium
 
                 $('#modal-form-payment [name=sisa]').val(response.penjualan.total_akhir);
                 $('#modal-form-payment [id=sisa_awal]').val(response.penjualan.total_akhir);
+                $('#modal-form-payment [id=nomornota]').val(response.penjualan.nomor);
                 $('#modal-form-payment [name=id_penjualan]').val(response.penjualan.id);
                 var url = "{{ route('penjualan_aluminium.paymentDelete', '')}}" + "/" + response.penjualan.id;
                 $('#modal-form-payment [id=hapus]').attr("href", url);

@@ -93,8 +93,8 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Batal</button>
-                    <a href="{{ route('penjualan_aluminium.cetaksj') }}" target="_blank" class="btn btn-secondary">Cetak SJ</a>
-                    <a href="{{ route('penjualan_aluminium.cetaksj') }}" target="_blank" class="btn btn-secondary">Cetak Nota</a>
+                    <a href="" target="_blank" class="btn btn-secondary" id="cetaksj" onclick="return !window.open(this.href, 'somesite', 'width=900,height=700')">Cetak SJ</a>
+                    <a href="" target="_blank" class="btn btn-secondary" id="cetaknota" onclick="return !window.open(this.href, 'somesite', 'width=900,height=700')">Cetak Nota</a>
                     <button type="button" name="payment" id="payment" class="btn btn-success" data-toggle="modal" onclick="addPayment('{{ route('penjualan_aluminium.payment') }}')">Pembayaran</button>
                 </div>
             </div>

@@ -19,7 +19,7 @@ class CreatePenjualanPaidTable extends Migration
             $table->string('bank');
             $table->date('tanggal');
             $table->bigInteger('jumlah');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

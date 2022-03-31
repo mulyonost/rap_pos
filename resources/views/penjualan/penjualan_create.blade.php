@@ -162,6 +162,10 @@ $(function() {
     });
 
 $(function() {
+    $('#form-avalan').on("keyup change blur mouseenter", recalcDiskon);
+});
+
+$(function() {
         $('#tanggal').on("change", getNomorPenjualan);
     });
 

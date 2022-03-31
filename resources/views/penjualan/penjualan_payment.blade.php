@@ -13,6 +13,14 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
+                            <div class="col-md-2">
+                                <label for="">Nomor Nota</label>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <input type="text" class="form-control" id="nomornota" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
                             <input type="hidden" name="id_penjualan">
                             <table class="table responsive" id="table-detail-payment">
                                 <thead>

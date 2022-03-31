@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Avalan;
 use Illuminate\Http\Request;
 use App\Models\PembelianAvalan;
 use App\Models\PembelianAvalanDetail;
+use Illuminate\Support\Facades\DB;
 
 class LaporanAvalanController extends Controller
 {
@@ -37,7 +39,15 @@ class LaporanAvalanController extends Controller
                 return view('reports.avalan.avalan_group_supplier');
 
             case 'avalan_group':
-                return view('reports.avalan.avalan_group_avalan');
+                $awal = $request->tanggal_awal;
+                $akhir = $request->tanggal_akhir;
+                $avalan = Avalan::select('nama', DB::raw('SUM(pembelian_avalan_detail.qty_akhir) as qty, SUM(pembelian_avalan_detail.subtotal) as subtotal'))
+                    ->join('pembelian_avalan_detail', 'avalan.id', '=', 'pembelian_avalan_detail.id_avalan')
+                    ->join('pembelian_avalan', 'pembelian_avalan.id', '=', 'pembelian_avalan_detail.id_pembelian_avalan')
+                    ->whereBetween('pembelian_avalan.tanggal', [$awal, $akhir])
+                    ->groupBy('avalan.nama')
+                    ->get();
+                return view('reports.avalan.avalan_group_avalan_manual', compact('avalan'));
         }
     }
 

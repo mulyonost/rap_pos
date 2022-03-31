@@ -18,13 +18,13 @@
                 <label>Tanggal Awal</label>
             </div>
             <div class="form-group mx-sm-3 mb-2">
-                <input type="date" class="form-control" id="tanggal-awal" name="tanggal-awal" value="<?=  date("Y-m-01")  ?>">
+                <input type="date" class="form-control" id="tanggal_awal" name="tanggal_awal" value="<?=  date("Y-m-01")  ?>">
             </div>
             <div class="form-group mb-2">
                 <label>Tanggal Akhir</label>
             </div>
             <div class="form-group mx-sm-3 mb-2">
-                <input type="date" class="form-control" id="tanggal-akhir" name="tanggal-akhir" value="<?=  date("Y-m-d")  ?>">
+                <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="<?=  date("Y-m-d")  ?>">
             </div>
             <button type="submit" class="btn btn-primary mb-2" value="avalan" name="type">Avalan</button>
             <button type="submit" class="btn btn-primary mb-2 ml-2" value="supplier" name="type">Group Supplier</button>

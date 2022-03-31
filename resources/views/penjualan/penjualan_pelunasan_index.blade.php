@@ -170,6 +170,7 @@ Penjualan Aluminium
                 }
 
                 $('#modal-form-payment [name=sisa]').val(response.penjualan.total_akhir);
+                $('#modal-form-payment [id=nomornota]').val(response.penjualan.nomor);
                 $('#modal-form-payment [id=sisa_awal]').val(response.penjualan.total_akhir);
                 $('#modal-form-payment [name=id_penjualan]').val(response.penjualan.id);
                 $('#modal-form-payment [id=hapus]').hide();

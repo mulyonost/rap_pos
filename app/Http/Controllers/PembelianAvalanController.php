@@ -229,7 +229,7 @@ class PembelianAvalanController extends Controller
         $payment->status = 1;
         $payment->save();
 
-        return redirect('pembelian/avalan');
+        return redirect('pembelian/avalan/pelunasan');
     }
 
     public function cetak()
