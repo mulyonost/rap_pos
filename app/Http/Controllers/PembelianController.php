@@ -33,7 +33,7 @@ class PembelianController extends Controller
 
     public function data()
     {
-        $pembelian = Pembelian::orderBy('tanggal', 'desc')->with('supplier')->take(50)->get();
+        $pembelian = Pembelian::orderBy('tanggal', 'desc')->with('supplier')->get();
         return datatables()
             ->of($pembelian)
             ->addIndexColumn()

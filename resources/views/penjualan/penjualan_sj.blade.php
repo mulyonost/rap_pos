@@ -37,7 +37,7 @@
     <section class="sheet padding-10mm">
       <div class="row">
           <div class="col text-left">
-              <p1>PT. Aluminium<br>Jl. Kima 16 Kav DD 7<br>Makassar, Sulawesi Selatan</p>
+              <p1><br>Jl. Kima 16 Kav DD 7<br>Makassar, Sulawesi Selatan</p>
           </div>
           <div class="col text-right">
               <p1 class="text-right">{{ $penjualan->nomor }}<br>{{ \Carbon\Carbon::parse($penjualan->tanggal)->format('d-M-Y')}}<br>{{ $penjualan->created_by }}</p>

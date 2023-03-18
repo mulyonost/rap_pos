@@ -70,7 +70,7 @@ function persentase() {
   totalAvalan = $('#jumlah_avalan').val();
   totalProduksi = $('#total').val();
   kgBillet = (totalBillet * 95);
-  persen = Math.round(totalAvalan / totalBillet * 100) / 100 ;
+  persen = Math.round(totalProduksi / totalBillet * 100) / 100 ;
   $('#persentase').text(persen);
 
 }

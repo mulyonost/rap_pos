@@ -34,7 +34,7 @@ class PembelianAvalanController extends Controller
 
     public function data()
     {
-        $pembelianav = PembelianAvalan::orderBy('tanggal', 'desc')->with('supplier')->take(50)->get();
+        $pembelianav = PembelianAvalan::orderBy('tanggal', 'desc')->with('supplier')->get();
         return datatables()
             ->of($pembelianav)
             ->addIndexColumn()
